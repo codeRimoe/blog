@@ -24,7 +24,7 @@ layout: default
                 {% if site.featured-tags %}
                 <section>
                     <!-- no hr -->
-                    <h5><a href="{{'/tags/' | prepend: site.baseurl }}">FEATURED TAGS</a></h5>
+                    <h5><a href="{{'/tags/' | prepend: site.baseurl }}">TAGS</a></h5>
                     <div class="tags">
         				{% for tag in site.tags %}
                             {% if tag[1].size > {{site.featured-condition-size}} %}
@@ -73,7 +73,7 @@ layout: default
                 {% if site.featured-tags %}
                 <section>
                     <hr class="hidden-sm hidden-xs">
-                    <h5><a href="{{'/tags/' | prepend: site.baseurl }}">FEATURED TAGS</a></h5>
+                    <h5><a href="{{'/tags/' | prepend: site.baseurl }}">TAGS</a></h5>
                     <div class="tags">
                         {% for tag in site.tags %}
                             {% if tag[1].size > {{site.featured-condition-size}} %}
@@ -91,26 +91,28 @@ layout: default
                     <hr><h5><a href="{{'/about/' | prepend: site.baseurl }}">ABOUT ME</a></h5>
                     <div class="short-about">
                         {% if site.sidebar-avatar %}
-                            <img align="center"width="100%" src="{{site.sidebar-avatar}}" />
+                            <img align="center" width="100%" src="{{site.sidebar-avatar}}" />
                         {% endif %}
+                        <div align="center">
+                        <a aria-label="Send email" href="mailto:{{site.email}}"><i class="icon fa fa-envelope-o"></i></a>
+                        <a aria-label="My Github" target="_blank" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+                        <a aria-label="My Weibo" target="_blank" href="https://weibo.com/{{site.weibo_username}}"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
+                        <a aria-label="My Twitter" target="_blank" href="https://twitter.com/{{site.twitter_username}}"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                        <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/{{site.facebook_username}}"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
+                        <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/{{site.zhihu_username}}/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                        <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                        </div>
                         {% if site.sidebar-about-description %}
                             <p>{{site.sidebar-about-description}}</p>
                         {% endif %}
                         <!-- SNS Link -->
-                            <a aria-label="Send email" href="mailto:{{site.email}}"><i class="icon fa fa-envelope-o"></i></a>
-                            <a aria-label="My Github" target="_blank" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github" aria-hidden="true"></i></a>
-                            <a aria-label="My Weibo" target="_blank" href="https://weibo.com/{{site.weibo_username}}"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
-                            <a aria-label="My Twitter" target="_blank" href="https://twitter.com/{{site.twitter_username}}"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
-                            <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/{{site.facebook_username}}"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                            <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/{{site.zhihu_username}}/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
-                            <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                         
                     </div>
                 </section>
                 <!-- Friends Blog -->
                 {% if site.friends %}
                 <hr>
-                <h5>FRIENDS</h5>
+                <h5>LINKS</h5>
                 <ul class="list-inline">
                     {% for friend in site.friends %}
                         <li><a href="{{friend.href}}">{{friend.title}}</a></li>

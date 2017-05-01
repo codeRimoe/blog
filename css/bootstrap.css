@@ -1057,13 +1057,13 @@ th {
 .glyphicon-menu-up:before {
   content: "\e260";
 }
-* {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+#fuckit{
+  -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+          box-sizing:border-box
 }
-*:before,
-*:after {
+#fuckit:before,
+#fuckit:after {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;

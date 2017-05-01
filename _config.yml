@@ -84,16 +84,13 @@ friends: [
         title: "Hux Blog",
         href: "http://huangxuan.me"
     },{
-        title: "Foo",
-        href: "#"
+        title: "Jekyll",
+        href: "http://jekyllcn.com/"
     },{
-        title: "Bar",
-        href: "#"
+        title: "GP,SYSU",
+        href: "http://gp.sysu.edu.cn/"
     },{
-        title: "Example Friends",
-        href: "#"
-    },{
-        title: "It helps SEO",
-        href: "#"
+        title: "SYSU",
+        href: "http://www.sysu.edu.cn/"
     }
 ]
