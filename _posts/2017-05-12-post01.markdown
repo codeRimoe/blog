@@ -4,7 +4,7 @@ title:      "为政之学与入徳之门"
 subtitle:   "从《礼记·大学》到《四书·大学》"
 date:       2017-05-12
 author:     "柠萌"
-header-img: "img/post-bg/post20170501201.jpg"
+header-img: "img/post-bg/post2017051201.jpg"
 tags:
     - 读书
     - 议论
