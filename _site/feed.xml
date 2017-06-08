@@ -5,9 +5,200 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 12 May 2017 01:50:00 +0800</pubDate>
-    <lastBuildDate>Fri, 12 May 2017 01:50:00 +0800</lastBuildDate>
+    <pubDate>Fri, 09 Jun 2017 03:08:27 +0800</pubDate>
+    <lastBuildDate>Fri, 09 Jun 2017 03:08:27 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>胡乱写了个小游戏</title>
+        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
+
+&lt;p&gt;H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港回到学校，就开始着手撸起来。&lt;/p&gt;
+
+&lt;p&gt;本来想做一个像机械迷城一样的H5游戏，但想想工程量太大赶不及交作业，而且最近事还不少，于是就想着做一个简单一点的。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;游戏设计&quot;&gt;游戏设计&lt;/h2&gt;
+
+&lt;p&gt;因为没有想法，所以上网找了一下别人blog的文章，于是发现了一篇2011年的文章&lt;a href=&quot;http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/&quot;&gt;《How to make a simple HTML5 Canvas game》&lt;/a&gt;，这也是有够古老的，但足够简单。&lt;/p&gt;
+
+&lt;p&gt;但是只是上下左右吃小妖怪这样的设定既不有趣也不可爱，而且也不可能直接copy别人的代码交作业。&lt;/p&gt;
+
+&lt;p&gt;所以结合以前玩过的一个叫泡泡堂的游戏来了灵感，设计了一个小游戏。&lt;/p&gt;
+
+&lt;p&gt;·玩家通过控制一个角色单位的【移动】和【放炸弹】来躲避并消灭怪物。&lt;/p&gt;
+
+&lt;p&gt;·怪物定时产生，跟随玩家角色移动，碰到玩家角色即消失，玩家扣血。&lt;/p&gt;
+
+&lt;p&gt;·胜利条件是杀敌数一定或一定时间内不死。&lt;/p&gt;
+
+&lt;p&gt;·当然怪物、炸弹可以有不同类型和效果。&lt;/p&gt;
+
+&lt;p&gt;然后为了变得萌萌哒就把游戏做成《小林家的龙女仆》的同人啦。&lt;/p&gt;
+
+&lt;p&gt;设定是托尔追坎娜，后来又加上一个不动的小林在中间，游戏中不能碰到。&lt;/p&gt;
+
+&lt;p&gt;（有人问我为什么是坎娜不是康娜，其实就是单纯喜欢这个小众的译名（误）。）&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic01.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;构建对象与移动&quot;&gt;构建对象与移动&lt;/h2&gt;
+
+&lt;p&gt;说干就干，首先要构建对象，先构建了三个对象，一是坎娜，二是托尔，三是炸弹。后来又加了个小林类。&lt;/p&gt;
+
+&lt;p&gt;基本上都有img、x、y、hp这三个数据成员，其实可以搞个基类的，不过当时有点赶着写完于是就直接撸没有设计类。&lt;/p&gt;
+
+&lt;p&gt;类图大概是下面这样的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic02.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;画图、移动、设置炸弹，另外写了几个检查状态的函数。&lt;/p&gt;
+
+&lt;p&gt;键盘输入控制的话，当然是用键盘的上下左右啦，其实这个也只是设置一个监听。&lt;/p&gt;
+
+&lt;p&gt;代码如下&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;c1&quot;&gt;//监听键盘事件&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;                                     &lt;span class=&quot;c1&quot;&gt;//记录当前按着的键&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;keydown&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;keyup&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add key value*/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add code*/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//松开某键盘执行代码&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add key value*/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add code*/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;//检测长按对应事件&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//使用（value in dictionary）判断&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;38&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;39&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBW&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBW&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其他的话就是托尔跟踪的函数了，算法大概就是每次算出xy差值，然后得到连线斜率，然后用速度算一下移动的xy值。&lt;/p&gt;
+
+&lt;p&gt;游戏实现方面还是比较简单的。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;手机端支持g感应&quot;&gt;手机端支持（G感应）&lt;/h2&gt;
+
+&lt;p&gt;本来只做PC端就能交作业了，但我突然觉得h5不做手机端这游戏发在票圈里肯定没人玩了，于是我就开始研究手机端了。&lt;/p&gt;
+
+&lt;p&gt;第一个问题首先是如何检测网页在手机端打开，为了图方便就直接用了别人的库&lt;a href=&quot;https://github.com/matthewhudson/device.js/blob/master/lib/device.js&quot;&gt;Device.js&lt;/a&gt;,然后就直接用device.mobile()判断就OK了。&lt;/p&gt;
+
+&lt;p&gt;然后控制的话当然是触摸画板放炸弹了，很简单就直接加一个object.onclick()就可以了，不过这里mark一下，canvas是不能直接onclick的，我们要造一个div然后get这个div再div.onclick()。&lt;/p&gt;
+
+&lt;p&gt;至于移动的话，我先是想用触摸canvas外的空白处，但一是不好实现，二是用户不好操作，三是竖屏状态下自适应后没有空白了，后来我就想到G感应。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic03.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;首先我去找了些文章，比较有参考价值的是&lt;a href=&quot;http://blog.csdn.net/hursing/article/details/9046837&quot;&gt;iOS Safari/WebKit对DeviceOrientationEvent的实现&lt;/a&gt;。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自&lt;a href=&quot;http://www.haorooms.com/post/html5_DeviceMotionEvent&quot;&gt;html5重力感应事件之DeviceMotionEvent&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;陀螺仪的监听器是”deviceorientation”，监听手机的转动，即手机一转动就触发监听。返回5个值：webkitCompassHeading，webkitCompassAccuracy，alpha，beta，gamma。&lt;/p&gt;
+
+&lt;p&gt;webkitCompassHeading：与正北方向的角度差值。正北为0度，正东为90度，正南为180度，正西为270度。&lt;/p&gt;
+
+&lt;p&gt;webkitCompassAccuracy：指北针的精确度，表示偏差为正负多少度。一般是10。&lt;/p&gt;
+
+&lt;p&gt;alpha: 在围绕 z 轴旋转时，手机屏幕面转过的度数，设备顶部指向地球正北方向时为0，取值[0,360]。&lt;/p&gt;
+
+&lt;p&gt;beta: 在围绕 x 轴旋转时，手机屏幕面转过的度数，设备水平放置时为0，取值[-180,180]。&lt;/p&gt;
+
+&lt;p&gt;gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水平放置时为0，取值[-90,90]。&lt;/p&gt;
+
+&lt;p&gt;具体的直观感受请就看下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic04.png&quot; alt=&quot;avatar&quot; /&gt;
+&lt;img src=&quot;/img/in-post/2017060901/pic05.png&quot; alt=&quot;avatar&quot; /&gt;
+&lt;img src=&quot;/img/in-post/2017060901/pic06.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们可以发现这里的原理很简单，大概是：通过正北（地磁场感应）判断alpha，通过重力加速度方向（重力感应）确定beta和gamma。&lt;/p&gt;
+
+&lt;p&gt;我们这里只用到beta和gamma，也就是说所谓的G感应其实是陀螺仪的两个返回值。&lt;/p&gt;
+
+&lt;p&gt;所以每当监听到转动时就往keysdown字典里添加对应方向的keycode，检测到轴线水平时删除该轴线上两个方向的keycode。当然，我设置了允许5度以内的偏差，就是返回正负5度都认为是水平。&lt;/p&gt;
+
+&lt;p&gt;此外要注意横屏时的方向和竖屏的不一样，利用window.orientation可以返回-90、0、90、180分别代表屏幕四个方向。&lt;/p&gt;
+
+&lt;p&gt;手机端测试时比较麻烦的是要先推到网站上再用手机打开，开始以为chrome的设备模拟不支持GSencor，后来发现是有Sencor模拟的。
+&lt;img src=&quot;/img/in-post/2017060901/pic07.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;另外我还发现chrome有remote devices功能，可以用USB连上手机，这次没用上，下次可以探索一下。
+&lt;img src=&quot;/img/in-post/2017060901/pic08.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;网页自适应&quot;&gt;网页自适应&lt;/h2&gt;
+
+&lt;p&gt;网页自适应对我来说一直挺麻烦的，可能是因为CSS和Style没学好，其实个人觉得吧，CSS写错了都不知道哪出问题，颇为心累。&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;坎娜与托尔 - Rimoe Game&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user-scalable=0&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;98%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;98%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;justify-content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nl&quot;&gt;align-items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;   
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这里mark一下meta里面的user-scalable=0，这样的话可以避免双击放大，在游戏中就很好地避免狂点屏幕放大网页的问题。&lt;/p&gt;
+
+&lt;p&gt;限时设置html和body的宽高98%，避免100%时出现滚动条，然后我用js控制缩放，直接修改div.style.zoom（缩放）。&lt;/p&gt;
+
+&lt;p&gt;因为canvas一开始就设置好宽高多少px，如果后面改的话其他图片大小什么的也要改，所以直接采用缩放的办法。用document.body.clientWidth和Height获取宽高，求其与画板的比值作为缩放尺度。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。
+不过这次的代码写的并不完美，挺混乱的。
+嗯，本人的H5学习之路还要任重道远呢。
+代码已开源在&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;，保留一切权利。&lt;/p&gt;
+
+&lt;p&gt;2017.06.09 于珠海&lt;/p&gt;
+</description>
+        <pubDate>Fri, 09 Jun 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/06/09/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/06/09/post01/</guid>
+        
+        <category>H5</category>
+        
+        <category>JS</category>
+        
+        <category>游戏</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
     
       <item>
         <title>为政之学与入徳之门</title>
@@ -15,7 +206,7 @@
 
 &lt;p&gt;本学期选了一门通识课，《礼记》导读，因交作业作了一篇文章，遂记录于此。&lt;/p&gt;
 
-&lt;p&gt;原文题为《《四书·大学》与《礼记·大学》之异》，本文在原文上有作修改。&lt;/p&gt;
+&lt;p&gt;原文题为《〈四书·大学〉与〈礼记·大学〉之异》，本文在原文上有作修改。&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -31,7 +222,7 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;大学新义与其在四书中的定位&quot;&gt;《大学》新义与其在《四书》中的定位&lt;/h2&gt;
+&lt;h2 id=&quot;大学新义与其在四书中定位&quot;&gt;《大学》新义与其在《四书》中定位&lt;/h2&gt;
 
 &lt;p&gt;朱子移文补传，实是借古文立新学，《大学》原文经朱子一番悉心打扮后，不仅形式变更了，含意也变得有所不同。
 朱子在《大学章句·序》中写道：&lt;/p&gt;
@@ -70,7 +261,9 @@
 
 &lt;p&gt;王阳明认为“格物“、”致知”、“诚意”、“正心”本意都是一样，都是为了“修身”。&lt;/p&gt;
 
-&lt;p&gt;“「格物」者,格其心之物也,格其意之物也,挌其知之物也:「正心」者,正其物之心也:「誠意」者,誠其物之意也:「致知」者,致其物之知也。此岂有内外彼此之分哉?——王守仁《传习录》”&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;“「格物」者,格其心之物也,格其意之物也,挌其知之物也:「正心」者,正其物之心也:「誠意」者,誠其物之意也:「致知」者,致其物之知也。此岂有内外彼此之分哉?——王守仁《传习录》”&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;依照此观点，《礼记》不必将四者分开。由此观之，从王阳明的学说来理解“格物致知”，并不一定比朱子学说更加符合《礼记》原意。&lt;/p&gt;
 
@@ -129,10 +322,6 @@
         <category>文史哲</category>
         
         <category>中国古代</category>
-        
-        <category>朱子</category>
-        
-        <category>礼记</category>
         
         
       </item>

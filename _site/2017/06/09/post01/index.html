@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="作家是杂家">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>胡乱写了个小游戏 - 凝萌小记 - Rimoe's</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/06/09/post01/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <!--<link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">凝萌小记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://rimoe.ml">Home - 柠萌</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2017060901.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg/post2017060901.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#H5" title="H5">H5</a>
+                        
+                        <a class="tag" href="/tags/#JS" title="JS">JS</a>
+                        
+                        <a class="tag" href="/tags/#游戏" title="游戏">游戏</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                    </div>
+                    <h1>胡乱写了个小游戏</h1>
+                    
+                    
+                    <h2 class="subheading">造《坎娜与托尔》过程中学到的</h2>
+                    
+                    <span class="meta">Posted by 柠萌 on June 9, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="缘起">缘起</h2>
+
+<p>H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港回到学校，就开始着手撸起来。</p>
+
+<p>本来想做一个像机械迷城一样的H5游戏，但想想工程量太大赶不及交作业，而且最近事还不少，于是就想着做一个简单一点的。</p>
+
+<hr />
+
+<h2 id="游戏设计">游戏设计</h2>
+
+<p>因为没有想法，所以上网找了一下别人blog的文章，于是发现了一篇2011年的文章<a href="http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/">《How to make a simple HTML5 Canvas game》</a>，这也是有够古老的，但足够简单。</p>
+
+<p>但是只是上下左右吃小妖怪这样的设定既不有趣也不可爱，而且也不可能直接copy别人的代码交作业。</p>
+
+<p>所以结合以前玩过的一个叫泡泡堂的游戏来了灵感，设计了一个小游戏。</p>
+
+<p>·玩家通过控制一个角色单位的【移动】和【放炸弹】来躲避并消灭怪物。</p>
+
+<p>·怪物定时产生，跟随玩家角色移动，碰到玩家角色即消失，玩家扣血。</p>
+
+<p>·胜利条件是杀敌数一定或一定时间内不死。</p>
+
+<p>·当然怪物、炸弹可以有不同类型和效果。</p>
+
+<p>然后为了变得萌萌哒就把游戏做成《小林家的龙女仆》的同人啦。</p>
+
+<p>设定是托尔追坎娜，后来又加上一个不动的小林在中间，游戏中不能碰到。</p>
+
+<p>（有人问我为什么是坎娜不是康娜，其实就是单纯喜欢这个小众的译名（误）。）</p>
+
+<p><img src="/img/in-post/2017060901/pic01.jpg" alt="avatar" /></p>
+
+<hr />
+
+<h2 id="构建对象与移动">构建对象与移动</h2>
+
+<p>说干就干，首先要构建对象，先构建了三个对象，一是坎娜，二是托尔，三是炸弹。后来又加了个小林类。</p>
+
+<p>基本上都有img、x、y、hp这三个数据成员，其实可以搞个基类的，不过当时有点赶着写完于是就直接撸没有设计类。</p>
+
+<p>类图大概是下面这样的。</p>
+
+<p><img src="/img/in-post/2017060901/pic02.png" alt="avatar" /></p>
+
+<p>画图、移动、设置炸弹，另外写了几个检查状态的函数。</p>
+
+<p>键盘输入控制的话，当然是用键盘的上下左右啦，其实这个也只是设置一个监听。</p>
+
+<p>代码如下</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
+<span class="c1">//监听键盘事件</span>
+<span class="kd">var</span> <span class="nx">keysDown</span> <span class="o">=</span> <span class="p">{};</span>                                     <span class="c1">//记录当前按着的键</span>
+<span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"keydown"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">keysDown</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"keyup"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">delete</span> <span class="nx">keysDown</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">];</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">){</span>
+        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="err">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>   <span class="c1">//松开某键盘执行代码</span>
+        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="err">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="c1">//检测长按对应事件</span>
+<span class="nx">Kanna</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">move</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//使用（value in dictionary）判断</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">38</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">40</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">37</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">39</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">&lt;=</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">=</span><span class="mi">48</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">&gt;=</span><span class="nx">CBH</span><span class="o">-</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">=</span><span class="nx">CBH</span><span class="o">-</span><span class="mi">48</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">&lt;=</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">=</span><span class="mi">48</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">&gt;=</span><span class="nx">CBW</span><span class="o">-</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">=</span><span class="nx">CBW</span><span class="o">-</span><span class="mi">48</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">kanna</span><span class="p">.</span><span class="nx">sum</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="nx">kanna</span><span class="p">.</span><span class="nx">img</span><span class="o">=</span><span class="nx">kimg</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">else</span> <span class="nx">kanna</span><span class="p">.</span><span class="nx">img</span><span class="o">=</span><span class="nx">kimg</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span>
+<span class="p">};</span>
+
+</code></pre>
+</div>
+
+<p>其他的话就是托尔跟踪的函数了，算法大概就是每次算出xy差值，然后得到连线斜率，然后用速度算一下移动的xy值。</p>
+
+<p>游戏实现方面还是比较简单的。</p>
+
+<hr />
+
+<h2 id="手机端支持g感应">手机端支持（G感应）</h2>
+
+<p>本来只做PC端就能交作业了，但我突然觉得h5不做手机端这游戏发在票圈里肯定没人玩了，于是我就开始研究手机端了。</p>
+
+<p>第一个问题首先是如何检测网页在手机端打开，为了图方便就直接用了别人的库<a href="https://github.com/matthewhudson/device.js/blob/master/lib/device.js">Device.js</a>,然后就直接用device.mobile()判断就OK了。</p>
+
+<p>然后控制的话当然是触摸画板放炸弹了，很简单就直接加一个object.onclick()就可以了，不过这里mark一下，canvas是不能直接onclick的，我们要造一个div然后get这个div再div.onclick()。</p>
+
+<p>至于移动的话，我先是想用触摸canvas外的空白处，但一是不好实现，二是用户不好操作，三是竖屏状态下自适应后没有空白了，后来我就想到G感应。</p>
+
+<p><img src="/img/in-post/2017060901/pic03.jpg" alt="avatar" /></p>
+
+<p>首先我去找了些文章，比较有参考价值的是<a href="http://blog.csdn.net/hursing/article/details/9046837">iOS Safari/WebKit对DeviceOrientationEvent的实现</a>。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自<a href="http://www.haorooms.com/post/html5_DeviceMotionEvent">html5重力感应事件之DeviceMotionEvent</a>。</p>
+
+<p>陀螺仪的监听器是”deviceorientation”，监听手机的转动，即手机一转动就触发监听。返回5个值：webkitCompassHeading，webkitCompassAccuracy，alpha，beta，gamma。</p>
+
+<p>webkitCompassHeading：与正北方向的角度差值。正北为0度，正东为90度，正南为180度，正西为270度。</p>
+
+<p>webkitCompassAccuracy：指北针的精确度，表示偏差为正负多少度。一般是10。</p>
+
+<p>alpha: 在围绕 z 轴旋转时，手机屏幕面转过的度数，设备顶部指向地球正北方向时为0，取值[0,360]。</p>
+
+<p>beta: 在围绕 x 轴旋转时，手机屏幕面转过的度数，设备水平放置时为0，取值[-180,180]。</p>
+
+<p>gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水平放置时为0，取值[-90,90]。</p>
+
+<p>具体的直观感受请就看下图：</p>
+
+<p><img src="/img/in-post/2017060901/pic04.png" alt="avatar" />
+<img src="/img/in-post/2017060901/pic05.png" alt="avatar" />
+<img src="/img/in-post/2017060901/pic06.png" alt="avatar" /></p>
+
+<p>我们可以发现这里的原理很简单，大概是：通过正北（地磁场感应）判断alpha，通过重力加速度方向（重力感应）确定beta和gamma。</p>
+
+<p>我们这里只用到beta和gamma，也就是说所谓的G感应其实是陀螺仪的两个返回值。</p>
+
+<p>所以每当监听到转动时就往keysdown字典里添加对应方向的keycode，检测到轴线水平时删除该轴线上两个方向的keycode。当然，我设置了允许5度以内的偏差，就是返回正负5度都认为是水平。</p>
+
+<p>此外要注意横屏时的方向和竖屏的不一样，利用window.orientation可以返回-90、0、90、180分别代表屏幕四个方向。</p>
+
+<p>手机端测试时比较麻烦的是要先推到网站上再用手机打开，开始以为chrome的设备模拟不支持GSencor，后来发现是有Sencor模拟的。
+<img src="/img/in-post/2017060901/pic07.png" alt="avatar" /></p>
+
+<p>另外我还发现chrome有remote devices功能，可以用USB连上手机，这次没用上，下次可以探索一下。
+<img src="/img/in-post/2017060901/pic08.png" alt="avatar" /></p>
+
+<hr />
+
+<h2 id="网页自适应">网页自适应</h2>
+
+<p>网页自适应对我来说一直挺麻烦的，可能是因为CSS和Style没学好，其实个人觉得吧，CSS写错了都不知道哪出问题，颇为心累。</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>坎娜与托尔 - Rimoe Game<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">"user-scalable=0"</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+    <span class="nt">html</span><span class="o">,</span><span class="nt">body</span><span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span><span class="m">98%</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span><span class="m">98%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span><span class="n">flex</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span><span class="nb">center</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span><span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>   
+<span class="nt">&lt;/style&gt;</span>
+</code></pre>
+</div>
+
+<p>这里mark一下meta里面的user-scalable=0，这样的话可以避免双击放大，在游戏中就很好地避免狂点屏幕放大网页的问题。</p>
+
+<p>限时设置html和body的宽高98%，避免100%时出现滚动条，然后我用js控制缩放，直接修改div.style.zoom（缩放）。</p>
+
+<p>因为canvas一开始就设置好宽高多少px，如果后面改的话其他图片大小什么的也要改，所以直接采用缩放的办法。用document.body.clientWidth和Height获取宽高，求其与画板的比值作为缩放尺度。</p>
+
+<hr />
+
+<h2 id="后记">后记</h2>
+
+<p>随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。
+不过这次的代码写的并不完美，挺混乱的。
+嗯，本人的H5学习之路还要任重道远呢。
+代码已开源在<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>，保留一切权利。</p>
+
+<p>2017.06.09 于珠海</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/05/12/post01/" data-toggle="tooltip" data-placement="top" title="为政之学与入徳之门">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="http://jekyllcn.com/">Jekyll</a></li>
+                    
+                        <li><a href="http://gp.sysu.edu.cn/">GP,SYSU</a></li>
+                    
+                        <li><a href="http://www.sysu.edu.cn/">SYSU</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        </br>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="icons-header" >
+                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+                    <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
+                    <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                    <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+                </br>
+                <p style="font-size:13px;">
+                All right reserved. &copy; 凝萌小记-2017</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                <iframe
+                    style="margin-left: 2px; margin-bottom:-5px;"
+                    frameborder="0" scrolling="0" width="100px" height="20px"
+                    src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/sweet-scroll.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+
+
+
+
+</body>
+
+</html>

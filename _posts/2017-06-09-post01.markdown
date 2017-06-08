@@ -1,0 +1,190 @@
+---
+layout:     post
+title:      "胡乱写了个小游戏"
+subtitle:   "造《坎娜与托尔》过程中学到的"
+date:       2017-06-09
+author:     "柠萌"
+header-img: "img/post-bg/post2017060901.jpg"
+tags:
+    - H5
+    - JS
+    - 游戏
+    - 技术
+---
+
+
+
+## 缘起
+
+H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港回到学校，就开始着手撸起来。
+
+本来想做一个像机械迷城一样的H5游戏，但想想工程量太大赶不及交作业，而且最近事还不少，于是就想着做一个简单一点的。
+
+---
+
+## 游戏设计
+
+因为没有想法，所以上网找了一下别人blog的文章，于是发现了一篇2011年的文章[《How to make a simple HTML5 Canvas game》](http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/)，这也是有够古老的，但足够简单。
+
+但是只是上下左右吃小妖怪这样的设定既不有趣也不可爱，而且也不可能直接copy别人的代码交作业。
+
+所以结合以前玩过的一个叫泡泡堂的游戏来了灵感，设计了一个小游戏。
+
+·玩家通过控制一个角色单位的【移动】和【放炸弹】来躲避并消灭怪物。
+
+·怪物定时产生，跟随玩家角色移动，碰到玩家角色即消失，玩家扣血。
+
+·胜利条件是杀敌数一定或一定时间内不死。
+
+·当然怪物、炸弹可以有不同类型和效果。
+
+然后为了变得萌萌哒就把游戏做成《小林家的龙女仆》的同人啦。
+
+设定是托尔追坎娜，后来又加上一个不动的小林在中间，游戏中不能碰到。
+
+（有人问我为什么是坎娜不是康娜，其实就是单纯喜欢这个小众的译名（误）。）
+
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic01.jpg)
+
+---
+
+## 构建对象与移动
+
+说干就干，首先要构建对象，先构建了三个对象，一是坎娜，二是托尔，三是炸弹。后来又加了个小林类。
+
+基本上都有img、x、y、hp这三个数据成员，其实可以搞个基类的，不过当时有点赶着写完于是就直接撸没有设计类。
+
+类图大概是下面这样的。
+
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic02.png)
+
+画图、移动、设置炸弹，另外写了几个检查状态的函数。
+
+键盘输入控制的话，当然是用键盘的上下左右啦，其实这个也只是设置一个监听。
+
+代码如下
+
+```javascript
+
+//监听键盘事件
+var keysDown = {};                                     //记录当前按着的键
+addEventListener("keydown", function (e) {
+    keysDown[e.keyCode] = true;
+}, false);
+
+addEventListener("keyup", function (e) {
+    delete keysDown[e.keyCode];
+    switch (e.keyCode){
+        case /*add key value*/ : /*add code*/;break;   //松开某键盘执行代码
+        case /*add key value*/ : /*add code*/;break;
+    }
+}, false);
+
+//检测长按对应事件
+Kanna.prototype.move = function (ctx) {
+    //使用（value in dictionary）判断
+    this.y += (38 in keysDown)*(-this.spd)+(40 in keysDown)*this.spd;
+    this.x += (37 in keysDown)*(-this.spd)+(39 in keysDown)*this.spd;
+    if(this.y<=48)this.y=48;
+    if(this.y>=CBH-48)this.y=CBH-48;
+    if(this.x<=48)this.x=48;
+    if(this.x>=CBW-48)this.x=CBW-48;
+    if(kanna.sum>0)kanna.img=kimg[1];
+    else kanna.img=kimg[0];
+    this.draw(ctx);
+};
+
+```
+
+其他的话就是托尔跟踪的函数了，算法大概就是每次算出xy差值，然后得到连线斜率，然后用速度算一下移动的xy值。
+
+游戏实现方面还是比较简单的。
+
+---
+
+## 手机端支持（G感应）
+
+本来只做PC端就能交作业了，但我突然觉得h5不做手机端这游戏发在票圈里肯定没人玩了，于是我就开始研究手机端了。
+
+第一个问题首先是如何检测网页在手机端打开，为了图方便就直接用了别人的库[Device.js](https://github.com/matthewhudson/device.js/blob/master/lib/device.js),然后就直接用device.mobile()判断就OK了。
+
+然后控制的话当然是触摸画板放炸弹了，很简单就直接加一个object.onclick()就可以了，不过这里mark一下，canvas是不能直接onclick的，我们要造一个div然后get这个div再div.onclick()。
+
+至于移动的话，我先是想用触摸canvas外的空白处，但一是不好实现，二是用户不好操作，三是竖屏状态下自适应后没有空白了，后来我就想到G感应。
+
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic03.jpg)
+
+首先我去找了些文章，比较有参考价值的是[iOS Safari/WebKit对DeviceOrientationEvent的实现](http://blog.csdn.net/hursing/article/details/9046837)。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自[html5重力感应事件之DeviceMotionEvent](http://www.haorooms.com/post/html5_DeviceMotionEvent)。
+
+陀螺仪的监听器是"deviceorientation"，监听手机的转动，即手机一转动就触发监听。返回5个值：webkitCompassHeading，webkitCompassAccuracy，alpha，beta，gamma。
+
+webkitCompassHeading：与正北方向的角度差值。正北为0度，正东为90度，正南为180度，正西为270度。
+
+webkitCompassAccuracy：指北针的精确度，表示偏差为正负多少度。一般是10。
+
+alpha: 在围绕 z 轴旋转时，手机屏幕面转过的度数，设备顶部指向地球正北方向时为0，取值[0,360]。
+
+beta: 在围绕 x 轴旋转时，手机屏幕面转过的度数，设备水平放置时为0，取值[-180,180]。
+
+gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水平放置时为0，取值[-90,90]。
+
+具体的直观感受请就看下图：
+
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic04.png)
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic05.png)
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic06.png)
+
+
+我们可以发现这里的原理很简单，大概是：通过正北（地磁场感应）判断alpha，通过重力加速度方向（重力感应）确定beta和gamma。
+
+我们这里只用到beta和gamma，也就是说所谓的G感应其实是陀螺仪的两个返回值。
+
+所以每当监听到转动时就往keysdown字典里添加对应方向的keycode，检测到轴线水平时删除该轴线上两个方向的keycode。当然，我设置了允许5度以内的偏差，就是返回正负5度都认为是水平。
+
+此外要注意横屏时的方向和竖屏的不一样，利用window.orientation可以返回-90、0、90、180分别代表屏幕四个方向。
+
+手机端测试时比较麻烦的是要先推到网站上再用手机打开，开始以为chrome的设备模拟不支持GSencor，后来发现是有Sencor模拟的。
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic07.png)
+
+另外我还发现chrome有remote devices功能，可以用USB连上手机，这次没用上，下次可以探索一下。
+![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic08.png)
+
+---
+
+## 网页自适应
+
+网页自适应对我来说一直挺麻烦的，可能是因为CSS和Style没学好，其实个人觉得吧，CSS写错了都不知道哪出问题，颇为心累。
+
+```html
+<head>
+    <title>坎娜与托尔 - Rimoe Game</title>
+    <meta charset="utf-8">
+    <meta content="user-scalable=0" name="viewport" />
+</head>
+<style>
+    html,body{
+        width:98%;
+        height:98%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }   
+</style>
+```
+
+这里mark一下meta里面的user-scalable=0，这样的话可以避免双击放大，在游戏中就很好地避免狂点屏幕放大网页的问题。
+
+限时设置html和body的宽高98%，避免100%时出现滚动条，然后我用js控制缩放，直接修改div.style.zoom（缩放）。
+
+因为canvas一开始就设置好宽高多少px，如果后面改的话其他图片大小什么的也要改，所以直接采用缩放的办法。用document.body.clientWidth和Height获取宽高，求其与画板的比值作为缩放尺度。
+
+---
+
+## 后记
+
+随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。
+不过这次的代码写的并不完美，挺混乱的。
+嗯，本人的H5学习之路还要任重道远呢。
+代码已开源在[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
+
+2017.06.09 于珠海
