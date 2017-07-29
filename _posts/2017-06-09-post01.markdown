@@ -183,8 +183,11 @@ gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水�
 ## 后记
 
 随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。
+
 不过这次的代码写的并不完美，挺混乱的。
+
 嗯，本人的H5学习之路还要任重道远呢。
-代码已开源在[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
+
+代码已发到[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
 
 2017.06.09 于珠海

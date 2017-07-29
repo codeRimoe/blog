@@ -66,7 +66,7 @@ QT简介请看：[关于QT、QT creator和编译器，新手入门必知的一�
 
 对于MacOS来说，下载一个QT Creater，这是一个大概是IDE的东西。感觉Mac版的话要自己配置Qt版本，之前我搞了好久都不行。建议安装编译器的时候用brew安装，
 
-```
+```shell
 brew update
 brew install qt
 ```
@@ -98,13 +98,13 @@ Headers和Source是头文件和源文件，一般就是cpp实现的Source，Form
 
 操纵窗口是通过工程创建的一个类MainWindow实现的。该类相当于是一个窗口，包含一个指针成员ui，调用窗口的预先绘制好控件对象时，使用ui->ObjName作为对象名使用，尤其菜单栏，状态栏等就更应该如此。
 
-```
+```cpp
 ui->mainToolBar->setFixedHeight(10);//设置工具栏高度为10
 ```
 
 当然，还可以自己创建控件对象，为了方便调用自己创建的对象，一般在MainWindow类中会创建一个指针成员，用于记录该对象。
 
-```
+```cpp
 timer = new QTimer(this);   //创建一个QTimer，之后可以使用timer来调用该对象
 /* ----------------- */
 delete timer;               //一般在析构函数中会调用delete删除对象
@@ -123,7 +123,7 @@ delete timer;               //一般在析构函数中会调用delete删除对�
 
 ![avatar]({{ site.baseurl }}/img/in-post/2017072701/pic10.png)
 
-```
+```cpp
 img=new QImage(":/jpg/resource/green.png");   //从资源库调取文件green.png
 pLabel->setPixmap(QPixmap::fromImage(*img));  //在QLabel中显示图片
 ```
@@ -136,7 +136,7 @@ pLabel->setPixmap(QPixmap::fromImage(*img));  //在QLabel中显示图片
 
 可以参考文章[Qt入门之信号与槽机制](http://www.cnblogs.com/MuyouSome/p/3515941.html)。
 
-```
+```cpp
 class MainWindow : public QMainWindow {
 
     Q_OBJECT
@@ -161,7 +161,7 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
 
 release编译后，将.exe文件提取出来，用Qt命令行使用windeployqt来拷贝依赖包即可发布。
 
-```
+```shell
 windeployqt Programme.exe
 ```
 
@@ -177,6 +177,6 @@ windeployqt Programme.exe
 
 做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。
 
-代码已开源在[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
+代码已发到[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
 
 2017.07.27 于广州

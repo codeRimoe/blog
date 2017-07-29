@@ -5,9 +5,317 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 27 Jul 2017 22:45:31 +0800</pubDate>
-    <lastBuildDate>Thu, 27 Jul 2017 22:45:31 +0800</lastBuildDate>
+    <pubDate>Sat, 29 Jul 2017 17:04:50 +0800</pubDate>
+    <lastBuildDate>Sat, 29 Jul 2017 17:04:50 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>API调用研究</title>
+        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
+
+&lt;p&gt;有一段时间想从微博中获取数据，于是就向试一下用API获取数据。基于这个出发点，我学会了使用微博API，虽然并没有通过weiboAPI获得什么实际用到的数据。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;一管中窥豹&quot;&gt;一、管中窥豹&lt;/h2&gt;
+
+&lt;p&gt;在使用API之前，我们有必要了解一下到底什么是API。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;API英文全称Application Programming Interface，即应用程序接口。接口（Interface ）指两个独立部分用于传递信息的共同边界（a shared boundary across which two separate components of a computer system exchange information，from Wikipedia）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;所谓接口，就像USB插口一样，插上去就能传递信息。API就是提供给应用程序使用的接口，应用程序通过这个接口就可以简单地获取信息，而不需要知道底层代码或工作机制等细节，就像我们使用移动硬盘时只需要知道怎么将USB插口接到电脑上而不需要知道计算机是怎样实现从硬盘拷贝数据的。&lt;/p&gt;
+
+&lt;p&gt;这样的好处就是，我们获取数据时，早已有了预先定义好的通道，数据提供方已经将访问数据的方法打包好，我们直接用就可以了，不用担心到底是怎么访问数据的——这些琐事就交给新浪吧。当然，API也不只是用于获取数据，还能用于发送数据，即接口的传输可以是双向的。比如我们通过调用新浪微博的API不仅可以获取最新的微博消息，还能通过接口发布一则微博或评论。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;二牛刀小试&quot;&gt;二、牛刀小试&lt;/h2&gt;
+
+&lt;p&gt;既然API是现成的数据获取渠道，那么调用方式也应该被精心设计，所以接口的调用应该是相对人性化的，也就是说对于要获取数据的一般用户，并不需要太深奥的知识都能使用，那么怎么调用API呢？&lt;/p&gt;
+
+&lt;p&gt;以下以新浪微博API为例初探如何调用API。&lt;/p&gt;
+
+&lt;p&gt;首先我们可以很容易找到&lt;a href=&quot;http://open.weibo.com/wiki/API&quot;&gt;新浪微博的API&lt;/a&gt;，里面有各种各样的接口（如图-1）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic01.jpg&quot; alt=&quot;图 - 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们先从“获取最新的公共微博”开始，点入左边的链接&lt;a href=&quot;http://open.weibo.com/wiki/2/statuses/public_timeline&quot;&gt;statuses/public_timeline&lt;/a&gt;，可以看到里面有许多项内容——URL、支持格式、请求方式、是否需要登录等等（如图-2）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic02.jpg&quot; alt=&quot;图 - 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;从这里我们可以知道这个接口调用要注意的东西，但现在我们似乎还看不懂，没关系我们，先把他放在一边，回到最初的问题上：如何调用API。&lt;/p&gt;
+
+&lt;p&gt;要知道如何调用，首先我们我知道在哪调用，这里采用一种简洁的语言——Python来调用我们API，如果不会Python也没关系，事实上你只要学会运行一个python程序就可以调用API了。&lt;/p&gt;
+
+&lt;h4 id=&quot;1-调用环境的搭建&quot;&gt;1. 调用环境的搭建&lt;/h4&gt;
+
+&lt;p&gt;搭建调用环境听起来很高端，其实说白了就是装软件和设置的过程。&lt;/p&gt;
+
+&lt;h6 id=&quot;-python的运行&quot;&gt;* Python的运行&lt;/h6&gt;
+
+&lt;h6 id=&quot;-sdk的获取&quot;&gt;* SDK的获取&lt;/h6&gt;
+
+&lt;p&gt;SDK即软件开发工具包（Software Development Kit），为了方便调用API，sina提供了各种语言下调用API的SDK，具体参见网站&lt;a href=&quot;http://open.weibo.com/wiki/SDK&quot;&gt;Weibo SDK&lt;/a&gt;。其中python的SDK是由大神廖雪峰&lt;a href=&quot;https://github.com/michaelliao&quot;&gt;github&lt;/a&gt;写的，他的git上也有一些python教程。关于SDK，可以戳：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;下载页&lt;a href=&quot;https://github.com/michaelliao/sinaweibopy&quot;&gt;新浪微博Python SDK&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;介绍页&lt;a href=&quot;http://github.liaoxuefeng.com/sinaweibopy/&quot;&gt;sinaweibopy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h6 id=&quot;-创建应用&quot;&gt;* 创建应用&lt;/h6&gt;
+
+&lt;p&gt;我们要调用数据，数据提供者必然不能随便开放数据，在新浪微博API中，要获取数据，就需要app-key和app-secret。这两个东西就像是账号密码，用来证明你是开发者，通过你开发的这个应用来使用API。&lt;/p&gt;
+
+&lt;p&gt;要获得app-key和app-secret，我们首先要有一个app-，我们在&lt;a href=&quot;http://open.weibo.com/&quot;&gt;新浪开发平台&lt;/a&gt;上创建一个应用，点击我的应用，然后认证信息后，点击微连接-其他，创建一个网页应用，不需要审核。&lt;/p&gt;
+
+&lt;p&gt;然后在【应用信息-基本信息】里面的app-key和app-secret（如图-3）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic03.png&quot; alt=&quot;图 - 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在【应用信息-高级信息】里面【OAuth2.0授权设置】（如图-4）里输入回调地址，这个地址是授权后跳转的页面，你可以自己做一个网页作为回调页，也可以随便找一个网页作为回调页，图中我用的是我自己做的一个简易页面。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic04.png&quot; alt=&quot;图 - 4&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2-尝试调用&quot;&gt;2. 尝试调用&lt;/h4&gt;
+
+&lt;p&gt;在任意路径新建一个文件夹作为代码存储区，也作为我们的工作环境。&lt;/p&gt;
+
+&lt;p&gt;将SDK里的文件复制进该文件夹中。&lt;/p&gt;
+
+&lt;p&gt;新建一个文本文档，命名随意但后缀要为.py，我们将通过这个文件来调用API，注意创建的文档要是纯文本文档。&lt;/p&gt;
+
+&lt;p&gt;然后在文档中粘贴以下代码（&lt;a href=&quot;https://github.com/codeRimoe/api/blob/master/weiboAPI/apicode/demo1_pub_timeline.py&quot;&gt;demo1_pub_timeline.py&lt;/a&gt;），我们试着用下面这段代码来扒一些简单的数据吧。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# _*_ coding: utf-8 _*_&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;weibo&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;webbrowser&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;reload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                                                  &lt;span class=&quot;c&quot;&gt;#使用UTF-8输出&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setdefaultencoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;APP_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'xxx'&lt;/span&gt;             &lt;span class=&quot;c&quot;&gt;#将引号中的xxx替换为你的APP_KEY，保留引号&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;MY_APP_SECRET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'yyy'&lt;/span&gt;       &lt;span class=&quot;c&quot;&gt;#将引号中的yyy替换为你的APP_SECRET，保留引号&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;REDIRECT_URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'zzz'&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;#将引号中的zzz替换为你的回调地址，保留引号&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#请求用户授权的过程&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weibo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;APIClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;APP_KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MY_APP_SECRET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;             &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;authorize_url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_authorize_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REDIRECT_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#自动打开浏览器，授权后复制地址栏中URL里的code字段&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;webbrowser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authorize_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                               &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#将code字段后的值复制输入&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;raw_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;input the code: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#获得用户授权&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request_access_token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;REDIRECT_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#保存返回的access_token,exires_in,uid&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;access_token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access_token&lt;/span&gt;                          &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;expires_in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;expires_in&lt;/span&gt;                              &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt;                                            &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#设置accsess_token&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_access_token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access_token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expires_in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#调用API&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statuses__public_timeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'statuses'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-----------the results is : &quot;&lt;/span&gt;                         &lt;span class=&quot;c&quot;&gt;#输出信息&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                                        &lt;span class=&quot;c&quot;&gt;#确定获取的信息条数&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'昵称：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'screen_name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' 来自：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'location'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'时间：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'created_at'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'来源：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'source'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'微博：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'text'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'转发：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'reposts_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' 评论：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'comments_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' 喜欢：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'attitudes_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-----------all--------------&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在运行这段代码之前，我们要先将app-key和app-secret放进代码中，这样新浪微博才知道谁要调用这些数据。当然我们也要把回调地址写上，注意要和上面创建APP时你填的地址一样。&lt;/p&gt;
+
+&lt;p&gt;然后我们在终端中运行这段代码。如无意外，代码运行后，终端会提示输入code，同时浏览器会打开，然后会出现授权提示页面（如图-5）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic05.png&quot; alt=&quot;图 - 5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这是选择授权就会跳转到授权提示页面，我们需要将跳转后的URL地址中的“code=”后面的部分复制，输入到终端中（如图-6）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic06.png&quot; alt=&quot;图 - 6&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后我们就能看到终端上显示出了我们扒下来的数据(可以写文件保存：&lt;a href=&quot;https://github.com/codeRimoe/api/tree/master/weiboAPI/result_example&quot;&gt;result.txt&lt;/a&gt;)啦（如图-7）！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic07.jpg&quot; alt=&quot;图 - 7&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;三更上层楼&quot;&gt;三、更上层楼&lt;/h2&gt;
+
+&lt;p&gt;API实质上是访问网站数据库的窗口，我们递交一个申请，网站返回数据，API和爬虫不同，爬虫是模拟人访问网页的行为获取网页，然后在获取的网页上提取数据，并通过网页的链接跳转继续获取数据，而API则是向服务器发送请求，服务器返回json格式的文件。所以API其实是官方提供的数据获取源。通常会对数据流量有一定的限制。&lt;/p&gt;
+
+&lt;p&gt;因此API调用的本质是：发送请求-&amp;gt;返回数据-&amp;gt;解析数据&lt;/p&gt;
+
+&lt;h4 id=&quot;1-http请求&quot;&gt;1. HTTP请求&lt;/h4&gt;
+
+&lt;p&gt;首先我们要发送的请求是通过HTTP进行请求的，HTTP的请求方式有几种：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。&lt;/li&gt;
+  &lt;li&gt;HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;方法&lt;/td&gt;
+      &lt;td&gt;描述&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GET&lt;/td&gt;
+      &lt;td&gt;请求指定的页面信息，并返回实体主体。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;HEAD&lt;/td&gt;
+      &lt;td&gt;类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;POST&lt;/td&gt;
+      &lt;td&gt;向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;PUT&lt;/td&gt;
+      &lt;td&gt;从客户端向服务器传送的数据取代指定的文档的内容。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;DELETE&lt;/td&gt;
+      &lt;td&gt;请求服务器删除指定的页面。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CONNECT&lt;/td&gt;
+      &lt;td&gt;HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;OPTIONS&lt;/td&gt;
+      &lt;td&gt;允许客户端查看服务器的性能。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TRACE&lt;/td&gt;
+      &lt;td&gt;回显服务器收到的请求，主要用于测试或诊断。&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;一般用到的就只有GET和POST，区别大概是GET用于获取数据，POST要在header中提交更多的参数用于提交数据。我们浏览网页，实际上是提交一个表单，向服务器请求数据。关于http协议的教程，具体可以看&lt;a href=&quot;http://www.runoob.com/http/http-tutorial.html&quot;&gt;HTTP教程&lt;/a&gt;，具体请求方式python中一般是使用urllib和urllib2两个模块的urlopen()函数。&lt;/p&gt;
+
+&lt;p&gt;我们在微博API的使用手册中可以看到，每个API都有写明HTTP请求方式，使用SDK可以不需要深入了解HTTP请求方式即可调用API。&lt;/p&gt;
+
+&lt;h4 id=&quot;2-oauth授权简介&quot;&gt;2. OAuth授权简介&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;OAuth是一个关于授权(authorization)的开放网络标准,在全世界得到广泛应用,目前的版本是2.0版。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;新浪微博API采用OAuth2.0授权，具体原理可以参考&lt;a href=&quot;http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html&quot;&gt;理解OAuth 2.0&lt;/a&gt;，这里我们只需要知道通过授权码认证后，我们的程序可以获得用户账号的某些权限，比如查看微博、发微博等。这个授权码，其实就是上文提到“code=”后面的那串字符。&lt;/p&gt;
+
+&lt;h4 id=&quot;3-使用sdk&quot;&gt;3. 使用SDK&lt;/h4&gt;
+
+&lt;p&gt;使用SDK很方便的一点就是可以不用管这些，直接就使用SDK（weiboAPI模块）里的函数。&lt;/p&gt;
+
+&lt;p&gt;上文demo.py中调用了几个函数:&lt;/p&gt;
+
+&lt;p&gt;其中client.get_authorize_url()函数可以返回授权页；&lt;/p&gt;
+
+&lt;p&gt;client.request_access_token()用于获得包括access_token的返回数据；&lt;/p&gt;
+
+&lt;p&gt;使用client.set_access_token()函数设置access_token后就可以调用API了。&lt;/p&gt;
+
+&lt;p&gt;API接口有很多，demo中调用的是公众时间流，可以获取公共微博数据。这些接口的调用方式在微博开放平台-&lt;a href=&quot;http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI&quot;&gt;微博API&lt;/a&gt;中可以找到。&lt;/p&gt;
+
+&lt;p&gt;比如当前用户关注的人的最新微博的API&lt;a href=&quot;http://open.weibo.com/wiki/2/statuses/home_timeline&quot;&gt;statuses/home_timeline&lt;/a&gt;其URL是”https://api.weibo.com/2/statuses/home_timeline.json”，调用就可以直接使用如下方法，其实就是把“/”换成“.”，然后后面加上请求方式（.get/.post）。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statuses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;home_timeline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果要调用某些API需要提交请求参数的，那就在括号里面加上参数名=具体参数，如&lt;a href=&quot;http://open.weibo.com/wiki/2/comments/create&quot;&gt;comments/create&lt;/a&gt;（这个API是POST请求方式,请求参数如图-8），那就应该写成如下形式。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic08.png&quot; alt=&quot;图 - 8&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;你好帅啊！&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4129569084024445&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;调用后结果如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic09.png&quot; alt=&quot;图 - 9&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;用API发条评论也是很有趣的嘛～&lt;/p&gt;
+
+&lt;h4 id=&quot;4-访问频次&quot;&gt;4. 访问频次&lt;/h4&gt;
+
+&lt;p&gt;API接口不是无限次数访问的，官方文档-&lt;a href=&quot;http://open.weibo.com/wiki/Rate-limiting&quot;&gt;接口访问频次权限&lt;/a&gt;这样写道：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;微博开放接口限制每段时间只能请求一定的次数。限制的单位时间有每小时、每天；限制的维度有单授权用户和单IP；部分特殊接口有单独的请求次数限制。例如：&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;一个应用内单授权用户每小时只能请求微博开放接口n次；&lt;/li&gt;
+    &lt;li&gt;一个应用内单授权用户每天累计只能请求微博开放接口m次；&lt;/li&gt;
+    &lt;li&gt;一个IP地址每小时只能请求微博开放接口x次；&lt;/li&gt;
+    &lt;li&gt;发微博接口单授权用户每小时只能请求y次；
+其中n、m、x、y的具体数值，微博开放平台将采用应用质量评估系统，实现智能评估应用质量，质量高的应用相应的这些数值就高，也就是请求限制小。因此限制值不固定，不同的应用有不同的限制，取决于应用自身的质量。&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;使用API接口&lt;a href=&quot;http://open.weibo.com/wiki/2/account/rate_limit_status&quot;&gt;account/rate_limit_status&lt;/a&gt;，可以查看当前应用的频次限制。&lt;/p&gt;
+
+&lt;h4 id=&quot;5-自动获取授权码&quot;&gt;5. 自动获取授权码&lt;/h4&gt;
+
+&lt;p&gt;这部分由于各种原因没有去研究，以后不知道什么时候才有空去研究，这里先贴一个链接：&lt;a href=&quot;http://blog.csdn.net/liujiandu101/article/details/52096654&quot;&gt;python模拟登录新浪微博自动获得调用新浪api所需的code&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;大概看了一下好像就是直接用requests请求的。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;四返躬内省&quot;&gt;四、返躬内省&lt;/h2&gt;
+
+&lt;p&gt;一开始研究API是为了通过API获取微博的数据，但后来发现，API对频次的限制比较严格，而且获取的方法比较单一，后来就转向使用爬虫。但如果要获取用户间的关系的话，使用API似乎也是可行的。&lt;/p&gt;
+
+&lt;p&gt;API的用途更多是用在应用接入方面，比如用在我们用某些软件或网页中的“分享到新浪微博”的接口，还是有其作用的。&lt;/p&gt;
+
+&lt;p&gt;另外新浪微博的API和twitter的API是很像的，《社交网站的数据挖掘与分析》第一章讲的就是twitte的API使用方法，大家有空可以看看。&lt;/p&gt;
+
+&lt;p&gt;其实这篇文章大约半年前就开始写了，最近才将之前的东西整理了一下，接下来我会写几篇关于上学期学习简单爬虫的艰苦历程，可能还会研究一下百度地图的API，不过不知道什么时候才能写出来。&lt;/p&gt;
+
+&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/api&quot;&gt;Github - api&lt;/a&gt;，保留一切权利。&lt;/p&gt;
+
+&lt;p&gt;代码参考自：&lt;a href=&quot;http://blog.csdn.net/dijason/article/details/8251322&quot;&gt;微博 获取指定用户发表的所有微博&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2017.07.27 于广州&lt;/p&gt;
+</description>
+        <pubDate>Sat, 29 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/29/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/29/post01/</guid>
+        
+        <category>Python</category>
+        
+        <category>API</category>
+        
+        <category>数据获取</category>
+        
+        <category>SDK</category>
+        
+        <category>技术</category>
+        
+        <category>微博</category>
+        
+        
+      </item>
     
       <item>
         <title>大概是最弱鸡的2D仿真</title>
@@ -63,7 +371,7 @@
 
 &lt;p&gt;对于MacOS来说，下载一个QT Creater，这是一个大概是IDE的东西。感觉Mac版的话要自己配置Qt版本，之前我搞了好久都不行。建议安装编译器的时候用brew安装，&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
 brew install qt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -95,16 +403,16 @@ brew install qt
 
 &lt;p&gt;操纵窗口是通过工程创建的一个类MainWindow实现的。该类相当于是一个窗口，包含一个指针成员ui，调用窗口的预先绘制好控件对象时，使用ui-&amp;gt;ObjName作为对象名使用，尤其菜单栏，状态栏等就更应该如此。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ui-&amp;gt;mainToolBar-&amp;gt;setFixedHeight(10);//设置工具栏高度为10
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mainToolBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setFixedHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//设置工具栏高度为10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;当然，还可以自己创建控件对象，为了方便调用自己创建的对象，一般在MainWindow类中会创建一个指针成员，用于记录该对象。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;timer = new QTimer(this);   //创建一个QTimer，之后可以使用timer来调用该对象
-/* ----------------- */
-delete timer;               //一般在析构函数中会调用delete删除对象
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QTimer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//创建一个QTimer，之后可以使用timer来调用该对象
+&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/* ----------------- */&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;               &lt;span class=&quot;c1&quot;&gt;//一般在析构函数中会调用delete删除对象
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;简而言之，QT是通过控制控件对象完成界面操作的。&lt;/p&gt;
@@ -119,9 +427,9 @@ delete timer;               //一般在析构函数中会调用delete删除对�
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic10.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;img=new QImage(&quot;:/jpg/resource/green.png&quot;);   //从资源库调取文件green.png
-pLabel-&amp;gt;setPixmap(QPixmap::fromImage(*img));  //在QLabel中显示图片
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:/jpg/resource/green.png&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//从资源库调取文件green.png
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setPixmap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QPixmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//在QLabel中显示图片
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;4-qt的信号-槽机制&quot;&gt;4. QT的信号-槽机制&lt;/h4&gt;
@@ -132,24 +440,24 @@ pLabel-&amp;gt;setPixmap(QPixmap::fromImage(*img));  //在QLabel中显示图片
 
 &lt;p&gt;可以参考文章&lt;a href=&quot;http://www.cnblogs.com/MuyouSome/p/3515941.html&quot;&gt;Qt入门之信号与槽机制&lt;/a&gt;。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class MainWindow : public QMainWindow {
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainWindow&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QMainWindow&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-    Q_OBJECT
+    &lt;span class=&quot;n&quot;&gt;Q_OBJECT&lt;/span&gt;
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    //other code...
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;explicit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QWidget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//other code...
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//槽函数必须要在类的public/private/protected slots中声明，否则无法使用
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 
-private slots:  //槽函数必须要在类的public/private/protected slots中声明，否则无法使用
-    void function();
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 
-};
-
-//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
-
-connect(pushButton1,SIGNAL(clicked(bool)),label,SLOT(close()));
-connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
+&lt;span class=&quot;c1&quot;&gt;//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pushButton1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGNAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SLOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()));&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pushButton2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGNAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SLOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()));&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -157,7 +465,7 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
 
 &lt;p&gt;release编译后，将.exe文件提取出来，用Qt命令行使用windeployqt来拷贝依赖包即可发布。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;windeployqt Programme.exe
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;windeployqt Programme.exe
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -173,7 +481,7 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
 
 &lt;p&gt;做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。&lt;/p&gt;
 
-&lt;p&gt;代码已开源在&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;，保留一切权利。&lt;/p&gt;
+&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;，保留一切权利。&lt;/p&gt;
 
 &lt;p&gt;2017.07.27 于广州&lt;/p&gt;
 </description>
@@ -365,10 +673,13 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
 
 &lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
 
-&lt;p&gt;随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。
-不过这次的代码写的并不完美，挺混乱的。
-嗯，本人的H5学习之路还要任重道远呢。
-代码已开源在&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;，保留一切权利。&lt;/p&gt;
+&lt;p&gt;随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。&lt;/p&gt;
+
+&lt;p&gt;不过这次的代码写的并不完美，挺混乱的。&lt;/p&gt;
+
+&lt;p&gt;嗯，本人的H5学习之路还要任重道远呢。&lt;/p&gt;
+
+&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;，保留一切权利。&lt;/p&gt;
 
 &lt;p&gt;2017.06.09 于珠海&lt;/p&gt;
 </description>

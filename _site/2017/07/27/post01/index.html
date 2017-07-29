@@ -233,7 +233,7 @@
 
 <p>对于MacOS来说，下载一个QT Creater，这是一个大概是IDE的东西。感觉Mac版的话要自己配置Qt版本，之前我搞了好久都不行。建议安装编译器的时候用brew安装，</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>brew update
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>brew update
 brew install qt
 </code></pre>
 </div>
@@ -265,16 +265,16 @@ brew install qt
 
 <p>操纵窗口是通过工程创建的一个类MainWindow实现的。该类相当于是一个窗口，包含一个指针成员ui，调用窗口的预先绘制好控件对象时，使用ui-&gt;ObjName作为对象名使用，尤其菜单栏，状态栏等就更应该如此。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>ui-&gt;mainToolBar-&gt;setFixedHeight(10);//设置工具栏高度为10
-</code></pre>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ui</span><span class="o">-&gt;</span><span class="n">mainToolBar</span><span class="o">-&gt;</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="c1">//设置工具栏高度为10
+</span></code></pre>
 </div>
 
 <p>当然，还可以自己创建控件对象，为了方便调用自己创建的对象，一般在MainWindow类中会创建一个指针成员，用于记录该对象。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>timer = new QTimer(this);   //创建一个QTimer，之后可以使用timer来调用该对象
-/* ----------------- */
-delete timer;               //一般在析构函数中会调用delete删除对象
-</code></pre>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QTimer</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>   <span class="c1">//创建一个QTimer，之后可以使用timer来调用该对象
+</span><span class="cm">/* ----------------- */</span>
+<span class="k">delete</span> <span class="n">timer</span><span class="p">;</span>               <span class="c1">//一般在析构函数中会调用delete删除对象
+</span></code></pre>
 </div>
 
 <p>简而言之，QT是通过控制控件对象完成界面操作的。</p>
@@ -289,9 +289,9 @@ delete timer;               //一般在析构函数中会调用delete删除对�
 
 <p><img src="/img/in-post/2017072701/pic10.png" alt="avatar" /></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>img=new QImage(":/jpg/resource/green.png");   //从资源库调取文件green.png
-pLabel-&gt;setPixmap(QPixmap::fromImage(*img));  //在QLabel中显示图片
-</code></pre>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">img</span><span class="o">=</span><span class="k">new</span> <span class="n">QImage</span><span class="p">(</span><span class="s">":/jpg/resource/green.png"</span><span class="p">);</span>   <span class="c1">//从资源库调取文件green.png
+</span><span class="n">pLabel</span><span class="o">-&gt;</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">QPixmap</span><span class="o">::</span><span class="n">fromImage</span><span class="p">(</span><span class="o">*</span><span class="n">img</span><span class="p">));</span>  <span class="c1">//在QLabel中显示图片
+</span></code></pre>
 </div>
 
 <h4 id="4-qt的信号-槽机制">4. QT的信号-槽机制</h4>
@@ -302,24 +302,24 @@ pLabel-&gt;setPixmap(QPixmap::fromImage(*img));  //在QLabel中显示图片
 
 <p>可以参考文章<a href="http://www.cnblogs.com/MuyouSome/p/3515941.html">Qt入门之信号与槽机制</a>。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class MainWindow : public QMainWindow {
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MainWindow</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QMainWindow</span> <span class="p">{</span>
 
-    Q_OBJECT
+    <span class="n">Q_OBJECT</span>
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    //other code...
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">explicit</span> <span class="n">MainWindow</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="o">~</span><span class="n">MainWindow</span><span class="p">();</span>
+    <span class="c1">//other code...
+</span>
+<span class="k">private</span> <span class="n">slots</span><span class="o">:</span>  <span class="c1">//槽函数必须要在类的public/private/protected slots中声明，否则无法使用
+</span>    <span class="kt">void</span> <span class="n">function</span><span class="p">();</span>
 
-private slots:  //槽函数必须要在类的public/private/protected slots中声明，否则无法使用
-    void function();
+<span class="p">};</span>
 
-};
-
-//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
-
-connect(pushButton1,SIGNAL(clicked(bool)),label,SLOT(close()));
-connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
+<span class="c1">//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
+</span>
+<span class="n">connect</span><span class="p">(</span><span class="n">pushButton1</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">clicked</span><span class="p">(</span><span class="kt">bool</span><span class="p">)),</span><span class="n">label</span><span class="p">,</span><span class="n">SLOT</span><span class="p">(</span><span class="n">close</span><span class="p">()));</span>
+<span class="n">connect</span><span class="p">(</span><span class="n">pushButton2</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">clicked</span><span class="p">(</span><span class="kt">bool</span><span class="p">)),</span><span class="k">this</span><span class="p">,</span><span class="n">SLOT</span><span class="p">(</span><span class="n">function</span><span class="p">()));</span>
 </code></pre>
 </div>
 
@@ -327,7 +327,7 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
 
 <p>release编译后，将.exe文件提取出来，用Qt命令行使用windeployqt来拷贝依赖包即可发布。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>windeployqt Programme.exe
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>windeployqt Programme.exe
 </code></pre>
 </div>
 
@@ -343,7 +343,7 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
 
 <p>做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。</p>
 
-<p>代码已开源在<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>，保留一切权利。</p>
+<p>代码已发到<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>，保留一切权利。</p>
 
 <p>2017.07.27 于广州</p>
 
@@ -356,6 +356,10 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
                         <a href="/2017/06/09/post01/" data-toggle="tooltip" data-placement="top" title="胡乱写了个小游戏">&larr; Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/07/29/post01/" data-toggle="tooltip" data-placement="top" title="API调用研究">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -402,9 +406,19 @@ connect(pushButton2,SIGNAL(clicked(bool)),this,SLOT(function()));
                             
         				
                             
-                				<a href="/tags/#技术" title="技术" rel="2">
+                				<a href="/tags/#技术" title="技术" rel="3">
                                     技术
                                 </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
                             
         				
                             
