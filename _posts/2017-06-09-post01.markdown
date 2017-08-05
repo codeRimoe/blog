@@ -6,8 +6,7 @@ date:       2017-06-09
 author:     "柠萌"
 header-img: "img/post-bg/post2017060901.jpg"
 tags:
-    - H5
-    - JS
+    - H5/JS
     - 游戏
     - 技术
 ---

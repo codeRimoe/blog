@@ -8,7 +8,6 @@ header-img: "img/post-bg/post2017050102.jpg"
 tags:
     - 地图投影
     - 地图学
-    - 投影条件
     - 地图变形
 ---
 

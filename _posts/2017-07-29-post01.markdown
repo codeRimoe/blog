@@ -7,9 +7,8 @@ author:     "柠萌"
 header-img: "img/post-bg/post2017072901.jpg"
 tags:
     - Python
-    - API
+    - API/SDK
     - 数据获取
-    - SDK
     - 技术
     - 微博
 ---

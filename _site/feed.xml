@@ -5,9 +5,56 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 29 Jul 2017 17:04:50 +0800</pubDate>
-    <lastBuildDate>Sat, 29 Jul 2017 17:04:50 +0800</lastBuildDate>
+    <pubDate>Sun, 06 Aug 2017 01:32:41 +0800</pubDate>
+    <lastBuildDate>Sun, 06 Aug 2017 01:32:41 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>玥</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;皓洁为月，佳文成玉。凤鸟神珠，寄吾德馨。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;二十年有二月记&quot;&gt;二十年有二月记&lt;/h2&gt;
+
+&lt;p&gt;是年丁酉，余及冠，自取表字为玥，记于此。&lt;/p&gt;
+
+&lt;p&gt;自民国新学盛起，气象变化，又及文革之乱，礼乐俱废。今举国崇尚数理，新学鼎盛，余逆潮流而行，复辟旧习，以缅古人，并规行自勉。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;大学&quot;&gt;大学&lt;/h2&gt;
+
+&lt;p&gt;前不久经过中大北门的牌坊，才发现背面铭着的是“格致诚正 修齐治平”，此中深意，引我沉思。&lt;/p&gt;
+
+&lt;p&gt;中大入学读《大学》，很多人会觉得不明所以，此大学与彼《大学》到底是同一个东西吗？&lt;/p&gt;
+
+&lt;p&gt;所谓大学，和《大学》中的明德、亲民、止于至善是关联的。所谓大学，和《大学》中的格物、致知、诚意、正心、修身、齐家、治国、平天下是一致的。&lt;/p&gt;
+
+&lt;p&gt;君子之志，不在名利。大丈夫理当以治国平天下为己任，而真正的大学，则是提供一条实现理想的道路。潜心学术研究，求学问道于先生学人，就是格物致知。在大学的生活、交往、锻炼，我们的通识课、我们听的讲座、我们谈论的一切，都是诚其意、正其心、修其身的过程。创业、工作则是齐家，齐家乃能安邦平天下。&lt;/p&gt;
+
+&lt;p&gt;朱子借大学所讲的理，至今依旧受用。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;回忆往事兼论教育&quot;&gt;回忆往事兼论教育&lt;/h2&gt;
+
+&lt;p&gt;再前不久经过磨碟沙，见到很久前的酒楼仍在，如今已落败了许多，令我想起一段往事。&lt;/p&gt;
+
+&lt;p&gt;本欲在此记下，兼论今日对教育之思考，然而夜已深，昏昏欲睡，边就此搁笔，待他日记起再叙。&lt;/p&gt;
+
+&lt;p&gt;2017.08.05 凌晨 于佛山&lt;/p&gt;
+</description>
+        <pubDate>Sun, 06 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/06/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/06/post01/</guid>
+        
+        <category>生活</category>
+        
+        <category>文艺</category>
+        
+        
+      </item>
     
       <item>
         <title>API调用研究</title>
@@ -304,11 +351,9 @@
         
         <category>Python</category>
         
-        <category>API</category>
+        <category>API/SDK</category>
         
         <category>数据获取</category>
-        
-        <category>SDK</category>
         
         <category>技术</category>
         
@@ -499,8 +544,6 @@ brew install qt
         
         <category>技术</category>
         
-        <category>作业</category>
-        
         
       </item>
     
@@ -687,9 +730,7 @@ brew install qt
         <link>http://localhost:4000/2017/06/09/post01/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/06/09/post01/</guid>
         
-        <category>H5</category>
-        
-        <category>JS</category>
+        <category>H5/JS</category>
         
         <category>游戏</category>
         
@@ -817,9 +858,7 @@ brew install qt
         
         <category>议论</category>
         
-        <category>文史哲</category>
-        
-        <category>中国古代</category>
+        <category>文艺</category>
         
         
       </item>
@@ -981,8 +1020,6 @@ brew install qt
         
         <category>地图学</category>
         
-        <category>投影条件</category>
-        
         <category>地图变形</category>
         
         
@@ -1027,6 +1064,8 @@ brew install qt
         <guid isPermaLink="true">http://localhost:4000/2017/05/01/post01/</guid>
         
         <category>生活</category>
+        
+        <category>文艺</category>
         
         
       </item>
