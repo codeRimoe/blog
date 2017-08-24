@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>大概是最弱鸡的2D仿真 - 凝萌小记 - Rimoe's</title>
+    <title>对学习及未来的一点思考 - 凝萌小记 - Rimoe's</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/07/27/post01/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/19/post01/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.css">
@@ -130,12 +130,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg/post2017072701.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2017081901.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg/post2017072701.jpg')
+        background-image: url('/img/post-bg/post2017081901.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -145,23 +145,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#C/C++" title="C/C++">C/C++</a>
+                        <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
-                        <a class="tag" href="/tags/#QT" title="QT">QT</a>
-                        
-                        <a class="tag" href="/tags/#可视化" title="可视化">可视化</a>
-                        
-                        <a class="tag" href="/tags/#仿真" title="仿真">仿真</a>
-                        
-                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        <a class="tag" href="/tags/#文艺" title="文艺">文艺</a>
                         
                     </div>
-                    <h1>大概是最弱鸡的2D仿真</h1>
+                    <h1>对学习及未来的一点思考</h1>
                     
                     
-                    <h2 class="subheading">写作业中学到的可视化</h2>
+                    <h2 class="subheading">切莫浮沙筑高台，不为繁华易素心</h2>
                     
-                    <span class="meta">Posted by 柠萌 on July 27, 2017</span>
+                    <span class="meta">Posted by 柠萌 on August 19, 2017</span>
                 </div>
             </div>
         </div>
@@ -179,171 +173,71 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h2 id="缘起">缘起</h2>
+				<blockquote>
+  <p>切莫浮沙筑高台，不为繁华易素心。</p>
+</blockquote>
 
-<p>大二下学期的基础课特别多，大作业也特别多，就在几周前，我在大作业与考试复习的夹缝里顽强地生存。</p>
+<h2 id="弁言">弁言</h2>
 
-<p>大概是一个模拟草原上狼吃羊的过程，要求C++语言，使用OOP思想，使用图像可视化。</p>
+<p>近日作息挺规律的，在学校里也算是有事可做。暑假一不小心就被弄丢了，似乎做了些什么，又似乎什么也没做。</p>
 
-<hr />
+<p>有位老师上课说，大学生活也就是 —— 大一搞社团，大二搞妹子，大三才想起要学习，等到大四就准备去实习。</p>
 
-<h2 id="实验过程">实验过程</h2>
+<p>我一直以为在学习上我是没有停歇过的，上课认真听 —— 然而也还是将许多节课睡过去了，作业认真写 —— 然而还是有许多作业是糊弄过去的。要说学到最多东西的，大概就是看知乎吧。这天下决心学这些，再过几天就把心思放在别的地方。似乎什么都懂一点，但最后却是什么都没得到。</p>
 
-<p>具体的实验报告可以在<a href="https://github.com/codeRimoe/Wolf_and_Sheep">GitHub - Wolf and Sheep</a>上看，这里就不多叙述惹。</p>
+<p>我以前可有好好真正地「学习」过？</p>
 
-<p><img src="/img/in-post/2017072701/pic01.png" alt="avatar" /></p>
+<p>有的。小学时候为的一道数学题可以沉思好久，初中时候为了学英文每天努力地记单词，高中时候忘我地写作、刻章，为了整理好一页笔记放弃一个晚修，近来研究爬虫和网页时候遇到问题来回踱步。直到今天认真思考怎么画画才回想起那些时候的感觉。所谓学习，原来是专心思考一件事，可以不被一切的一切所吸引。</p>
 
-<hr />
+<p>一直以来最惹我羡慕两种人，一种是认真的人，一种是固执的人。</p>
 
-<h2 id="狼和羊的人工智障">狼和羊的人工智障</h2>
+<p>现在看来，和我交心的几个朋友，要不就是认真的人，要不就是固执的人，要不就是既认真又固执的人。</p>
 
-<p>比原来的要求增加了一些东西，优化的移动策略：</p>
-
-<ul>
-  <li>狼会往狼多的方向移动</li>
-  <li>羊会往远离追逐他的狼的方向逃跑，往狼少的地方移动</li>
-  <li>繁殖时会为出生的宝宝选择最佳出生位置</li>
-</ul>
-
-<p>实现方法非常简单，其实就是计算权重，也就是提供了一个决策方案的实现思路，越优先的考虑节点的权重乘以越高的位置。原理相当于设计一个函数计算优先度，我们考虑问题往往会一层一层的考虑比较（类似于决策树）。</p>
-
-<p>如下图，羊首先考虑有没有狼在身边，一步就能吃掉自己，其次考虑移动后附近狼的数目多少，最后考虑移动后的草的数量。</p>
-
-<p><img src="/img/in-post/2017072701/pic02.png" alt="avatar" /></p>
-
-<p>因为活命永远是最重要的，所以首先不要逃离最接近的狼，然后再长远考虑移动后的情况。最后权重计算公式是W=A<em>w1+B</em>w2+C*w3，这里的为w1、w2、w3参数是可以变化的，具体要视情况而定，这个线性模拟策略参数设置可以考虑通过神经网络模型等得出。当然这里保证A、B、C小于10，将参数w1、w2、w3分别设为100、10、1，就可以得到一种简单的模拟方式：就是先比较A，再比较B，再比较C，只要策略一的A比策略二的大，就不考虑BC的值。</p>
-
-<p>这部分也不是本文重点，就此略过。</p>
+<p>近来在知乎上看到一句话，我很喜欢，概括起来就是，「认真」、「固执」。</p>
 
 <hr />
 
-<h2 id="可视化qt">可视化（QT）</h2>
+<h2 id="切莫浮沙筑高台">切莫浮沙筑高台</h2>
 
-<p>最后我选择QT进行可视化，其中一个原因是QT是开源的，最重要的原因是跨平台，对于使用MacOS的我来说，写作业给老师比较烦就是老师用的是Windows，好多库都是不一样的。QT可以跨三个平台，大概有点不好的就是UI文件会有点错位，不过关系不大。</p>
+<p>这句话出处未考，但似乎很多学工科的都很喜欢这句话。</p>
 
-<p>QT是一个可视化架构，通过QT可以很容易做出一些比较好看耐用的交互界面。而QT creator则是一个配套的IDE。</p>
+<p>基础的不认真学好，是造不出好的东西的。我小时候也试过，物理还没学好，就想去看量子力学，然后结果可想而知。</p>
 
-<p>QT简介请看：<a href="http://blog.csdn.net/xuancailinggan/article/details/50620829">关于QT、QT creator和编译器，新手入门必知的一些知识</a>。</p>
+<p>记得教我概率统计的王向阳老师上课说，数学系的学生对定义是很清晰的，所以数学系的学生做起题来比理工科的学生好。一直以来，作为理科生，我对问题的思考，都是建立在最基础的概念和定义上的，一句话读不懂，就会一个个词语去想，这个是什么。在学术上，定义是不应该也不可能会被糊弄过去的。</p>
 
-<p><img src="/img/in-post/2017072701/pic03.png" alt="avatar" /></p>
-
-<h4 id="1-qt的安装与配置">1. QT的安装与配置</h4>
-
-<p>对于MacOS来说，下载一个QT Creater，这是一个大概是IDE的东西。感觉Mac版的话要自己配置Qt版本，之前我搞了好久都不行。建议安装编译器的时候用brew安装，</p>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>brew update
-brew install qt
-</code></pre>
-</div>
-<p>安装成功后然后终端会提示安装的路径（大概是/usr/local/Cellar/qt/5.9.0），然后在Qt Creator中设置版本（偏好设置-&gt;构建与运行-&gt;Qt Version-&gt;添加…）。这里最坑的是Mac的打开文件窗口不能直接访问系统保护的目录，这里有几个方法，一是直接Command+Shift+G，输入路径，二是前往文件夹或者终端cd路径，然后创建个快捷方式（替身），然后通过替身跳到文件夹。</p>
-
-<p><img src="/img/in-post/2017072701/pic04.png" alt="avatar" /></p>
-
-<p><img src="/img/in-post/2017072701/pic05.png" alt="avatar" /></p>
-
-<p>配置完就可以使用了，左下角有个类似资源管理器的东西，选“项目”里面会有工程文件的Source和资源文件等。</p>
-
-<p><img src="/img/in-post/2017072701/pic06.png" alt="avatar" /></p>
-
-<p>然后旁边可以选择编译器、release、debug、build。</p>
-
-<p>在Windows下的安装就傻瓜得多了，大概就是一个引导程序，比较傻瓜的装好就OK。编译器建议只选MingW的就够了。</p>
-
-<h4 id="2-qt的控件对象">2. QT的控件对象</h4>
-
-<p>QT的工程文件是.pro，项目的文件框架如下图所示。</p>
-
-<p><img src="/img/in-post/2017072701/pic07.png" alt="avatar" /></p>
-
-<p>Headers和Source是头文件和源文件，一般就是cpp实现的Source，Form是.ui文件，大概就是初始界面的框架。Resources是资源文件，一些图片一般放在里面用于调取。</p>
-
-<p>.ui文件可以在“设计“模式（designer）中直接画出窗口相应的框架，这个有点像VB，如下图所示。这里指出在windows下里面的控件对象会错位。</p>
-
-<p><img src="/img/in-post/2017072701/pic08.png" alt="avatar" /></p>
-
-<p>操纵窗口是通过工程创建的一个类MainWindow实现的。该类相当于是一个窗口，包含一个指针成员ui，调用窗口的预先绘制好控件对象时，使用ui-&gt;ObjName作为对象名使用，尤其菜单栏，状态栏等就更应该如此。</p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ui</span><span class="o">-&gt;</span><span class="n">mainToolBar</span><span class="o">-&gt;</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="c1">//设置工具栏高度为10
-</span></code></pre>
-</div>
-
-<p>当然，还可以自己创建控件对象，为了方便调用自己创建的对象，一般在MainWindow类中会创建一个指针成员，用于记录该对象。</p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QTimer</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>   <span class="c1">//创建一个QTimer，之后可以使用timer来调用该对象
-</span><span class="cm">/* ----------------- */</span>
-<span class="k">delete</span> <span class="n">timer</span><span class="p">;</span>               <span class="c1">//一般在析构函数中会调用delete删除对象
-</span></code></pre>
-</div>
-
-<p>简而言之，QT是通过控制控件对象完成界面操作的。</p>
-
-<h4 id="3-qt的资源库">3. QT的资源库</h4>
-
-<p>前面说到QT的resources文件夹用于存放资源，比如图片素材这类东西就可以放在里面，以备调用。</p>
-
-<p>在右下角文件管理器中选项目，Resources文件夹右键-添加新文件，创建一个.qrc文件，然后往.qrc文件中添加资源，自后就可以调用其中的资源了。</p>
-
-<p><img src="/img/in-post/2017072701/pic09.png" alt="avatar" /></p>
-
-<p><img src="/img/in-post/2017072701/pic10.png" alt="avatar" /></p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">img</span><span class="o">=</span><span class="k">new</span> <span class="n">QImage</span><span class="p">(</span><span class="s">":/jpg/resource/green.png"</span><span class="p">);</span>   <span class="c1">//从资源库调取文件green.png
-</span><span class="n">pLabel</span><span class="o">-&gt;</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">QPixmap</span><span class="o">::</span><span class="n">fromImage</span><span class="p">(</span><span class="o">*</span><span class="n">img</span><span class="p">));</span>  <span class="c1">//在QLabel中显示图片
-</span></code></pre>
-</div>
-
-<h4 id="4-qt的信号-槽机制">4. QT的信号-槽机制</h4>
-
-<p>信号与槽是QT的两个重要概念，两者可以将不同对象联系起来，使程序更安全简洁。</p>
-
-<p>信号指的是对象发出的触发指令，槽则是接受信号并触发的函数，两者以connect函数连接起来。</p>
-
-<p>可以参考文章<a href="http://www.cnblogs.com/MuyouSome/p/3515941.html">Qt入门之信号与槽机制</a>。</p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MainWindow</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QMainWindow</span> <span class="p">{</span>
-
-    <span class="n">Q_OBJECT</span>
-
-<span class="k">public</span><span class="o">:</span>
-    <span class="k">explicit</span> <span class="n">MainWindow</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="o">~</span><span class="n">MainWindow</span><span class="p">();</span>
-    <span class="c1">//other code...
-</span>
-<span class="k">private</span> <span class="n">slots</span><span class="o">:</span>  <span class="c1">//槽函数必须要在类的public/private/protected slots中声明，否则无法使用
-</span>    <span class="kt">void</span> <span class="n">function</span><span class="p">();</span>
-
-<span class="p">};</span>
-
-<span class="c1">//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
-</span>
-<span class="n">connect</span><span class="p">(</span><span class="n">pushButton1</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">clicked</span><span class="p">(</span><span class="kt">bool</span><span class="p">)),</span><span class="n">label</span><span class="p">,</span><span class="n">SLOT</span><span class="p">(</span><span class="n">close</span><span class="p">()));</span>
-<span class="n">connect</span><span class="p">(</span><span class="n">pushButton2</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">clicked</span><span class="p">(</span><span class="kt">bool</span><span class="p">)),</span><span class="k">this</span><span class="p">,</span><span class="n">SLOT</span><span class="p">(</span><span class="n">function</span><span class="p">()));</span>
-</code></pre>
-</div>
-
-<h4 id="5-qt的编译打包">5. QT的编译打包</h4>
-
-<p>release编译后，将.exe文件提取出来，用Qt命令行使用windeployqt来拷贝依赖包即可发布。</p>
-
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code>windeployqt Programme.exe
-</code></pre>
-</div>
-
-<p>命令自动会将程序需要的第三方库（.dll文件）复制到.exe文件的的路径中。</p>
-
-<p>在Mac下生成的app文件，也可以用macdeployqt来进行依赖库拷贝。</p>
-
-<p>具体可以参考：<a href="http://blog.csdn.net/liuyez123/article/details/50462637">Qt 程序打包发布总结</a>。</p>
+<p>其实最终说明的道理还是一样，浮沙筑不起高台，这也是我为什么对一些简单的学习和作业也认真记录的原因。</p>
 
 <hr />
 
-<h2 id="后记">后记</h2>
+<h2 id="不为繁华易素心">不为繁华易素心</h2>
 
-<p>做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。</p>
+<p>出自元代冯子振的《西湖梅》：</p>
 
-<p>代码已发到<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>，保留一切权利。</p>
+<blockquote>
+  <p>苏老堤边玉一林，六桥风月是知音。 任他桃李争欢赏，不为繁华易素心。</p>
+</blockquote>
 
-<p>2017.07.27 于广州</p>
+<p>本意说的是淡泊名利，志向高洁。</p>
+
+<p>在瞬息万变的今天，新的事物太多太多，每天都是一个不一样的世界。</p>
+
+<p>听说人工智能很热，大家都觉得很酷，就有人开始担心人工智能统治世界，或有人都觉得自己也要学学神经网络才行。</p>
+
+<p>可是神经网络这种上个世纪发明的东西，是哪些人让他变得很酷呢？我想应该是那些不担心自己做的东西会过时，不担心自己研究的东西不是热点的人吧。</p>
+
+<p>有时候，学习古老的的技术会觉得似乎没什么用，好害怕再过不久旧的技术就会被取代。一直以来都觉得自己学的东西不够前沿，不够酷，感觉自己这也不会，那也不会。但现在想想，那又怎样呢？没有必要让自己为了时代潮流而放弃目前的方向。这也想学，那也想学是不对的。毕竟看见路口就拐弯的话，往往都是回到原点的。</p>
+
+<p>我所羡慕的固执的人，他们能无畏地说出非某事某物不可的言论，他们能不想退路地一条路走到黑，他们能不顾外界的影响随自己的心而去。我想这才是学习乃至人生的真正方法。</p>
+
+<hr />
+
+<h2 id="未来">未来</h2>
+
+<p>大学算是过去一半了，在这个时候不免会担心未来。</p>
+
+<p>迷茫是一件好事情，那是有思考而有有选择的人的特权，但我想，能好好地做自己想做的事，过让自己感到快乐的日子，其实是很不错的。蓦直向前，不忘初心，那不是很好吗？</p>
+
+<p>2017.08.19 晚 于广州</p>
 
 
                 <hr>
@@ -351,12 +245,12 @@ brew install qt
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/06/09/post01/" data-toggle="tooltip" data-placement="top" title="胡乱写了个小游戏">&larr; Previous Post</a>
+                        <a href="/2017/08/06/post01/" data-toggle="tooltip" data-placement="top" title="玥">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/07/29/post01/" data-toggle="tooltip" data-placement="top" title="API调用研究">Next Post &rarr;</a>
+                        <a href="/2017/08/24/post01/" data-toggle="tooltip" data-placement="top" title="爬虫入门笔记（一）">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

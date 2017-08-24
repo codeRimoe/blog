@@ -5,9 +5,353 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 06 Aug 2017 01:32:41 +0800</pubDate>
-    <lastBuildDate>Sun, 06 Aug 2017 01:32:41 +0800</lastBuildDate>
+    <pubDate>Thu, 24 Aug 2017 16:09:36 +0800</pubDate>
+    <lastBuildDate>Thu, 24 Aug 2017 16:09:36 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>爬虫入门笔记（一）</title>
+        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
+
+&lt;p&gt;三月份的时候，那时的我还很有志气地打算学习数据分析的，然而后来发现自己似乎把技能点点到前端上了。&lt;/p&gt;
+
+&lt;p&gt;数据分析的话要有数据呀，嗯，从网上获取数据吧。手动扒太累了，就写个小程序咯。&lt;/p&gt;
+
+&lt;p&gt;说起来接触Python还是因为认识的同学说想学爬虫，然后问我写爬虫用什么语言好。我百度了一下，似乎写爬虫都用Python，于是我就跟他讲，你学Python吧。后来又由于各种原因我也进了Python的坑。&lt;/p&gt;
+
+&lt;p&gt;那到底什么是爬虫呢？说白了就是自动浏览网页获取网页的自动化程序，其实我们常用搜索引擎就有爬虫技术，比如Google爬虫。至于为什么用Python写，刚刚就说了，大家都用这个写，学的话也容易上手。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic01.jpg&quot; alt=&quot;图 - 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们平时访问网页，表面上就是输入网址-浏览网页-获取信息三步，因此最简单的爬虫就是不断重复这三步。&lt;/p&gt;
+
+&lt;p&gt;事实上，写爬虫这东西，其实并没有太多技术性。但想造出健壮的爬虫，其实并不容易的。爬虫与反爬虫的斗争，大家可以上知乎了解一下：&lt;a href=&quot;https://www.zhihu.com/question/58342241&quot;&gt;知乎 - 有哪些有趣的反爬虫手段？&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;至于爬虫能干啥，请看：&lt;a href=&quot;https://www.zhihu.com/question/27621722&quot;&gt;利用爬虫技术能做到哪些很酷很有趣很有用的事情？&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;所需模块&quot;&gt;所需模块&lt;/h2&gt;
+
+&lt;p&gt;写一个最简单的爬虫，其实只需要这两个模块：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;urllib和urllib2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;一看这个模块名就知道是URL相关的library。具体用法可以参看：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.python.org/3/library/urllib.html&quot;&gt;urllib官方文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.python.org/2/library/urllib2.html&quot;&gt;urllib2官方文档&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://cuiqingcai.com/947.html&quot;&gt;静觅 - Python爬虫入门三之Urllib库的基本使用&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://cuiqingcai.com/954.html&quot;&gt;静觅 - Python爬虫入门四之Urllib库的高级用法&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以下语句运行环境为Mac OS／Python2.7.13。&lt;/p&gt;
+
+&lt;p&gt;一开始就说了我们只需要模拟三个步骤：输入网址-浏览网页-获取信息。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;输入网址&quot;&gt;输入网址&lt;/h2&gt;
+
+&lt;p&gt;输入网址是为了获取网页，当然前提是要联网，我们可以先在交互式解释器中看看。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#打开网页http://rimoe.ml&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                         &lt;span class=&quot;c&quot;&gt;#解析re，输出html格式&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;输出：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1 &lt;span class=&quot;nt&quot;&gt;&amp;lt;addinfourl&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;4436195304&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;whose&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;fp =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;socket._fileobject&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;0x10816f8d0&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&amp;gt;
+2 '&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;\n&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;\n  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;\n  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;\n  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;\n …… &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;\n'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic02.jpg&quot; alt=&quot;图 - 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;事实上，获取数据就是这么两句话。在某种意义上来说，网页经已爬下来了，爬虫已经写完啦。&lt;/p&gt;
+
+&lt;p&gt;先压抑内心的小兴奋，爬下来这么一堆东西有啥用呢？&lt;/p&gt;
+
+&lt;p&gt;当然，这样一堆字符看起来没啥用，但我们可以想办法从中间提取想要的元素。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;浏览网页&quot;&gt;浏览网页&lt;/h2&gt;
+
+&lt;p&gt;我们日常浏览的网页一般都是浏览器解析过的标签文件，具体过程可以参考：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/xiangriikui/article/details/52207153&quot;&gt;前端文摘：深入解析浏览器的幕后工作原理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.cnblogs.com/lhb25/p/how-browsers-work.html&quot;&gt;在浏览器中输入网址到网页展现全部过程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;当然对于爬虫而言，我们希望程序输出的只包含我们需要的信息，因此我们需要对刚刚抓取的网页进行分析，也就是写程序来代替浏览器解释我们获取的文件（这里是html）。&lt;/p&gt;
+
+&lt;p&gt;这里就可以用到「正则表达式」这个东西了。&lt;/p&gt;
+
+&lt;p&gt;正则表达式，故名思义，就是规则的表达式，或者说是一个样例，通过这个样例我们可以从文本中规范准确地提取符合该样例的部分文本。&lt;/p&gt;
+
+&lt;p&gt;我们可以用正则表达式来提取能够匹配表达式的文本，正则表达式的匹配规则如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic03.png&quot; alt=&quot;图 - 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;部分注解抄录如下：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;（1）数量词的贪婪模式与非贪婪模式&lt;/p&gt;
+
+  &lt;p&gt;正则表达式通常用于在文本中查找匹配的字符串。Python里数量词默认是贪婪的（在少数语言里也可能是默认非贪婪），总是尝试匹配尽可能多的字符；非贪婪的则相反，总是尝试匹配尽可能少的字符。例如：正则表达式”ab&lt;em&gt;”如果用于查找”abbbc”，将找到”abbb”。而如果使用非贪婪的数量词”ab&lt;/em&gt;?”，将找到”a”。&lt;/p&gt;
+
+  &lt;p&gt;注：我们一般使用非贪婪模式来提取。&lt;/p&gt;
+
+  &lt;p&gt;（2）反斜杠问题&lt;/p&gt;
+
+  &lt;p&gt;与大多数编程语言相同，正则表达式里使用”\”作为转义字符，这就可能造成反斜杠困扰。假如你需要匹配文本中的字符”\”，那么使用编程语言表示的正则表达式里将需要4个反斜杠”\\”：前两个和后两个分别用于在编程语言里转义成反斜杠，转换成两个反斜杠后再在正则表达式里转义成一个反斜杠。&lt;/p&gt;
+
+  &lt;p&gt;Python里的原生字符串很好地解决了这个问题，这个例子中的正则表达式可以使用r”\”表示。同样，匹配一个数字的”\d”可以写成r”\d”。有了原生字符串，妈妈也不用担心是不是漏写了反斜杠，写出来的表达式也更直观勒。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;图片引用及参考来自：&lt;a href=&quot;http://cuiqingcai.com/977.html&quot;&gt;静觅 - Python爬虫入门七之正则表达式&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Python的re模块可以使用正则表达式匹配字符串：&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### 举例1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'rimoe,rimoe.ml'&lt;/span&gt;          &lt;span class=&quot;c&quot;&gt;#从txt1中搜索关键字'rimoe'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rimoe'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#用正则表达式生成pattern对象&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;#查找所有符合表达式的子串&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### 举例2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'1.rimoe&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2.Yue&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;3.Luo&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;       &lt;span class=&quot;c&quot;&gt;#从txt2中提取列表内容&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;.(.*?)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;n'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#一般用r串作为参数&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#这里\d匹配数字（0～9），+表示匹配连续的数字，\.匹配字符'.'&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#(.*?)匹配连续任意字符任意次，括号表示要提取的部分分组&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#\n匹配回车，(.*?)\n表示任意字符匹配直到遇到回车停止匹配&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;输出&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rimoe'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'rimoe'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rimoe'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Yue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Luo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;比如对于我们刚刚爬下来的网页，我们想要提取网页的这一部分：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic04.jpg&quot; alt=&quot;图 - 4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们可以右击相应元素，点“检查”（审查元素）查看相对应的标签：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic05.jpg&quot; alt=&quot;图 - 5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;当然这里推荐Chrome，主要是因为好用加功能完善，在学习爬虫的道路上这个审查元素的功能和这个开发者选项框将会是你的好基友，弹出的框如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic06.jpg&quot; alt=&quot;图 - 6&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们可以看到其实这一部分是一个列表标签，在我们刚刚抓取的网页里面也能找到：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic07.jpg&quot; alt=&quot;图 - 7&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;h5 Game - 坎娜与托尔&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.ml/2017/06/09/post01/&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[NOTE BLOG]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml/kanna&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[TRY NOW]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;OOP Homework - Wolf and Sheep&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;\\&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[NOTE BLOG]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;我们用正则表达式来表示,分两次提取：&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#刚刚提取的网页返回res&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'&amp;lt;li&amp;gt;(.*?)&amp;lt;/li&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#提取列表标签&amp;lt;li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#re.S为DOCALL模式，该模式下字符'.'可以匹配回车'\n'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;#打印出来看看是什么样子的吧～&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'&amp;lt;a.*?href=(.*?)&amp;gt;(.*?)&amp;lt;/a&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#逐项提取链接标签&amp;lt;a&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Project：'&lt;/span&gt;                    &lt;span class=&quot;c&quot;&gt;#格式化打印&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;':'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;输出：&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;          &amp;lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&amp;gt;h5 Game - &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://blog.rimoe.ml/2017/06/09/post01/&quot;&amp;gt;[NOTE BLOG]&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://rimoe.ml/kanna&quot;&amp;gt;[TRY NOW]&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;          &amp;lt;a href=&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&amp;gt;OOP Homework - Wolf and Sheep&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://blog.rimoe.ml/2017/07/27/post01/&quot;&amp;gt;[NOTE BLOG]&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Game&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;坎娜与托尔&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.ml/2017/06/09/post01/&quot;&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TRY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml/kanna&quot;&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OOP&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Homework&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Wolf&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sheep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.ml/2017/07/27/post01/&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic08.jpg&quot; alt=&quot;图 - 8&quot; /&gt;
+&lt;img src=&quot;/img/in-post/2017082401/pic09.jpg&quot; alt=&quot;图 - 9&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;获取信息&quot;&gt;获取信息&lt;/h2&gt;
+
+&lt;p&gt;一般来说数据获取后，要保存到本地，对于列表一般保存为csv格式，这里我们就保存为普通的文本文件。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#将打印部分修改成保存文档&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'data.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Project:'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;':'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic10.jpg&quot; alt=&quot;图 - 10&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#Spider Lv1&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#打开网页http://rimoe.ml&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'&amp;lt;li&amp;gt;(.*?)&amp;lt;/li&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#提取列表标签&amp;lt;li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'&amp;lt;a.*?href=(.*?)&amp;gt;(.*?)&amp;lt;/a&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'data.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'w'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#逐项提取链接标签&amp;lt;a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Project:'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;               &lt;span class=&quot;c&quot;&gt;#格式化输出&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;':'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/Spider/tree/master/demo/Level_1&quot;&gt;Github - Spider&lt;/a&gt;，保留一切权利。&lt;/p&gt;
+
+&lt;p&gt;爬虫的原理简单粗暴，除了这个简单的爬虫之外，其实还有一些简单易用的现成框架，有硬件条件的话，爬虫的威力其实更大。&lt;/p&gt;
+
+&lt;p&gt;当然有条件的话，最好的爬虫其实是人肉爬虫（滑稽）。&lt;/p&gt;
+
+&lt;p&gt;接下来如果有时间，会继续写完这个爬虫入门笔记系列。&lt;/p&gt;
+
+&lt;p&gt;2017.08.24 午后 于广州&lt;/p&gt;
+</description>
+        <pubDate>Thu, 24 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/24/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/24/post01/</guid>
+        
+        <category>爬虫</category>
+        
+        <category>技术</category>
+        
+        <category>Python</category>
+        
+        <category>数据获取</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>对学习及未来的一点思考</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;切莫浮沙筑高台，不为繁华易素心。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;弁言&quot;&gt;弁言&lt;/h2&gt;
+
+&lt;p&gt;近日作息挺规律的，在学校里也算是有事可做。暑假一不小心就被弄丢了，似乎做了些什么，又似乎什么也没做。&lt;/p&gt;
+
+&lt;p&gt;有位老师上课说，大学生活也就是 —— 大一搞社团，大二搞妹子，大三才想起要学习，等到大四就准备去实习。&lt;/p&gt;
+
+&lt;p&gt;我一直以为在学习上我是没有停歇过的，上课认真听 —— 然而也还是将许多节课睡过去了，作业认真写 —— 然而还是有许多作业是糊弄过去的。要说学到最多东西的，大概就是看知乎吧。这天下决心学这些，再过几天就把心思放在别的地方。似乎什么都懂一点，但最后却是什么都没得到。&lt;/p&gt;
+
+&lt;p&gt;我以前可有好好真正地「学习」过？&lt;/p&gt;
+
+&lt;p&gt;有的。小学时候为的一道数学题可以沉思好久，初中时候为了学英文每天努力地记单词，高中时候忘我地写作、刻章，为了整理好一页笔记放弃一个晚修，近来研究爬虫和网页时候遇到问题来回踱步。直到今天认真思考怎么画画才回想起那些时候的感觉。所谓学习，原来是专心思考一件事，可以不被一切的一切所吸引。&lt;/p&gt;
+
+&lt;p&gt;一直以来最惹我羡慕两种人，一种是认真的人，一种是固执的人。&lt;/p&gt;
+
+&lt;p&gt;现在看来，和我交心的几个朋友，要不就是认真的人，要不就是固执的人，要不就是既认真又固执的人。&lt;/p&gt;
+
+&lt;p&gt;近来在知乎上看到一句话，我很喜欢，概括起来就是，「认真」、「固执」。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;切莫浮沙筑高台&quot;&gt;切莫浮沙筑高台&lt;/h2&gt;
+
+&lt;p&gt;这句话出处未考，但似乎很多学工科的都很喜欢这句话。&lt;/p&gt;
+
+&lt;p&gt;基础的不认真学好，是造不出好的东西的。我小时候也试过，物理还没学好，就想去看量子力学，然后结果可想而知。&lt;/p&gt;
+
+&lt;p&gt;记得教我概率统计的王向阳老师上课说，数学系的学生对定义是很清晰的，所以数学系的学生做起题来比理工科的学生好。一直以来，作为理科生，我对问题的思考，都是建立在最基础的概念和定义上的，一句话读不懂，就会一个个词语去想，这个是什么。在学术上，定义是不应该也不可能会被糊弄过去的。&lt;/p&gt;
+
+&lt;p&gt;其实最终说明的道理还是一样，浮沙筑不起高台，这也是我为什么对一些简单的学习和作业也认真记录的原因。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;不为繁华易素心&quot;&gt;不为繁华易素心&lt;/h2&gt;
+
+&lt;p&gt;出自元代冯子振的《西湖梅》：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;苏老堤边玉一林，六桥风月是知音。 任他桃李争欢赏，不为繁华易素心。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;本意说的是淡泊名利，志向高洁。&lt;/p&gt;
+
+&lt;p&gt;在瞬息万变的今天，新的事物太多太多，每天都是一个不一样的世界。&lt;/p&gt;
+
+&lt;p&gt;听说人工智能很热，大家都觉得很酷，就有人开始担心人工智能统治世界，或有人都觉得自己也要学学神经网络才行。&lt;/p&gt;
+
+&lt;p&gt;可是神经网络这种上个世纪发明的东西，是哪些人让他变得很酷呢？我想应该是那些不担心自己做的东西会过时，不担心自己研究的东西不是热点的人吧。&lt;/p&gt;
+
+&lt;p&gt;有时候，学习古老的的技术会觉得似乎没什么用，好害怕再过不久旧的技术就会被取代。一直以来都觉得自己学的东西不够前沿，不够酷，感觉自己这也不会，那也不会。但现在想想，那又怎样呢？没有必要让自己为了时代潮流而放弃目前的方向。这也想学，那也想学是不对的。毕竟看见路口就拐弯的话，往往都是回到原点的。&lt;/p&gt;
+
+&lt;p&gt;我所羡慕的固执的人，他们能无畏地说出非某事某物不可的言论，他们能不想退路地一条路走到黑，他们能不顾外界的影响随自己的心而去。我想这才是学习乃至人生的真正方法。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;未来&quot;&gt;未来&lt;/h2&gt;
+
+&lt;p&gt;大学算是过去一半了，在这个时候不免会担心未来。&lt;/p&gt;
+
+&lt;p&gt;迷茫是一件好事情，那是有思考而有有选择的人的特权，但我想，能好好地做自己想做的事，过让自己感到快乐的日子，其实是很不错的。蓦直向前，不忘初心，那不是很好吗？&lt;/p&gt;
+
+&lt;p&gt;2017.08.19 晚 于广州&lt;/p&gt;
+</description>
+        <pubDate>Sat, 19 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/19/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/19/post01/</guid>
+        
+        <category>生活</category>
+        
+        <category>文艺</category>
+        
+        
+      </item>
     
       <item>
         <title>玥</title>
@@ -41,7 +385,7 @@
 
 &lt;p&gt;再前不久经过磨碟沙，见到很久前的酒楼仍在，如今已落败了许多，令我想起一段往事。&lt;/p&gt;
 
-&lt;p&gt;本欲在此记下，兼论今日对教育之思考，然而夜已深，昏昏欲睡，边就此搁笔，待他日记起再叙。&lt;/p&gt;
+&lt;p&gt;本欲在此记下，兼论今日对教育之思考，然而夜已深，昏昏欲睡，便就此搁笔，待他日记起再叙。&lt;/p&gt;
 
 &lt;p&gt;2017.08.05 凌晨 于佛山&lt;/p&gt;
 </description>
