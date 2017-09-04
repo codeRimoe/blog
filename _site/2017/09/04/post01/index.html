@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="作家是杂家">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>爬虫入门笔记（二） - 凝萌小记 - Rimoe's</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/09/04/post01/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <!--<link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">凝萌小记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://rimoe.ml">Home - 柠萌</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2017090401.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg/post2017090401.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#爬虫" title="爬虫">爬虫</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                        <a class="tag" href="/tags/#数据获取" title="数据获取">数据获取</a>
+                        
+                    </div>
+                    <h1>爬虫入门笔记（二）</h1>
+                    
+                    
+                    <h2 class="subheading">单身问题的社会学关怀</h2>
+                    
+                    <span class="meta">Posted by 柠萌 on September 4, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="缘起">缘起</h2>
+
+<p>昨晚回宿舍的时候，看到一对情侣在路边撒狗粮，就像这样：</p>
+
+<p><img src="/img/in-post/2017090401/pic01.jpeg" alt="图 - 1" /></p>
+
+<p>然后我就想可不可以上微博看看有没有相亲的，嗯，好像还真有：</p>
+
+<p><img src="/img/in-post/2017090401/pic02.png" alt="图 - 2" /></p>
+
+<p>那不如用爬虫爬一份相亲列表出来吧，嘿嘿嘿。</p>
+
+<p>我们尝试用<a href="http://blog.rimoe.ml/2017/08/24/post01/">上一篇文章</a>的方法获取<a href="http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&amp;is_hot=1&amp;noscale_head=1#_0">二次元交往平台</a>的主页。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="n">site</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=</span><span class="si">%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%8</span><span class="s">C</span><span class="si">%</span><span class="s">E6</span><span class="si">%</span><span class="s">AC</span><span class="si">%</span><span class="s">A1</span><span class="si">%</span><span class="s">E5</span><span class="si">%85%83%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%</span><span class="s">A4</span><span class="si">%</span><span class="s">E5</span><span class="si">%</span><span class="s">BE</span><span class="si">%80%</span><span class="s">E5</span><span class="si">%</span><span class="s">B9</span><span class="si">%</span><span class="s">B3</span><span class="si">%</span><span class="s">E5</span><span class="si">%8</span><span class="s">F</span><span class="si">%</span><span class="s">B0&amp;is_hot=1&amp;noscale_head=1#_0"</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">site</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'gbk'</span><span class="p">)</span>  <span class="c">#  以gbk方式解码</span>
+</code></pre>
+</div>
+
+<p>然而发现……没有妹纸呀……</p>
+
+<p>仔细观察，发现打印出来的开头是这样的：</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-type"</span> <span class="na">content=</span><span class="s">"text/html; charset=gb2312"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Sina Visitor System<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+</code></pre>
+</div>
+
+<p>访客系统……也就是说跳转到登录的网页了，需要登录才可以访问。</p>
+
+<p>对于这种情况，我们可以有两个办法：</p>
+
+<ul>
+  <li>让爬虫自己登录</li>
+  <li>手工登录，然后爬虫使用cookie</li>
+</ul>
+
+<p>在这篇文章里，我们手工登录获取cookie，然后使用cookie访问网页，至于第一种方法，后续的文章再做讨论。</p>
+
+<hr />
+
+<h2 id="运行环境">运行环境</h2>
+
+<p>之前也说过了，这里语句运行环境都为Mac OS／Python2.7.13。</p>
+
+<hr />
+
+<h2 id="获取cookie">获取cookie</h2>
+
+<blockquote>
+  <p>维基百科:Cookie，中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端上的数据（通常经过加密）。</p>
+</blockquote>
+
+<p>平时我们PC上用微博时，在一次登录后，我们后续访问就可以不用登录了，其实就是本地存储了登录状态，请求网页时发送本地的cookie即可表明账户登录状态。</p>
+
+<p>利用Chrome的开发者工具可以很方便地获取cookie。</p>
+
+<p>如图，在Network中查看提交的Header，我们可以看到长长的一串字符，在访问网页时，我们只要提交这个cookie，就可以使用登录状态访问网页啦。</p>
+
+<p>这个cookie在登录后持续有效直到退出账户或该次登录失效。</p>
+
+<hr />
+
+<h2 id="配置请求头">配置请求头</h2>
+
+<p>之前写<a href="http://blog.rimoe.ml/2017/07/29/post01/">API调研究</a>的时候也提到了HTML请求方式和Header。</p>
+
+<p>具体可以查阅<a href="http://www.runoob.com/http/http-tutorial.html">HTTP教程</a></p>
+
+<p>我们在这里尝试使用urllib2提交请求头。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=</span><span class="si">%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%8</span><span class="s">C</span><span class="si">%</span><span class="s">E6</span><span class="si">%</span><span class="s">AC</span><span class="si">%</span><span class="s">A1</span><span class="si">%</span><span class="s">E5</span><span class="si">%85%83%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%</span><span class="s">A4</span><span class="si">%</span><span class="s">E5</span><span class="si">%</span><span class="s">BE</span><span class="si">%80%</span><span class="s">E5</span><span class="si">%</span><span class="s">B9</span><span class="si">%</span><span class="s">B3</span><span class="si">%</span><span class="s">E5</span><span class="si">%8</span><span class="s">F</span><span class="si">%</span><span class="s">B0&amp;is_hot=1&amp;noscale_head=1#_0'</span>
+<span class="n">cookie</span> <span class="o">=</span> <span class="s">'SINAGLOBAL=balabala'</span>  <span class="c">#输入cookie</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'cookie'</span> <span class="p">:</span> <span class="n">cookie</span> <span class="p">}</span> 
+<span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+<span class="c">#将URL、Header打包请求，当然这里还可以有别的参数</span>
+<span class="c">#class urllib2.Request(url[, data][, headers][, origin_req_host][, unverifiable])</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="c">#提交请求并获取响应</span>
+<span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>返回：</p>
+
+<p><img src="/img/in-post/2017090401/pic03.png" alt="图 - 3" /></p>
+
+<p>好啦，接下来就是正则表达式的事情了。</p>
+
+<hr />
+
+<h2 id="使用beautifulsoup提取信息">使用BeautifulSoup提取信息</h2>
+
+<p>可是，正则表达式用起来十分不方便，还容易出错，一不小心格式就调不好，还有可能连错在哪都搞不清楚。</p>
+
+<p>我们知道在HTML DOM中HTML的所有内容被都视为一种节点，其实我们只要知道节点的路径，就可以快速获取该节点提取相应信息。BeautifulSoup就可以基于这个原理用于快速获取html里的信息。</p>
+
+<p>这里就可以尝试使用BeautifulSoup来代替正则表达式，体会一下鸟枪换炮的感觉。</p>
+
+<p>据说bs4对Python3并不友好，但我们用的是python2就不管那么多了。</p>
+
+<p>当然使用前我们要先安装一下bs4这个库,另外我们还需要lxml这个库的支持（用于解析html，类似的还有html5lib以及python自带的html.parser）:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pip install bs4
+pip install lxml
+</code></pre>
+</div>
+
+<p>观察源码，我们可以发现，微博的网页其实是使用一个js函数FM.view(json)来展示的，html存在一个json格式中：</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">FM</span><span class="p">.</span><span class="nx">view</span><span class="p">({</span>
+  <span class="s2">"ns"</span> <span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+  <span class="s2">"domid"</span> <span class="p">:</span> <span class="s2">"xxx"</span><span class="p">,</span>
+  <span class="s2">"css"</span> <span class="p">:</span> <span class="p">[</span><span class="s2">"..."</span><span class="p">],</span>
+  <span class="s2">"html"</span> <span class="p">:</span> <span class="s2">"balabala"</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+
+<p><img src="/img/in-post/2017090401/pic04.png" alt="图 - 4" /></p>
+
+<p>在仔细观察，可以发现，主页微博的html是在domid为Pl_Official_MyProfileFeed__22的json中的，我们先用正则表达式把这部分内容提取出来。使用json模块解析其中的html属性，就得到用户主页微博的html文本。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#承接上一节response为返回内容</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'"domid":"Pl_Official_MyProfileFeed__22",(.*?)</span><span class="err">\</span><span class="s">)&lt;/script&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+<span class="n">webres</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">html</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c">#用正则表达式提取包含内容部分</span>
+<span class="n">webres_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s">'{'</span><span class="o">+</span><span class="n">webres</span><span class="p">)</span> <span class="c">#解析json字符串，前面要补充`{`字符</span>
+<span class="n">webres_html</span> <span class="o">=</span> <span class="n">webres_json</span><span class="p">[</span><span class="s">'html'</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>打印出来是这样的：</p>
+
+<p><img src="/img/in-post/2017090401/pic05.png" alt="图 - 5" /></p>
+
+<p>接下来我们用BeautifulSoup对html文本进行分析，首先看看造出来soup是怎样的呢？</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#使用BeautifulSoup对webres_html进行分析</span>
+<span class="kn">import</span> <span class="nn">lxml</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span> <span class="k">as</span> <span class="n">bs</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">bs</span><span class="p">(</span><span class="n">webres_html</span><span class="p">,</span><span class="s">'lxml'</span><span class="p">)</span>  <span class="c"># 构建Soup</span>
+<span class="k">print</span> <span class="n">soup</span>
+</code></pre>
+</div>
+
+<p><img src="/img/in-post/2017090401/pic06.png" alt="图 - 6" /></p>
+
+<p>打印出来的东西十分整齐，真实一个beautiful的soup，看着就很舒服。使用contents可以逐级分析html下的标签元素。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">contents</span>
+<span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">contents</span>
+</code></pre>
+</div>
+
+<p>通过源码我们大概知道，在每条单独微博都在一个class为”WB_dertail”的div里，使用find_all的方法，得到所有符合条件的标签，以数组形式返回，然后我们，将微博里的含信息标签全部提取出来。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 微博每张图片有id，缩略图URL、URL分别为以下格式：</span>
+<span class="c"># http://wx4.sinaimg.cn/mw690/(pic_id).jpg   #URL</span>
+<span class="c"># http://wx4.sinaimg.cn/square/(pic_id).jpg  #缩略图URL</span>
+
+<span class="n">infos</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s">"WB_detail"</span><span class="p">)</span>
+<span class="n">pattern_pic</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'pic_id=(.*)'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">infos</span><span class="p">:</span>
+  <span class="n">Stxt</span><span class="o">=</span><span class="s">""</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">txts</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s">"WB_text W_f14"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contents</span>
+    <span class="n">pics</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'li'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txts</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">txtc</span> <span class="ow">in</span> <span class="n">txt</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+          <span class="n">Stxt</span><span class="o">+=</span><span class="n">txtc</span>              <span class="c">#对于链接文本，提取其内容</span>
+      <span class="k">except</span><span class="p">:</span>
+        <span class="n">Stxt</span><span class="o">+=</span><span class="n">txt</span>                 <span class="c">#否则原样输出</span>
+    <span class="k">for</span> <span class="n">pic</span> <span class="ow">in</span> <span class="n">pics</span><span class="p">:</span>              <span class="c">#得到图片URL</span>
+        <span class="n">picid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_pic</span><span class="p">,</span><span class="n">pic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'action-data'</span><span class="p">))</span>
+        <span class="k">print</span> <span class="s">"http://wx1.sinaimg.cn/mw690/"</span> <span class="o">+</span> <span class="n">picid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">'.jpg'</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+  <span class="k">print</span> <span class="n">Stxt</span>
+</code></pre>
+</div>
+
+<p>打印出来的效果：</p>
+
+<p><img src="/img/in-post/2017090401/pic07.png" alt="图 - 7" /></p>
+
+<p>关于BeautifulSoup的用法，可以参考<a href="http://cuiqingcai.com/1319.html">静觅 - Python爬虫利器二之Beautiful Soup的用法</a>，此外个人觉得XPath更好用，具体可以参考<a href="http://cuiqingcai.com/2621.html">Python爬虫利器三之Xpath语法与lxml库的用法</a>。</p>
+
+<hr />
+
+<h2 id="写文件">写文件</h2>
+
+<p>写文件当然容易，但要保存图片的话，就需要用到imghdr模块。</p>
+
+<p>imghdir的what模块可以返回图片的文件格式。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">imghdr</span> <span class="kn">import</span> <span class="n">what</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="n">pic_url</span> <span class="o">=</span> <span class="s">'http://rimoe.ml/assets/img/9030.jpg'</span>
+<span class="n">save_dir</span> <span class="o">=</span> <span class="s">'/Users/_nA/Desktop/'</span>    <span class="c">#存储路径</span>
+<span class="n">photo</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">pic_url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">pic_type</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">photo</span><span class="p">)</span>      <span class="c">#判断图片格式</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">pic_type</span> <span class="p">:</span>                   <span class="c">#若无法识别格式返回None</span>
+  <span class="n">pic_type</span> <span class="o">=</span> <span class="s">''</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">'pic.'</span> <span class="o">+</span> <span class="n">pic_type</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">photo</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="按页数依次爬取">按页数依次爬取</h2>
+
+<p>这样下来我们只能抓取一部分，妹子根本不够看，那我们就多抓几页：</p>
+
+<p>我们可以看到微博主页的URL可以设置URL参数，这里简单地修改URL的page参数即可。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://weibo.com/u/3803639941?is_search=0&amp;visible=0&amp;is_all=1&amp;is_tag=0&amp;profile_ftype=1&amp;page=</span><span class="si">%</span><span class="s">d'</span><span class="o">%</span><span class="n">page</span>
+</code></pre>
+</div>
+
+<p>最后程序可以写成函数，写个循环就开始跑了。</p>
+
+<p>跑出来结果如下：</p>
+
+<p><img src="/img/in-post/2017090401/pic08.png" alt="图 - 8" /></p>
+
+<p><img src="/img/in-post/2017090401/pic09.png" alt="图 - 9" /></p>
+
+<hr />
+
+<h2 id="结尾">结尾</h2>
+
+<p>嗯，可是这东西爬下来关我什么事呢？</p>
+
+<p>写这篇文章的人真是有够无聊了，还不如去看二次元的妹子（误）。</p>
+
+<p><img src="/img/in-post/2017090401/pic10.jpg" alt="图 - 10" /></p>
+
+<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_2">Github - Spider</a>，保留一切权利。</p>
+
+<p>2017.09 于广州</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/08/24/post01/" data-toggle="tooltip" data-placement="top" title="爬虫入门笔记（一）">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="3">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#文艺" title="文艺" rel="4">
+                                    文艺
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="5">
+                                    技术
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="3">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#数据获取" title="数据获取" rel="3">
+                                    数据获取
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#爬虫" title="爬虫" rel="2">
+                                    爬虫
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="http://jekyllcn.com/">Jekyll</a></li>
+                    
+                        <li><a href="http://gp.sysu.edu.cn/">GP,SYSU</a></li>
+                    
+                        <li><a href="http://www.sysu.edu.cn/">SYSU</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        </br>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="icons-header" >
+                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+                    <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
+                    <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                    <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+                </br>
+                <p style="font-size:13px;">
+                All right reserved. &copy; 凝萌小记-2017</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                <iframe
+                    style="margin-left: 2px; margin-bottom:-5px;"
+                    frameborder="0" scrolling="0" width="100px" height="20px"
+                    src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/sweet-scroll.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+
+
+
+
+</body>
+
+</html>
