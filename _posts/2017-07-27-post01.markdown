@@ -176,6 +176,6 @@ windeployqt Programme.exe
 
 做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。
 
-代码已发到[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
+代码已发到[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)。
 
 2017.07.27 于广州

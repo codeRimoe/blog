@@ -242,7 +242,7 @@ with open('data.txt','w') as file:
     file.write('\n\n')
 ```
 
-代码已发到[Github - Spider](https://github.com/codeRimoe/Spider/tree/master/demo/Level_1)，保留一切权利。
+代码已发到[Github - Spider](https://github.com/codeRimoe/Spider/tree/master/demo/Level_1)。
 
 爬虫的原理简单粗暴，除了这个简单的爬虫之外，其实还有一些简单易用的现成框架，有硬件条件的话，爬虫的威力其实更大。
 

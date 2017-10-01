@@ -257,6 +257,6 @@ url = 'http://weibo.com/u/3803639941?is_search=0&visible=0&is_all=1&is_tag=0&pro
 
 ![图 - 10]({{ site.baseurl }}/img/in-post/2017090401/pic10.jpg)
 
-代码已发到[Github - Spider](https://github.com/codeRimoe/Spider/tree/master/demo/Level_2)，保留一切权利。
+代码已发到[Github - Spider](https://github.com/codeRimoe/Spider/tree/master/demo/Level_2)。
 
 2017.09 于广州

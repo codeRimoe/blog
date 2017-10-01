@@ -256,7 +256,7 @@ API的用途更多是用在应用接入方面，比如用在我们用某些软�
 
 其实这篇文章大约半年前就开始写了，最近才将之前的东西整理了一下，接下来我会写几篇关于上学期学习简单爬虫的艰苦历程，可能还会研究一下百度地图的API，不过不知道什么时候才能写出来。
 
-代码已发到[Github - api](https://github.com/codeRimoe/api)，保留一切权利。
+代码已发到[Github - api](https://github.com/codeRimoe/api)。
 
 代码参考自：[微博 获取指定用户发表的所有微博](http://blog.csdn.net/dijason/article/details/8251322)
 

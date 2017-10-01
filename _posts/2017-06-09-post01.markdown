@@ -187,6 +187,6 @@ gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水�
 
 嗯，本人的H5学习之路还要任重道远呢。
 
-代码已发到[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)，保留一切权利。
+代码已发到[Github - h5_game_kanna](https://github.com/codeRimoe/h5_game_kanna)。
 
 2017.06.09 于珠海
