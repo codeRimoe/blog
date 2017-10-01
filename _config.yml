@@ -67,7 +67,7 @@ ga_domain: huangxuan.me
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "打算做点什么，正在学习做点什么。"
+sidebar-about-description: "不是技术宅，但懂点技术，有点宅。"
 sidebar-avatar: /img/HWLuo.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
