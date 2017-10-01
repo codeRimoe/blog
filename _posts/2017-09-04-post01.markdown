@@ -134,7 +134,7 @@ FM.view({
 ![图 - 4]({{ site.baseurl }}/img/in-post/2017090401/pic04.png)
 
 
-在仔细观察，可以发现，主页微博的html是在domid为Pl_Official_MyProfileFeed__22的json中的，我们先用正则表达式把这部分内容提取出来。使用json模块解析其中的html属性，就得到用户主页微博的html文本。
+再仔细观察，可以发现，主页微博的html是在domid为Pl_Official_MyProfileFeed__22的json中的，我们先用正则表达式把这部分内容提取出来。使用json模块解析其中的html属性，就得到用户主页微博的html文本。
 
 ```python
 #承接上一节response为返回内容

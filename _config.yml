@@ -2,7 +2,7 @@
 title: 凝萌小记
 SEOTitle: 凝萌小记 - Rimoe's
 header-img: img/home-bg.jpg
-email: negatronljl@gmail.com
+email: yue.rimoe@gmail.com
 description: "作家是杂家"
 keyword: ""
 url: "http://rimoe.ml"              # your host, for absolute URL
@@ -11,11 +11,11 @@ baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 # SNS settings
-RSS: false
+RSS: true
 twitter_username: Haowen_Luo
 github_username:  coderimoe
 weibo_username:  negatron
-zhihu_username:  negatron
+zhihu_username:  yue_
 facebook_username:  negatronljl
 
 
