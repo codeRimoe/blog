@@ -190,7 +190,7 @@
 <p>在使用API之前，我们有必要了解一下到底什么是API。</p>
 
 <blockquote>
-  <p>API英文全称Application Programming Interface，即应用程序接口。接口（Interface ）指两个独立部分用于传递信息的共同边界（a shared boundary across which two separate components of a computer system exchange information，from Wikipedia）。</p>
+  <p>API英文全称Application Programming Interface，即应用程序接口。接口（Interface）指两个独立部分用于传递信息的共同边界（a shared boundary across which two separate components of a computer system exchange information，from Wikipedia）。</p>
 </blockquote>
 
 <p>所谓接口，就像USB插口一样，插上去就能传递信息。API就是提供给应用程序使用的接口，应用程序通过这个接口就可以简单地获取信息，而不需要知道底层代码或工作机制等细节，就像我们使用移动硬盘时只需要知道怎么将USB插口接到电脑上而不需要知道计算机是怎样实现从硬盘拷贝数据的。</p>
@@ -256,56 +256,57 @@
 
 <p>然后在文档中粘贴以下代码（<a href="https://github.com/codeRimoe/api/blob/master/weiboAPI/apicode/demo1_pub_timeline.py">demo1_pub_timeline.py</a>），我们试着用下面这段代码来扒一些简单的数据吧。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># _*_ coding: utf-8 _*_</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># _*_ coding: utf-8 _*_</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">weibo</span>
 <span class="kn">import</span> <span class="nn">webbrowser</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>                                                  <span class="c">#使用UTF-8输出</span>
+<span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>                                              <span class="c"># 使用UTF-8输出</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
 
-<span class="n">APP_KEY</span> <span class="o">=</span> <span class="s">'xxx'</span>             <span class="c">#将引号中的xxx替换为你的APP_KEY，保留引号</span>
-<span class="n">MY_APP_SECRET</span> <span class="o">=</span> <span class="s">'yyy'</span>       <span class="c">#将引号中的yyy替换为你的APP_SECRET，保留引号</span>
-<span class="n">REDIRECT_URL</span> <span class="o">=</span> <span class="s">'zzz'</span>        <span class="c">#将引号中的zzz替换为你的回调地址，保留引号</span>
+<span class="n">APP_KEY</span> <span class="o">=</span> <span class="s">'xxx'</span>             <span class="c"># 将引号中的xxx替换为你的APP_KEY，保留引号</span>
+<span class="n">MY_APP_SECRET</span> <span class="o">=</span> <span class="s">'yyy'</span>       <span class="c"># 将引号中的yyy替换为你的APP_SECRET，保留引号</span>
+<span class="n">REDIRECT_URL</span> <span class="o">=</span> <span class="s">'zzz'</span>        <span class="c"># 将引号中的zzz替换为你的回调地址，保留引号</span>
 
-<span class="c">#请求用户授权的过程</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">weibo</span><span class="o">.</span><span class="n">APIClient</span><span class="p">(</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="n">MY_APP_SECRET</span><span class="p">)</span>             <span class="c">#</span>
-<span class="n">authorize_url</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_authorize_url</span><span class="p">(</span><span class="n">REDIRECT_URL</span><span class="p">)</span>       <span class="c">#</span>
+<span class="c"># 请求用户授权的过程</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">weibo</span><span class="o">.</span><span class="n">APIClient</span><span class="p">(</span><span class="n">APP_KEY</span><span class="p">,</span> <span class="n">MY_APP_SECRET</span><span class="p">)</span>            <span class="c">#</span>
+<span class="n">authorize_url</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_authorize_url</span><span class="p">(</span><span class="n">REDIRECT_URL</span><span class="p">)</span>      <span class="c">#</span>
 
-<span class="c">#自动打开浏览器，授权后复制地址栏中URL里的code字段</span>
-<span class="n">webbrowser</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="n">authorize_url</span><span class="p">)</span>                               <span class="c">#</span>
+<span class="c"># 自动打开浏览器，授权后复制地址栏中URL里的code字段</span>
+<span class="n">webbrowser</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="n">authorize_url</span><span class="p">)</span>                              <span class="c">#</span>
 
-<span class="c">#将code字段后的值复制输入</span>
-<span class="n">code</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">"input the code: "</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>                 <span class="c">#</span>
+<span class="c"># 将code字段后的值复制输入</span>
+<span class="n">code</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">"input the code: "</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>                <span class="c">#</span>
 
-<span class="c">#获得用户授权</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">request_access_token</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">REDIRECT_URL</span><span class="p">)</span>    <span class="c">#</span>
+<span class="c"># 获得用户授权</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">request_access_token</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">REDIRECT_URL</span><span class="p">)</span>   <span class="c">#</span>
 
-<span class="c">#保存返回的access_token,exires_in,uid</span>
-<span class="n">access_token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">access_token</span>                          <span class="c">#</span>
-<span class="n">expires_in</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">expires_in</span>                              <span class="c">#</span>
-<span class="n">uid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">uid</span>                                            <span class="c">#</span>
+<span class="c"># 保存返回的access_token,exires_in,uid</span>
+<span class="n">access_token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">access_token</span>                         <span class="c">#</span>
+<span class="n">expires_in</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">expires_in</span>                             <span class="c">#</span>
+<span class="n">uid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">uid</span>                                           <span class="c">#</span>
 
-<span class="c">#设置accsess_token</span>
-<span class="n">client</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">expires_in</span><span class="p">)</span>            <span class="c">#</span>
+<span class="c"># 设置accsess_token</span>
+<span class="n">client</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">expires_in</span><span class="p">)</span>           <span class="c">#</span>
 
-<span class="c">#调用API</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">statuses__public_timeline</span><span class="p">()[</span><span class="s">'statuses'</span><span class="p">]</span>     <span class="c">#</span>
+<span class="c"># 调用API</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">statuses__public_timeline</span><span class="p">()[</span><span class="s">'statuses'</span><span class="p">]</span>    <span class="c">#</span>
 
-<span class="k">print</span> <span class="s">"-----------the results is : "</span>                         <span class="c">#输出信息</span>
-<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>                                        <span class="c">#确定获取的信息条数</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">length</span><span class="p">):</span>
-  <span class="k">print</span> <span class="s">'昵称：'</span><span class="o">+</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'user'</span><span class="p">][</span><span class="s">'screen_name'</span><span class="p">]</span><span class="o">+</span><span class="s">' 来自：'</span><span class="o">+</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'user'</span><span class="p">][</span><span class="s">'location'</span><span class="p">]</span>
-  <span class="k">print</span> <span class="s">'时间：'</span><span class="o">+</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'created_at'</span><span class="p">]</span>
-  <span class="k">print</span> <span class="s">'来源：'</span><span class="o">+</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'source'</span><span class="p">]</span>
-  <span class="k">print</span> <span class="s">'微博：'</span><span class="o">+</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'text'</span><span class="p">]</span>
-  <span class="k">print</span> <span class="s">'转发：'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'reposts_count'</span><span class="p">])</span><span class="o">+</span><span class="s">' 评论：'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'comments_count'</span><span class="p">])</span><span class="o">+</span><span class="s">' 喜欢：'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'attitudes_count'</span><span class="p">])</span>
-  <span class="k">print</span>
+<span class="k">print</span> <span class="s">"-----------the results is : "</span>                        <span class="c"># 输出信息</span>
+<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>                                       <span class="c"># 确定获取的信息条数</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">'昵称：'</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'user'</span><span class="p">][</span><span class="s">'screen_name'</span><span class="p">]</span> <span class="o">+</span> \
+        <span class="s">' 来自：'</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'user'</span><span class="p">][</span><span class="s">'location'</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">'时间：'</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'created_at'</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">'来源：'</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'source'</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">'微博：'</span> <span class="o">+</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'text'</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">'转发：'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'reposts_count'</span><span class="p">])</span> <span class="o">+</span> \
+        <span class="s">' 评论：'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'comments_count'</span><span class="p">])</span> <span class="o">+</span> \
+        <span class="s">' 喜欢：'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">'attitudes_count'</span><span class="p">])</span>
+    <span class="k">print</span>
 <span class="k">print</span> <span class="s">"-----------all--------------"</span>
-</code></pre>
-</div>
+
+</code></pre></div></div>
 
 <p>在运行这段代码之前，我们要先将app-key和app-secret放进代码中，这样新浪微博才知道谁要调用这些数据。当然我们也要把回调地址写上，注意要和上面创建APP时你填的地址一样。</p>
 
@@ -407,17 +408,16 @@
 
 <p>比如当前用户关注的人的最新微博的API<a href="http://open.weibo.com/wiki/2/statuses/home_timeline">statuses/home_timeline</a>其URL是”https://api.weibo.com/2/statuses/home_timeline.json”，调用就可以直接使用如下方法，其实就是把“/”换成“.”，然后后面加上请求方式（.get/.post）。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">statuses</span><span class="o">.</span><span class="n">home_timeline</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre>
-</div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">statuses</span><span class="o">.</span><span class="n">home_timeline</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</code></pre></div></div>
 
 <p>如果要调用某些API需要提交请求参数的，那就在括号里面加上参数名=具体参数，如<a href="http://open.weibo.com/wiki/2/comments/create">comments/create</a>（这个API是POST请求方式,请求参数如图-8），那就应该写成如下形式。</p>
 
 <p><img src="/img/in-post/2017072901/pic08.png" alt="图 - 8" /></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">results</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s">"你好帅啊！"</span><span class="p">,</span><span class="nb">id</span><span class="o">=</span><span class="mi">4129569084024445</span><span class="p">)</span>
-</code></pre>
-</div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">results</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s">"你好帅啊！"</span><span class="p">,</span>
+                                          <span class="nb">id</span><span class="o">=</span><span class="mi">4129569084024445</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p>调用后结果如下：</p>
 
@@ -460,7 +460,7 @@
 
 <p>其实这篇文章大约半年前就开始写了，最近才将之前的东西整理了一下，接下来我会写几篇关于上学期学习简单爬虫的艰苦历程，可能还会研究一下百度地图的API，不过不知道什么时候才能写出来。</p>
 
-<p>代码已发到<a href="https://github.com/codeRimoe/api">Github - api</a>，保留一切权利。</p>
+<p>代码已发到<a href="https://github.com/codeRimoe/api">Github - api</a>。</p>
 
 <p>代码参考自：<a href="http://blog.csdn.net/dijason/article/details/8251322">微博 获取指定用户发表的所有微博</a></p>
 
@@ -501,13 +501,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="3">
+                				<a href="/tags/#生活" title="生活" rel="4">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="4">
+                				<a href="/tags/#文艺" title="文艺" rel="5">
                                     文艺
                                 </a>
                             
@@ -560,6 +560,10 @@
                 				<a href="/tags/#爬虫" title="爬虫" rel="2">
                                     爬虫
                                 </a>
+                            
+        				
+                            
+        				
                             
         				
         			</div>
@@ -634,12 +638,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="icons-header" >
-                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
                     <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
                     <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
                     <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 </br>

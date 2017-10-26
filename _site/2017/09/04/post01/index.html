@@ -191,22 +191,23 @@
 
 <p>我们尝试用<a href="http://blog.rimoe.ml/2017/08/24/post01/">上一篇文章</a>的方法获取<a href="http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&amp;is_hot=1&amp;noscale_head=1#_0">二次元交往平台</a>的主页。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="n">site</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=</span><span class="si">%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%8</span><span class="s">C</span><span class="si">%</span><span class="s">E6</span><span class="si">%</span><span class="s">AC</span><span class="si">%</span><span class="s">A1</span><span class="si">%</span><span class="s">E5</span><span class="si">%85%83%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%</span><span class="s">A4</span><span class="si">%</span><span class="s">E5</span><span class="si">%</span><span class="s">BE</span><span class="si">%80%</span><span class="s">E5</span><span class="si">%</span><span class="s">B9</span><span class="si">%</span><span class="s">B3</span><span class="si">%</span><span class="s">E5</span><span class="si">%8</span><span class="s">F</span><span class="si">%</span><span class="s">B0&amp;is_hot=1&amp;noscale_head=1#_0"</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">site</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'gbk'</span><span class="p">)</span>  <span class="c">#  以gbk方式解码</span>
-</code></pre>
-</div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="n">site</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;"</span>
+                       <span class="s">"nick=</span><span class="si">%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%8</span><span class="s">C</span><span class="si">%</span><span class="s">E6</span><span class="si">%</span><span class="s">AC</span><span class="si">%</span><span class="s">A1</span><span class="si">%</span><span class="s">E5</span><span class="si">%85%83%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%</span><span class="s">A4</span><span class="si">%</span><span class="s">E5</span><span class="si">%</span><span class="s">BE</span><span class="si">%80%</span><span class="s">E5"</span>
+                       <span class="s">"</span><span class="si">%</span><span class="s">B9</span><span class="si">%</span><span class="s">B3</span><span class="si">%</span><span class="s">E5</span><span class="si">%8</span><span class="s">F</span><span class="si">%</span><span class="s">B0&amp;is_hot=1&amp;noscale_head=1#_0"</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">site</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'gbk'</span><span class="p">)</span>  <span class="c"># 以gbk方式解码</span>
+
+</code></pre></div></div>
 
 <p>然而发现……没有妹纸呀……</p>
 
 <p>仔细观察，发现打印出来的开头是这样的：</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-type"</span> <span class="na">content=</span><span class="s">"text/html; charset=gb2312"</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;title&gt;</span>Sina Visitor System<span class="nt">&lt;/title&gt;</span>
 <span class="nt">&lt;/head&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>访客系统……也就是说跳转到登录的网页了，需要登录才可以访问。</p>
 
@@ -251,18 +252,22 @@
 
 <p>我们在这里尝试使用urllib2提交请求头。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">'http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=</span><span class="si">%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%8</span><span class="s">C</span><span class="si">%</span><span class="s">E6</span><span class="si">%</span><span class="s">AC</span><span class="si">%</span><span class="s">A1</span><span class="si">%</span><span class="s">E5</span><span class="si">%85%83%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%</span><span class="s">A4</span><span class="si">%</span><span class="s">E5</span><span class="si">%</span><span class="s">BE</span><span class="si">%80%</span><span class="s">E5</span><span class="si">%</span><span class="s">B9</span><span class="si">%</span><span class="s">B3</span><span class="si">%</span><span class="s">E5</span><span class="si">%8</span><span class="s">F</span><span class="si">%</span><span class="s">B0&amp;is_hot=1&amp;noscale_head=1#_0'</span>
-<span class="n">cookie</span> <span class="o">=</span> <span class="s">'SINAGLOBAL=balabala'</span>  <span class="c">#输入cookie</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'cookie'</span> <span class="p">:</span> <span class="n">cookie</span> <span class="p">}</span> 
-<span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
-<span class="c">#将URL、Header打包请求，当然这里还可以有别的参数</span>
-<span class="c">#class urllib2.Request(url[, data][, headers][, origin_req_host][, unverifiable])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="p">(</span><span class="s">"http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;"</span>
+       <span class="s">"nick=</span><span class="si">%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%8</span><span class="s">C</span><span class="si">%</span><span class="s">E6</span><span class="si">%</span><span class="s">AC</span><span class="si">%</span><span class="s">A1</span><span class="si">%</span><span class="s">E5</span><span class="si">%85%83%</span><span class="s">E4</span><span class="si">%</span><span class="s">BA</span><span class="si">%</span><span class="s">A4</span><span class="si">%</span><span class="s">E5</span><span class="si">%</span><span class="s">BE</span><span class="si">%80%</span><span class="s">E5"</span>
+       <span class="s">"</span><span class="si">%</span><span class="s">B9</span><span class="si">%</span><span class="s">B3</span><span class="si">%</span><span class="s">E5</span><span class="si">%8</span><span class="s">F</span><span class="si">%</span><span class="s">B0&amp;is_hot=1&amp;noscale_head=1#_0"</span><span class="p">)</span>
+<span class="n">cookie</span> <span class="o">=</span> <span class="s">'SINAGLOBAL=balabala'</span>  <span class="c"># 输入cookie</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'cookie'</span><span class="p">:</span> <span class="n">cookie</span><span class="p">}</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="c"># 将URL、Header打包请求，当然这里还可以有别的参数</span>
+<span class="c"># class urllib2.Request(url[, data][, headers][, origin_req_host]\</span>
+<span class="c"># [, unverifiable])</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-<span class="c">#提交请求并获取响应</span>
+<span class="c"># 提交请求并获取响应</span>
 <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</code></pre>
-</div>
+
+</code></pre></div></div>
 
 <p>返回：</p>
 
@@ -284,36 +289,33 @@
 
 <p>当然使用前我们要先安装一下bs4这个库,另外我们还需要lxml这个库的支持（用于解析html，类似的还有html5lib以及python自带的html.parser）:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>pip install bs4
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install bs4
 pip install lxml
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>观察源码，我们可以发现，微博的网页其实是使用一个js函数FM.view(json)来展示的，html存在一个json格式中：</p>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">FM</span><span class="p">.</span><span class="nx">view</span><span class="p">({</span>
-  <span class="s2">"ns"</span> <span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-  <span class="s2">"domid"</span> <span class="p">:</span> <span class="s2">"xxx"</span><span class="p">,</span>
-  <span class="s2">"css"</span> <span class="p">:</span> <span class="p">[</span><span class="s2">"..."</span><span class="p">],</span>
-  <span class="s2">"html"</span> <span class="p">:</span> <span class="s2">"balabala"</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FM</span><span class="p">.</span><span class="nx">view</span><span class="p">({</span>
+    <span class="s2">"ns"</span> <span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="s2">"domid"</span> <span class="p">:</span> <span class="s2">"xxx"</span><span class="p">,</span>
+    <span class="s2">"css"</span> <span class="p">:</span> <span class="p">[</span><span class="s2">"..."</span><span class="p">],</span>
+    <span class="s2">"html"</span> <span class="p">:</span> <span class="s2">"balabala"</span>
 <span class="p">})</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="/img/in-post/2017090401/pic04.png" alt="图 - 4" /></p>
 
-<p>在仔细观察，可以发现，主页微博的html是在domid为Pl_Official_MyProfileFeed__22的json中的，我们先用正则表达式把这部分内容提取出来。使用json模块解析其中的html属性，就得到用户主页微博的html文本。</p>
+<p>再仔细观察，可以发现，主页微博的html是在domid为Pl_Official_MyProfileFeed__22的json中的，我们先用正则表达式把这部分内容提取出来。使用json模块解析其中的html属性，就得到用户主页微博的html文本。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#承接上一节response为返回内容</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#承接上一节response为返回内容</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'"domid":"Pl_Official_MyProfileFeed__22",(.*?)</span><span class="err">\</span><span class="s">)&lt;/script&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'"domid":"Pl_Official_MyProfileFeed__22",(.*?)\)&lt;/script&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
 <span class="n">webres</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">html</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c">#用正则表达式提取包含内容部分</span>
 <span class="n">webres_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s">'{'</span><span class="o">+</span><span class="n">webres</span><span class="p">)</span> <span class="c">#解析json字符串，前面要补充`{`字符</span>
 <span class="n">webres_html</span> <span class="o">=</span> <span class="n">webres_json</span><span class="p">[</span><span class="s">'html'</span><span class="p">]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>打印出来是这样的：</p>
 
@@ -321,50 +323,51 @@ pip install lxml
 
 <p>接下来我们用BeautifulSoup对html文本进行分析，首先看看造出来soup是怎样的呢？</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#使用BeautifulSoup对webres_html进行分析</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#使用BeautifulSoup对webres_html进行分析</span>
+
 <span class="kn">import</span> <span class="nn">lxml</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span> <span class="k">as</span> <span class="n">bs</span>
-<span class="n">soup</span> <span class="o">=</span> <span class="n">bs</span><span class="p">(</span><span class="n">webres_html</span><span class="p">,</span><span class="s">'lxml'</span><span class="p">)</span>  <span class="c"># 构建Soup</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">bs</span><span class="p">(</span><span class="n">webres_html</span><span class="p">,</span> <span class="s">'lxml'</span><span class="p">)</span>  <span class="c"># 构建Soup</span>
 <span class="k">print</span> <span class="n">soup</span>
-</code></pre>
-</div>
+
+</code></pre></div></div>
 
 <p><img src="/img/in-post/2017090401/pic06.png" alt="图 - 6" /></p>
 
 <p>打印出来的东西十分整齐，真实一个beautiful的soup，看着就很舒服。使用contents可以逐级分析html下的标签元素。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">contents</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">contents</span>
 <span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">contents</span>
-</code></pre>
-</div>
+
+</code></pre></div></div>
 
 <p>通过源码我们大概知道，在每条单独微博都在一个class为”WB_dertail”的div里，使用find_all的方法，得到所有符合条件的标签，以数组形式返回，然后我们，将微博里的含信息标签全部提取出来。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 微博每张图片有id，缩略图URL、URL分别为以下格式：</span>
-<span class="c"># http://wx4.sinaimg.cn/mw690/(pic_id).jpg   #URL</span>
-<span class="c"># http://wx4.sinaimg.cn/square/(pic_id).jpg  #缩略图URL</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 微博每张图片有id，缩略图URL、URL分别为以下格式：</span>
+<span class="c"># http://wx4.sinaimg.cn/mw690/(pic_id).jpg   # URL</span>
+<span class="c"># http://wx4.sinaimg.cn/square/(pic_id).jpg  # 缩略图URL</span>
 
 <span class="n">infos</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s">"WB_detail"</span><span class="p">)</span>
 <span class="n">pattern_pic</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'pic_id=(.*)'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">infos</span><span class="p">:</span>
-  <span class="n">Stxt</span><span class="o">=</span><span class="s">""</span>
-  <span class="k">try</span><span class="p">:</span>
-    <span class="n">txts</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s">"WB_text W_f14"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contents</span>
-    <span class="n">pics</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'li'</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txts</span><span class="p">:</span>
-      <span class="k">try</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">txtc</span> <span class="ow">in</span> <span class="n">txt</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
-          <span class="n">Stxt</span><span class="o">+=</span><span class="n">txtc</span>              <span class="c">#对于链接文本，提取其内容</span>
-      <span class="k">except</span><span class="p">:</span>
-        <span class="n">Stxt</span><span class="o">+=</span><span class="n">txt</span>                 <span class="c">#否则原样输出</span>
-    <span class="k">for</span> <span class="n">pic</span> <span class="ow">in</span> <span class="n">pics</span><span class="p">:</span>              <span class="c">#得到图片URL</span>
-        <span class="n">picid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_pic</span><span class="p">,</span><span class="n">pic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'action-data'</span><span class="p">))</span>
-        <span class="k">print</span> <span class="s">"http://wx1.sinaimg.cn/mw690/"</span> <span class="o">+</span> <span class="n">picid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">'.jpg'</span>
-  <span class="k">except</span><span class="p">:</span>
-    <span class="k">pass</span>
-  <span class="k">print</span> <span class="n">Stxt</span>
-</code></pre>
-</div>
+    <span class="n">Stxt</span><span class="o">=</span><span class="s">""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">txts</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s">"WB_text W_f14"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contents</span>
+        <span class="n">pics</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'li'</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txts</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+              <span class="k">for</span> <span class="n">txtc</span> <span class="ow">in</span> <span class="n">txt</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+                <span class="n">Stxt</span><span class="o">+=</span><span class="n">txtc</span>              <span class="c"># 对于链接文本，提取其内容</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">Stxt</span><span class="o">+=</span><span class="n">txt</span>               <span class="c"># 否则原样输出</span>
+        <span class="k">for</span> <span class="n">pic</span> <span class="ow">in</span> <span class="n">pics</span><span class="p">:</span>                <span class="c"># 得到图片URL</span>
+              <span class="n">picid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern_pic</span><span class="p">,</span> <span class="n">pic</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'action-data'</span><span class="p">))</span>
+              <span class="k">print</span> <span class="s">"http://wx1.sinaimg.cn/mw690/"</span> <span class="o">+</span> <span class="n">picid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">'.jpg'</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">print</span> <span class="n">Stxt</span>
+
+</code></pre></div></div>
 
 <p>打印出来的效果：</p>
 
@@ -380,19 +383,19 @@ pip install lxml
 
 <p>imghdir的what模块可以返回图片的文件格式。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">imghdr</span> <span class="kn">import</span> <span class="n">what</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">imghdr</span> <span class="kn">import</span> <span class="n">what</span>
 <span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="n">pic_url</span> <span class="o">=</span> <span class="s">'http://rimoe.ml/assets/img/9030.jpg'</span>
-<span class="n">save_dir</span> <span class="o">=</span> <span class="s">'/Users/_nA/Desktop/'</span>    <span class="c">#存储路径</span>
+<span class="n">save_dir</span> <span class="o">=</span> <span class="s">'/Users/_nA/Desktop/'</span>    <span class="c"># 存储路径</span>
 <span class="n">photo</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">pic_url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">pic_type</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">photo</span><span class="p">)</span>      <span class="c">#判断图片格式</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">pic_type</span> <span class="p">:</span>                   <span class="c">#若无法识别格式返回None</span>
-  <span class="n">pic_type</span> <span class="o">=</span> <span class="s">''</span>
+<span class="n">pic_type</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">photo</span><span class="p">)</span>      <span class="c"># 判断图片格式</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">pic_type</span> <span class="p">:</span>                   <span class="c"># 若无法识别格式返回None</span>
+    <span class="n">pic_type</span> <span class="o">=</span> <span class="s">''</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">'pic.'</span> <span class="o">+</span> <span class="n">pic_type</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-  <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">photo</span><span class="p">)</span>
-</code></pre>
-</div>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">photo</span><span class="p">)</span>
+
+</code></pre></div></div>
 
 <hr />
 
@@ -402,10 +405,11 @@ pip install lxml
 
 <p>我们可以看到微博主页的URL可以设置URL参数，这里简单地修改URL的page参数即可。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">'http://weibo.com/u/3803639941?is_search=0&amp;visible=0&amp;is_all=1&amp;is_tag=0&amp;profile_ftype=1&amp;page=</span><span class="si">%</span><span class="s">d'</span><span class="o">%</span><span class="n">page</span>
-</code></pre>
-</div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">url</span> <span class="o">=</span> <span class="p">(</span><span class="s">"http://weibo.com/u/3803639941?is_search=0&amp;visible=0&amp;is_all=1&amp;is_tag=0&amp;"</span>
+       <span class="s">"profile_ftype=1&amp;page=</span><span class="si">%</span><span class="s">d"</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
+
+</code></pre></div></div>
 
 <p>最后程序可以写成函数，写个循环就开始跑了。</p>
 
@@ -425,7 +429,7 @@ pip install lxml
 
 <p><img src="/img/in-post/2017090401/pic10.jpg" alt="图 - 10" /></p>
 
-<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_2">Github - Spider</a>，保留一切权利。</p>
+<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_2">Github - Spider</a>。</p>
 
 <p>2017.09 于广州</p>
 
@@ -438,6 +442,10 @@ pip install lxml
                         <a href="/2017/08/24/post01/" data-toggle="tooltip" data-placement="top" title="爬虫入门笔记（一）">&larr; Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/10/05/post01/" data-toggle="tooltip" data-placement="top" title="我想写一篇文章">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -460,13 +468,13 @@ pip install lxml
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="3">
+                				<a href="/tags/#生活" title="生活" rel="4">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="4">
+                				<a href="/tags/#文艺" title="文艺" rel="5">
                                     文艺
                                 </a>
                             
@@ -519,6 +527,10 @@ pip install lxml
                 				<a href="/tags/#爬虫" title="爬虫" rel="2">
                                     爬虫
                                 </a>
+                            
+        				
+                            
+        				
                             
         				
         			</div>
@@ -593,12 +605,12 @@ pip install lxml
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="icons-header" >
-                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
                     <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
                     <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
                     <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 </br>

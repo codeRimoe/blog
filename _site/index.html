@@ -129,27 +129,27 @@
 
 
     <!-- Page Header -->
-<div id="particles-js" style="background-size:100%;background:url('/img/home-bg.jpg') no-repeat" >
+<div id="particles-js" style="background-size:cover;background-image:url('/img/home-bg.jpg');background-repeat:no-repeat;" >
   <div class="content">
       <h1>
         <span class="site-title">凝萌小记</span>
         <span class="site-description">作家是杂家。</span>
       </h1>
       <div class="icons-header">
-        <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+        <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
         <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
         <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
         <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
         <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-        <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+        <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
         <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
       </div>
 
   </div>
-  <a class="down" style="color:#fff" href="#xxloc"><i class="icon fa fa-chevron-down" aria-hidden="true"></i></a>
+  <a class="down" style="color:#fff" href="#moe" data-scroll><i class="icon fa fa-chevron-down" aria-hidden="true"></i></a>
 </div>
 
-<a name="xxloc"></a>
+<div id="moe"></div>
 
 
 <!-- Main Content -->
@@ -167,6 +167,66 @@
                 post-container
             ">
     			
+<div class="post-preview">
+    <a href="/2017/10/23/post01/">
+        <h2 class="post-title">
+            一些收获
+        </h2>
+        
+        <h3 class="post-subtitle">
+            关于今日对统计学的部分知识的理解
+        </h3>
+        
+        <div class="post-content-preview">
+            从p值开始
+
+对于空间自相关，之前一直没看明白，只是大概知其所以，但也就这样不知其所以然。
+
+其中原因，也许是统计没学好。但这不能怪我，毕竟我们概率统计都没讲到假设检验。
+
+今天上课将地理统计，提到空间自相关，老师解释了一通p值，但似乎没戳到p值本质，于是我在网上找了一下，很糙地理解了何为p值。
+
+假设-检验
+
+
+  
+    
+      [你真的懂p值吗?
+      说人话的统计学](...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 柠萌 on October 23, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/10/05/post01/">
+        <h2 class="post-title">
+            我想写一篇文章
+        </h2>
+        
+        <h3 class="post-subtitle">
+            来表达我内心的苦闷
+        </h3>
+        
+        <div class="post-content-preview">
+            关于苦闷
+
+我想写一篇文章来表达我内心的苦闷，但是我连我内心的情感都无法好好地说出来，那就像是一个未懂言语的孩子咿咿呀呀地哭着叫着，让别人看着好笑。
+
+说一个故事容易，写成一篇文章却颇难。
+
+六年前的我，还是一个喜欢文艺却不愿读书的青年，那时正是爱好谈情的年纪–总歆羡着怎样风花之前，憧憬着如何雪月之下。以为这世间惟有妹子与爱不可辜负。现今看来似乎也并不如此，只不过那时用来把自己灌醉的梅子酒瓶...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 柠萌 on October 5, 2017
+    </p>
+</div>
+<hr>
+
 <div class="post-preview">
     <a href="/2017/09/04/post01/">
         <h2 class="post-title">
@@ -318,7 +378,7 @@ site = urllib2.urlopen("http://weibo.com/u/3803639941?refer_fla...
 在使用API之前，我们有必要了解一下到底什么是API。
 
 
-  API英文全称Application Programming Interface，即应用程序接口。接口（Interface ）指两个独立部分用...
+  API英文全称Application Programming Interface，即应用程序接口。接口（Interface）指两个独立部分用于...
         </div>
     </a>
     <p class="post-meta">
@@ -430,61 +490,17 @@ H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/05/01/post02/">
-        <h2 class="post-title">
-            用数学画地图
-        </h2>
-        
-        <h3 class="post-subtitle">
-            地图投影怎么做到条件投影的？
-        </h3>
-        
-        <div class="post-content-preview">
-            1、地图投影为什么会变形？
-
-要知道变形怎么来，我们就从什么是投影讲起。
-
-
-  (据维基百科)
-
-  A map projection is a systematic transformation of the latitudes and longitudes of locations on the surface of a sphere or an ellipsoid into loca...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 柠萌 on May 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/01/post01/">
-        <h2 class="post-title">
-            搭建一个小记事本
-        </h2>
-        
-        <h3 class="post-subtitle">
-            垦一个自己的园地
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  “有些人种花聊以消遣，有些人种花志在卖钱；真种花者以种花为其生活，——而花亦未尝不美，未尝于人无益。（周作人《自己的园地》）”
-
-
-缘起
-
-中学时候有写周记的习惯，写得一篇文章后又会拿去给同学看，那非常的愉悦就像是幼儿园的孩子夸耀自己的手工作品一样。等到今天处于大学里，自由的时间多了，却更加无暇去作文。有无穷多的乐事、烦心事去充塞我的生活，这些大大小小的事迫使我戒掉了读书作文这种精神上...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 柠萌 on May 1, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
 
 
     		</div>
@@ -504,13 +520,13 @@ H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港
                     <div class="tags">
                         
                             
-                                <a href="/tags/#生活" title="生活" rel="3">
+                                <a href="/tags/#生活" title="生活" rel="4">
                                     生活
                                 </a>
                             
                         
                             
-                                <a href="/tags/#文艺" title="文艺" rel="4">
+                                <a href="/tags/#文艺" title="文艺" rel="5">
                                     文艺
                                 </a>
                             
@@ -565,6 +581,10 @@ H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港
                                 </a>
                             
                         
+                            
+                        
+                            
+                        
                     </div>
                 </section>
                 
@@ -577,16 +597,16 @@ H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港
                             <img align="center" width="100%" src="/img/Yue.jpg" />
                         
                         <div align="center">
-                        <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                        <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
                         <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
                         <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
                         <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                         <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                        <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                        <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
                         <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                         </div>
                         
-                            <p>打算做点什么，正在学习做点什么。</p>
+                            <p>不是技术宅，但懂点技术，有点宅。</p>
                         
                         <!-- SNS Link -->
                         
@@ -621,12 +641,12 @@ H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="icons-header" >
-                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
                     <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
                     <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
                     <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 </br>

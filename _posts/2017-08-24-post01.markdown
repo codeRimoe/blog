@@ -57,15 +57,18 @@ tags:
 
 ```python
 import urllib2
-res = urllib2.urlopen("http://rimoe.ml") #打开网页http://rimoe.ml
+
+res = urllib2.urlopen("http://rimoe.ml")  # 打开网页http://rimoe.ml
 print res
-print res.read()                         #解析re，输出html格式
+print res.read()                          # 解析re，输出html格式
+
 ```
 输出：
 
 ```
 1 <addinfourl at 4436195304 whose fp = <socket._fileobject object at 0x10816f8d0>>
-2 '<!DOCTYPE html>\n<html lang="en">\n  <head>\n  <meta charset="utf-8">\n  <meta http-equiv="X-UA-Compatible" content="IE=edge">\n …… </body>\n'
+2 '<!DOCTYPE html>\n<html lang="en">\n  <head>\n  <meta charset="utf-8">\n  <meta 
+  http-equiv="X-UA-Compatible" content="IE=edge">\n …… </body>\n'
 ```
 
 ![图 - 2]({{ site.baseurl }}/img/in-post/2017082401/pic02.jpg)
@@ -114,18 +117,21 @@ Python的re模块可以使用正则表达式匹配字符串：
 
 ```python
 import re
+
 ### 举例1
 txt1 = 'rimoe,rimoe.ml'          #从txt1中搜索关键字'rimoe'
 pattern1 = re.compile('rimoe')   #用正则表达式生成pattern对象
-re.findall(pattern1,txt1)        #查找所有符合表达式的子串
+re.findall(pattern1, txt1)        #查找所有符合表达式的子串
+
 ### 举例2
-txt2 = '1.rimoe\n2.Yue\n3.Luo\n'       #从txt2中提取列表内容
+txt2 = '1.rimoe\n2.Yue\n3.Luo\n'       # 从txt2中提取列表内容
 pattern2 = re.compile(r'\d+\.(.*?)\n')
-re.findall(pattern2,txt2)
-#一般用r串作为参数
-#这里\d匹配数字（0～9），+表示匹配连续的数字，\.匹配字符'.'
-#(.*?)匹配连续任意字符任意次，括号表示要提取的部分分组
-#\n匹配回车，(.*?)\n表示任意字符匹配直到遇到回车停止匹配
+re.findall(pattern2, txt2)
+# 一般用r串作为参数
+# 这里\d匹配数字（0～9），+表示匹配连续的数字，\.匹配字符'.'
+# (.*?)匹配连续任意字符任意次，括号表示要提取的部分分组
+# \n匹配回车，(.*?)\n表示任意字符匹配直到遇到回车停止匹配
+
 ```
 
 输出
@@ -142,7 +148,7 @@ re.findall(pattern2,txt2)
 
 ![图 - 5]({{ site.baseurl }}/img/in-post/2017082401/pic05.jpg)
 
-当然这里推荐Chrome，主要是因为好用加功能完善，在学习爬虫的道路上这个审查元素的功能和这个开发者选项框将会是你的好基友，弹出的框如下图：
+当然这里推荐Chrome，主要是因为好用加功能完善，在学习爬虫的道路上这个审查元素的功能和这个开发者选项框将会是你学习爬虫的好基友，弹出的框如下图：
 
 ![图 - 6]({{ site.baseurl }}/img/in-post/2017082401/pic06.jpg)
 
@@ -153,31 +159,37 @@ re.findall(pattern2,txt2)
 ```html
 <ul>
   <li>
-    <a href="https://github.com/codeRimoe/h5_game_kanna">h5 Game - 坎娜与托尔</a>  <a href="http://blog.rimoe.ml/2017/06/09/post01/">[NOTE BLOG]</a>  <a href="http://rimoe.ml/kanna">[TRY NOW]</a>
+    <a href="https://github.com/codeRimoe/h5_game_kanna">h5 Game - 坎娜与托尔</a>  
+    <a href="http://blog.rimoe.ml/2017/06/09/post01/">[NOTE BLOG]</a>
+    <a href="http://rimoe.ml/kanna">[TRY NOW]</a>
   </li>
   <li>
-    <a href="https://github.com/codeRimoe/Wolf_and_Sheep">OOP Homework - Wolf and Sheep</a>  <a href="\\">[NOTE BLOG]</a>
+    <a href="https://github.com/codeRimoe/Wolf_and_Sheep">OOP Homework - Wolf and Sheep</a>
+    <a href="\\">[NOTE BLOG]</a>
   </li>
 </ul>
 ```
 
 我们用正则表达式来表示,分两次提取：
 ```python
-#刚刚提取的网页返回res
+# 刚刚提取的网页返回res
 import re
+
 txt1 = res.read()
-pattern1 = re.compile(r'<li>(.*?)</li>',re.S)
-#提取列表标签<li>
-#re.S为DOCALL模式，该模式下字符'.'可以匹配回车'\n'
-txt2 = re.findall(pattern1,txt1)
-print txt2    #打印出来看看是什么样子的吧～
-pattern2 = re.compile(r'<a.*?href=(.*?)>(.*?)</a>',re.S)
+pattern1 = re.compile(r'<li>(.*?)</li>', re.S)
+
+# 提取列表标签<li>
+# re.S为DOCALL模式，该模式下字符'.'可以匹配回车'\n'
+txt2 = re.findall(pattern1, txt1)
+print txt2                               # 打印出来看看是什么样子的吧～
+pattern2 = re.compile(r'<a.*?href=(.*?)>(.*?)</a>', re.S)
 for txt in txt2:
-  results = re.findall(pattern2,txt)   #逐项提取链接标签<a>
-  print 'Project：'                    #格式化打印
-  for result in results:
-    print result[1]+':'+result[0]
-  print
+    results = re.findall(pattern2, txt)   # 逐项提取链接标签<a>
+    print 'Project：'                    # 格式化打印
+    for result in results:
+        print result[1]+':'+result[0]
+    print
+
 ```
 
 输出：
@@ -220,26 +232,26 @@ with open('data.txt','w') as file:
 
 ```python
 # -*- coding: utf-8 -*-
-#Spider Lv1
+# Spider Lv1
 
 import urllib2
 import re
 
-res = urllib2.urlopen("http://rimoe.ml") #打开网页http://rimoe.ml
+res = urllib2.urlopen("http://rimoe.ml")        # 打开网页http://rimoe.ml
 
 txt1 = res.read()
-pattern1 = re.compile(r'<li>(.*?)</li>',re.S)
-#提取列表标签<li>
-txt2 = re.findall(pattern1,txt1)
-pattern2 = re.compile(r'<a.*?href=(.*?)>(.*?)</a>',re.S)
+pattern1 = re.compile(r'<li>(.*?)</li>', re.S)  # 提取列表标签<li>
+txt2 = re.findall(pattern1, txt1)
+pattern2 = re.compile(r'<a.*?href=(.*?)>(.*?)</a>', re.S)
 
-with open('data.txt','w') as file:
-  for txt in txt2:
-    results = re.findall(pattern2,txt)   #逐项提取链接标签<a>
-    file.write('Project:')               #格式化输出
-    for result in results:
-      file.write('\n'+result[1]+':'+result[0])
-    file.write('\n\n')
+with open('data.txt', 'w') as file:
+    for txt in txt2:
+        results = re.findall(pattern2, txt)     # 逐项提取链接标签<a>
+        file.write('Project:')                  # 格式化输出
+        for result in results:
+            file.write('\n'+result[1] + ':' + result[0])
+        file.write('\n\n')
+
 ```
 
 代码已发到[Github - Spider](https://github.com/codeRimoe/Spider/tree/master/demo/Level_1)。

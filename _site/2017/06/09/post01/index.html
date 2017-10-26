@@ -225,7 +225,7 @@
 
 <p>代码如下</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="c1">//监听键盘事件</span>
 <span class="kd">var</span> <span class="nx">keysDown</span> <span class="o">=</span> <span class="p">{};</span>                                     <span class="c1">//记录当前按着的键</span>
 <span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"keydown"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
@@ -235,8 +235,8 @@
 <span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"keyup"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">delete</span> <span class="nx">keysDown</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">];</span>
     <span class="k">switch</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">){</span>
-        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="err">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>   <span class="c1">//松开某键盘执行代码</span>
-        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="err">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="p">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>   <span class="c1">//松开某键盘执行代码</span>
+        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="p">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
 
@@ -254,8 +254,7 @@
     <span class="k">this</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span>
 <span class="p">};</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>其他的话就是托尔跟踪的函数了，算法大概就是每次算出xy差值，然后得到连线斜率，然后用速度算一下移动的xy值。</p>
 
@@ -315,7 +314,7 @@
 
 <p>网页自适应对我来说一直挺麻烦的，可能是因为CSS和Style没学好，其实个人觉得吧，CSS写错了都不知道哪出问题，颇为心累。</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;title&gt;</span>坎娜与托尔 - Rimoe Game<span class="nt">&lt;/title&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">"user-scalable=0"</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="nt">/&gt;</span>
@@ -329,8 +328,7 @@
         <span class="nl">align-items</span><span class="p">:</span><span class="nb">center</span><span class="p">;</span>
     <span class="p">}</span>   
 <span class="nt">&lt;/style&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>这里mark一下meta里面的user-scalable=0，这样的话可以避免双击放大，在游戏中就很好地避免狂点屏幕放大网页的问题。</p>
 
@@ -348,7 +346,7 @@
 
 <p>嗯，本人的H5学习之路还要任重道远呢。</p>
 
-<p>代码已发到<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>，保留一切权利。</p>
+<p>代码已发到<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>。</p>
 
 <p>2017.06.09 于珠海</p>
 
@@ -387,13 +385,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="3">
+                				<a href="/tags/#生活" title="生活" rel="4">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="4">
+                				<a href="/tags/#文艺" title="文艺" rel="5">
                                     文艺
                                 </a>
                             
@@ -446,6 +444,10 @@
                 				<a href="/tags/#爬虫" title="爬虫" rel="2">
                                     爬虫
                                 </a>
+                            
+        				
+                            
+        				
                             
         				
         			</div>
@@ -520,12 +522,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="icons-header" >
-                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
                     <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
                     <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
                     <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 </br>

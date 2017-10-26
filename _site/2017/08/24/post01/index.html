@@ -224,18 +224,19 @@
 
 <p>输入网址是为了获取网页，当然前提是要联网，我们可以先在交互式解释器中看看。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://rimoe.ml"</span><span class="p">)</span> <span class="c">#打开网页http://rimoe.ml</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://rimoe.ml"</span><span class="p">)</span>  <span class="c"># 打开网页http://rimoe.ml</span>
 <span class="k">print</span> <span class="n">res</span>
-<span class="k">print</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>                         <span class="c">#解析re，输出html格式</span>
-</code></pre>
-</div>
+<span class="k">print</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>                          <span class="c"># 解析re，输出html格式</span>
+
+</code></pre></div></div>
 <p>输出：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1 <span class="nt">&lt;addinfourl</span> <span class="na">at</span> <span class="na">4436195304</span> <span class="na">whose</span> <span class="na">fp =</span><span class="err"> </span><span class="s">&lt;socket._fileobject</span> <span class="na">object</span> <span class="na">at</span> <span class="na">0x10816f8d0</span><span class="nt">&gt;</span>&gt;
-2 '<span class="cp">&lt;!DOCTYPE html&gt;</span>\n<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>\n  <span class="nt">&lt;head&gt;</span>\n  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>\n  <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge"</span><span class="nt">&gt;</span>\n …… <span class="nt">&lt;/body&gt;</span>\n'
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 <span class="nt">&lt;addinfourl</span> <span class="na">at</span> <span class="na">4436195304</span> <span class="na">whose</span> <span class="na">fp =</span><span class="err"> </span><span class="s">&lt;socket._fileobject</span> <span class="na">object</span> <span class="na">at</span> <span class="na">0x10816f8d0</span><span class="nt">&gt;</span>&gt;
+2 '<span class="cp">&lt;!DOCTYPE html&gt;</span>\n<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>\n  <span class="nt">&lt;head&gt;</span>\n  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>\n  <span class="nt">&lt;meta</span> 
+  <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge"</span><span class="nt">&gt;</span>\n …… <span class="nt">&lt;/body&gt;</span>\n'
+</code></pre></div></div>
 
 <p><img src="/img/in-post/2017082401/pic02.jpg" alt="图 - 2" /></p>
 
@@ -285,27 +286,28 @@
 
 <p>Python的re模块可以使用正则表达式匹配字符串：</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+
 <span class="c">### 举例1</span>
 <span class="n">txt1</span> <span class="o">=</span> <span class="s">'rimoe,rimoe.ml'</span>          <span class="c">#从txt1中搜索关键字'rimoe'</span>
 <span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">'rimoe'</span><span class="p">)</span>   <span class="c">#用正则表达式生成pattern对象</span>
-<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span><span class="n">txt1</span><span class="p">)</span>        <span class="c">#查找所有符合表达式的子串</span>
+<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span> <span class="n">txt1</span><span class="p">)</span>        <span class="c">#查找所有符合表达式的子串</span>
+
 <span class="c">### 举例2</span>
-<span class="n">txt2</span> <span class="o">=</span> <span class="s">'1.rimoe</span><span class="se">\n</span><span class="s">2.Yue</span><span class="se">\n</span><span class="s">3.Luo</span><span class="se">\n</span><span class="s">'</span>       <span class="c">#从txt2中提取列表内容</span>
-<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'</span><span class="err">\</span><span class="s">d+</span><span class="err">\</span><span class="s">.(.*?)</span><span class="err">\</span><span class="s">n'</span><span class="p">)</span>
-<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span><span class="n">txt2</span><span class="p">)</span>
-<span class="c">#一般用r串作为参数</span>
-<span class="c">#这里\d匹配数字（0～9），+表示匹配连续的数字，\.匹配字符'.'</span>
-<span class="c">#(.*?)匹配连续任意字符任意次，括号表示要提取的部分分组</span>
-<span class="c">#\n匹配回车，(.*?)\n表示任意字符匹配直到遇到回车停止匹配</span>
-</code></pre>
-</div>
+<span class="n">txt2</span> <span class="o">=</span> <span class="s">'1.rimoe</span><span class="se">\n</span><span class="s">2.Yue</span><span class="se">\n</span><span class="s">3.Luo</span><span class="se">\n</span><span class="s">'</span>       <span class="c"># 从txt2中提取列表内容</span>
+<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'\d+\.(.*?)\n'</span><span class="p">)</span>
+<span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span> <span class="n">txt2</span><span class="p">)</span>
+<span class="c"># 一般用r串作为参数</span>
+<span class="c"># 这里\d匹配数字（0～9），+表示匹配连续的数字，\.匹配字符'.'</span>
+<span class="c"># (.*?)匹配连续任意字符任意次，括号表示要提取的部分分组</span>
+<span class="c"># \n匹配回车，(.*?)\n表示任意字符匹配直到遇到回车停止匹配</span>
+
+</code></pre></div></div>
 
 <p>输出</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="mi">1</span> <span class="p">[</span><span class="s">'rimoe'</span><span class="p">,</span> <span class="s">'rimoe'</span><span class="p">]</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span> <span class="p">[</span><span class="s">'rimoe'</span><span class="p">,</span> <span class="s">'rimoe'</span><span class="p">]</span>
 <span class="mi">2</span> <span class="p">[</span><span class="s">'rimoe'</span><span class="p">,</span> <span class="s">'Yue'</span><span class="p">,</span> <span class="s">'Luo'</span><span class="p">]</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>比如对于我们刚刚爬下来的网页，我们想要提取网页的这一部分：</p>
 
@@ -315,7 +317,7 @@
 
 <p><img src="/img/in-post/2017082401/pic05.jpg" alt="图 - 5" /></p>
 
-<p>当然这里推荐Chrome，主要是因为好用加功能完善，在学习爬虫的道路上这个审查元素的功能和这个开发者选项框将会是你的好基友，弹出的框如下图：</p>
+<p>当然这里推荐Chrome，主要是因为好用加功能完善，在学习爬虫的道路上这个审查元素的功能和这个开发者选项框将会是你学习爬虫的好基友，弹出的框如下图：</p>
 
 <p><img src="/img/in-post/2017082401/pic06.jpg" alt="图 - 6" /></p>
 
@@ -323,38 +325,42 @@
 
 <p><img src="/img/in-post/2017082401/pic07.jpg" alt="图 - 7" /></p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ul&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;li&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/codeRimoe/h5_game_kanna"</span><span class="nt">&gt;</span>h5 Game - 坎娜与托尔<span class="nt">&lt;/a&gt;</span>  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://blog.rimoe.ml/2017/06/09/post01/"</span><span class="nt">&gt;</span>[NOTE BLOG]<span class="nt">&lt;/a&gt;</span>  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://rimoe.ml/kanna"</span><span class="nt">&gt;</span>[TRY NOW]<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/codeRimoe/h5_game_kanna"</span><span class="nt">&gt;</span>h5 Game - 坎娜与托尔<span class="nt">&lt;/a&gt;</span>  
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://blog.rimoe.ml/2017/06/09/post01/"</span><span class="nt">&gt;</span>[NOTE BLOG]<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://rimoe.ml/kanna"</span><span class="nt">&gt;</span>[TRY NOW]<span class="nt">&lt;/a&gt;</span>
   <span class="nt">&lt;/li&gt;</span>
   <span class="nt">&lt;li&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/codeRimoe/Wolf_and_Sheep"</span><span class="nt">&gt;</span>OOP Homework - Wolf and Sheep<span class="nt">&lt;/a&gt;</span>  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"\\"</span><span class="nt">&gt;</span>[NOTE BLOG]<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/codeRimoe/Wolf_and_Sheep"</span><span class="nt">&gt;</span>OOP Homework - Wolf and Sheep<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"\\"</span><span class="nt">&gt;</span>[NOTE BLOG]<span class="nt">&lt;/a&gt;</span>
   <span class="nt">&lt;/li&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>我们用正则表达式来表示,分两次提取：</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#刚刚提取的网页返回res</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 刚刚提取的网页返回res</span>
 <span class="kn">import</span> <span class="nn">re</span>
+
 <span class="n">txt1</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;li&gt;(.*?)&lt;/li&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
-<span class="c">#提取列表标签&lt;li&gt;</span>
-<span class="c">#re.S为DOCALL模式，该模式下字符'.'可以匹配回车'\n'</span>
-<span class="n">txt2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span><span class="n">txt1</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">txt2</span>    <span class="c">#打印出来看看是什么样子的吧～</span>
-<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;a.*?href=(.*?)&gt;(.*?)&lt;/a&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+<span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;li&gt;(.*?)&lt;/li&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+
+<span class="c"># 提取列表标签&lt;li&gt;</span>
+<span class="c"># re.S为DOCALL模式，该模式下字符'.'可以匹配回车'\n'</span>
+<span class="n">txt2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span> <span class="n">txt1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">txt2</span>                               <span class="c"># 打印出来看看是什么样子的吧～</span>
+<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;a.*?href=(.*?)&gt;(.*?)&lt;/a&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txt2</span><span class="p">:</span>
-  <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span><span class="n">txt</span><span class="p">)</span>   <span class="c">#逐项提取链接标签&lt;a&gt;</span>
-  <span class="k">print</span> <span class="s">'Project：'</span>                    <span class="c">#格式化打印</span>
-  <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="k">print</span>
-</code></pre>
-</div>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span> <span class="n">txt</span><span class="p">)</span>   <span class="c"># 逐项提取链接标签&lt;a&gt;</span>
+    <span class="k">print</span> <span class="s">'Project：'</span>                    <span class="c"># 格式化打印</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">print</span>
+
+</code></pre></div></div>
 
 <p>输出：</p>
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="mi">1</span> <span class="p">[</span><span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/h5_game_kanna"&gt;h5 Game - </span><span class="se">\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94</span><span class="s">&lt;/a&gt;  &lt;a href="http://blog.rimoe.ml/2017/06/09/post01/"&gt;[NOTE BLOG]&lt;/a&gt;  &lt;a href="http://rimoe.ml/kanna"&gt;[TRY NOW]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/Wolf_and_Sheep"&gt;OOP Homework - Wolf and Sheep&lt;/a&gt;  &lt;a href="http://blog.rimoe.ml/2017/07/27/post01/"&gt;[NOTE BLOG]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">]</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span> <span class="p">[</span><span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/h5_game_kanna"&gt;h5 Game - </span><span class="se">\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94</span><span class="s">&lt;/a&gt;  &lt;a href="http://blog.rimoe.ml/2017/06/09/post01/"&gt;[NOTE BLOG]&lt;/a&gt;  &lt;a href="http://rimoe.ml/kanna"&gt;[TRY NOW]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/Wolf_and_Sheep"&gt;OOP Homework - Wolf and Sheep&lt;/a&gt;  &lt;a href="http://blog.rimoe.ml/2017/07/27/post01/"&gt;[NOTE BLOG]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">]</span>
 
 <span class="mi">2</span> <span class="n">Project</span><span class="p">:</span>
 <span class="mi">3</span> <span class="n">h5</span> <span class="n">Game</span> <span class="o">-</span> <span class="err">坎娜与托尔</span><span class="p">:</span><span class="s">"https://github.com/codeRimoe/h5_game_kanna"</span>
@@ -364,8 +370,7 @@
 <span class="mi">6</span> <span class="n">Project</span><span class="err">：</span>
 <span class="mi">7</span> <span class="n">OOP</span> <span class="n">Homework</span> <span class="o">-</span> <span class="n">Wolf</span> <span class="ow">and</span> <span class="n">Sheep</span><span class="p">:</span><span class="s">"https://github.com/codeRimoe/Wolf_and_Sheep"</span>
 <span class="mi">8</span> <span class="p">[</span><span class="n">NOTE</span> <span class="n">BLOG</span><span class="p">]:</span><span class="s">"http://blog.rimoe.ml/2017/07/27/post01/"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="/img/in-post/2017082401/pic08.jpg" alt="图 - 8" />
 <img src="/img/in-post/2017082401/pic09.jpg" alt="图 - 9" /></p>
@@ -376,7 +381,7 @@
 
 <p>一般来说数据获取后，要保存到本地，对于列表一般保存为csv格式，这里我们就保存为普通的文本文件。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#将打印部分修改成保存文档</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#将打印部分修改成保存文档</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data.txt'</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
   <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txt2</span><span class="p">:</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span><span class="n">txt</span><span class="p">)</span>
@@ -384,38 +389,36 @@
     <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
       <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><img src="/img/in-post/2017082401/pic10.jpg" alt="图 - 10" /></p>
 
 <h2 id="总结">总结</h2>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#Spider Lv1</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># Spider Lv1</span>
 
 <span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://rimoe.ml"</span><span class="p">)</span> <span class="c">#打开网页http://rimoe.ml</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://rimoe.ml"</span><span class="p">)</span>        <span class="c"># 打开网页http://rimoe.ml</span>
 
 <span class="n">txt1</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;li&gt;(.*?)&lt;/li&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
-<span class="c">#提取列表标签&lt;li&gt;</span>
-<span class="n">txt2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span><span class="n">txt1</span><span class="p">)</span>
-<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;a.*?href=(.*?)&gt;(.*?)&lt;/a&gt;'</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+<span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;li&gt;(.*?)&lt;/li&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>  <span class="c"># 提取列表标签&lt;li&gt;</span>
+<span class="n">txt2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern1</span><span class="p">,</span> <span class="n">txt1</span><span class="p">)</span>
+<span class="n">pattern2</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;a.*?href=(.*?)&gt;(.*?)&lt;/a&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data.txt'</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
-  <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txt2</span><span class="p">:</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span><span class="n">txt</span><span class="p">)</span>   <span class="c">#逐项提取链接标签&lt;a&gt;</span>
-    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Project:'</span><span class="p">)</span>               <span class="c">#格式化输出</span>
-    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-      <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">':'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n\n</span><span class="s">'</span><span class="p">)</span>
-</code></pre>
-</div>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">txt</span> <span class="ow">in</span> <span class="n">txt2</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern2</span><span class="p">,</span> <span class="n">txt</span><span class="p">)</span>     <span class="c"># 逐项提取链接标签&lt;a&gt;</span>
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Project:'</span><span class="p">)</span>                  <span class="c"># 格式化输出</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">+</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">':'</span> <span class="o">+</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n\n</span><span class="s">'</span><span class="p">)</span>
 
-<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_1">Github - Spider</a>，保留一切权利。</p>
+</code></pre></div></div>
+
+<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_1">Github - Spider</a>。</p>
 
 <p>爬虫的原理简单粗暴，除了这个简单的爬虫之外，其实还有一些简单易用的现成框架，有硬件条件的话，爬虫的威力其实更大。</p>
 
@@ -460,13 +463,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="3">
+                				<a href="/tags/#生活" title="生活" rel="4">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="4">
+                				<a href="/tags/#文艺" title="文艺" rel="5">
                                     文艺
                                 </a>
                             
@@ -519,6 +522,10 @@
                 				<a href="/tags/#爬虫" title="爬虫" rel="2">
                                     爬虫
                                 </a>
+                            
+        				
+                            
+        				
                             
         				
         			</div>
@@ -593,12 +600,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="icons-header" >
-                    <a aria-label="Send email" href="mailto:negatronljl@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
                     <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
                     <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
-                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/negatron/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
                     <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 </br>

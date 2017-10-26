@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>玥 - 凝萌小记 - Rimoe's</title>
+    <title>一些收获 - 凝萌小记 - Rimoe's</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/08/06/post01/">
+    <link rel="canonical" href="http://localhost:4000/2017/10/23/post01/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.css">
@@ -130,12 +130,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg/post2017080601.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2017102301.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg/post2017080601.jpg')
+        background-image: url('/img/post-bg/post2017102301.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -145,17 +145,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#生活" title="生活">生活</a>
+                        <a class="tag" href="/tags/#统计" title="统计">统计</a>
                         
-                        <a class="tag" href="/tags/#文艺" title="文艺">文艺</a>
+                        <a class="tag" href="/tags/#空间分析" title="空间分析">空间分析</a>
                         
                     </div>
-                    <h1>玥</h1>
+                    <h1>一些收获</h1>
                     
                     
-                    <h2 class="subheading">皓洁为月，佳文成玉</h2>
+                    <h2 class="subheading">关于今日对统计学的部分知识的理解</h2>
                     
-                    <span class="meta">Posted by 柠萌 on August 6, 2017</span>
+                    <span class="meta">Posted by 柠萌 on October 23, 2017</span>
                 </div>
             </div>
         </div>
@@ -173,39 +173,62 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<blockquote>
-  <p>皓洁为月，佳文成玉。凤鸟神珠，寄吾德馨。</p>
+				<h2 id="从p值开始">从p值开始</h2>
+
+<p>对于空间自相关，之前一直没看明白，只是大概知其所以，但也就这样不知其所以然。</p>
+
+<p>其中原因，也许是统计没学好。但这不能怪我，毕竟我们概率统计都没讲到假设检验。</p>
+
+<p>今天上课将地理统计，提到空间自相关，老师解释了一通p值，但似乎没戳到p值本质，于是我在网上找了一下，很糙地理解了何为p值。</p>
+
+<h2 id="假设-检验">假设-检验</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>[你真的懂p值吗?</td>
+      <td>说人话的统计学](http://www.360doc.com/content/15/0704/22/22175932_482657194.shtml)里面把p值讲得十分通俗易懂，是一篇难得的好文章。</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>原文对p值定义是：“在假定原假设为真时，得到与样本相同或者更极端的结果的概率。”
+这和Wikipedia中引的定义差不多。
+the probability for a given statistical model that, when the null hypothesis is true, the statistical summary (such as the sample mean difference between two compared groups) would be the same as or of greater magnitude than the actual observed results.
+refer - Wasserstein, Ronald L.; Lazar, Nicole A. (7 March 2016). “The ASA’s Statement on p-Values: Context, Process, and Purpose”. The American Statistician. 70 (2): 129–133. doi:10.1080/00031305.2016.1154108. Retrieved 30 October 2016.</p>
 </blockquote>
 
-<h2 id="二十年有二月记">二十年有二月记</h2>
+<p>文中，还举了一个很好的例子：</p>
 
-<p>是年丁酉，余及冠，自取表字为玥，记于此。</p>
+<p>statistical model：AB两人掷硬币，硬币由A提供。</p>
 
-<p>自民国新学盛起，气象变化，又及文革之乱，礼乐俱废。今举国崇尚数理，新学鼎盛，余逆潮流而行，复辟旧习，以缅古人，并规行自勉。</p>
+<p>null hypothesis：B首先假设硬币是均质的。</p>
 
-<hr />
+<p>observed results：B检查硬币，掷五次，出现五次正面。</p>
 
-<h2 id="大学">大学</h2>
+<p>在这个例子中p值：p=Pr(A)+Pr(B),
+其中:
+A=the same asthe actual observed results（出现五次正面）,
+B=greater magnitude than the actual observed results（更小概率的情况）.</p>
 
-<p>前不久经过中大北门的牌坊，才发现背面铭着的是“格致诚正 修齐治平”，此中深意，引我沉思。</p>
+<p>显然p值很小的时候我们的零假设就可以被拒绝了。</p>
 
-<p>中大入学读《大学》，很多人会觉得不明所以，此大学与彼《大学》到底是同一个东西吗？</p>
+<h2 id="空间自相关">空间自相关</h2>
 
-<p>所谓大学，和《大学》中的明德、亲民、止于至善是关联的。所谓大学，和《大学》中的格物、致知、诚意、正心、修身、齐家、治国、平天下是一致的。</p>
+<p>空间自相关的零假设是“空间分布是均匀的”，然后在这个条件下算出当前分布出现的概率和跟不均匀的概率的和，这个结果就是p值。</p>
 
-<p>君子之志，不在名利。大丈夫理当以治国平天下为己任，而真正的大学，则是提供一条实现理想的道路。潜心学术研究，求学问道于先生学人，就是格物致知。在大学的生活、交往、锻炼，我们的通识课、我们听的讲座、我们谈论的一切，都是诚其意、正其心、修其身的过程。创业、工作则是齐家，齐家乃能安邦平天下。</p>
+<p>至于p值小于多少（显著性水平α），就是人为指定的了。</p>
 
-<p>朱子借大学所讲的理，至今依旧受用。</p>
+<p>因此空间自相关的p值说明的是“在显著性水平α下没有发现足够的证据反对原假设”。</p>
 
-<hr />
+<p>知乎上还提到，p值其实是拒绝真的概率，也就是说，如果我们拒绝假设，有p的概率是该假设为真。从而又引申出第一类错误、第二类错误的概念。</p>
 
-<h2 id="回忆往事兼论教育">回忆往事兼论教育</h2>
+<h2 id="关于统计学">关于统计学</h2>
 
-<p>再前不久经过磨碟沙，见到很久前的酒楼仍在，如今已落败了许多，令我想起一段往事。</p>
+<p>统计是一个很有趣而且实用的东西，在地理学的研究中其实十分重要，或者说，有时候我们对一些概念的不理解其实是因为统计没学好。</p>
 
-<p>本欲在此记下，兼论今日对教育之思考，然而夜已深，昏昏欲睡，便就此搁笔，待他日记起再叙。</p>
-
-<p>2017.08.05 凌晨 于佛山</p>
+<p>2017.10.23 晚 于广州</p>
 
 
                 <hr>
@@ -213,13 +236,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/07/29/post01/" data-toggle="tooltip" data-placement="top" title="API调用研究">&larr; Previous Post</a>
+                        <a href="/2017/10/05/post01/" data-toggle="tooltip" data-placement="top" title="我想写一篇文章">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/08/19/post01/" data-toggle="tooltip" data-placement="top" title="对学习及未来的一点思考">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 

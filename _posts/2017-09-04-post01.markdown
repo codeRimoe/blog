@@ -28,8 +28,11 @@ tags:
 
 ```python
 import urllib2
-site = urllib2.urlopen("http://weibo.com/u/3803639941?refer_flag=1001030001_&nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0")
-print site.read().decode('gbk')  #  以gbk方式解码
+site = urllib2.urlopen("http://weibo.com/u/3803639941?refer_flag=1001030001_&"
+                       "nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5"
+                       "%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0")
+print site.read().decode('gbk')  # 以gbk方式解码
+
 ```
 
 然而发现……没有妹纸呀……
@@ -84,15 +87,20 @@ print site.read().decode('gbk')  #  以gbk方式解码
 
 ```python
 import urllib2
-url = 'http://weibo.com/u/3803639941?refer_flag=1001030001_&nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0'
-cookie = 'SINAGLOBAL=balabala'  #输入cookie
-headers = {'cookie' : cookie } 
-request = urllib2.Request(url, headers = headers)
-#将URL、Header打包请求，当然这里还可以有别的参数
-#class urllib2.Request(url[, data][, headers][, origin_req_host][, unverifiable])
+
+url = ("http://weibo.com/u/3803639941?refer_flag=1001030001_&"
+       "nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5"
+       "%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0")
+cookie = 'SINAGLOBAL=balabala'  # 输入cookie
+headers = {'cookie': cookie}
+request = urllib2.Request(url, headers=headers)
+# 将URL、Header打包请求，当然这里还可以有别的参数
+# class urllib2.Request(url[, data][, headers][, origin_req_host]\
+# [, unverifiable])
 response = urllib2.urlopen(request)
-#提交请求并获取响应
+# 提交请求并获取响应
 print response.read()
+
 ```
 
 返回：
@@ -115,7 +123,7 @@ print response.read()
 
 当然使用前我们要先安装一下bs4这个库,另外我们还需要lxml这个库的支持（用于解析html，类似的还有html5lib以及python自带的html.parser）:
 
-```
+```shell
 pip install bs4
 pip install lxml
 ```
@@ -124,10 +132,10 @@ pip install lxml
 
 ```js
 FM.view({
-  "ns" : "",
-  "domid" : "xxx",
-  "css" : ["..."],
-  "html" : "balabala"
+    "ns" : "",
+    "domid" : "xxx",
+    "css" : ["..."],
+    "html" : "balabala"
 })
 ```
 
@@ -155,10 +163,12 @@ webres_html = webres_json['html']
 
 ```python
 #使用BeautifulSoup对webres_html进行分析
+
 import lxml
 from bs4 import BeautifulSoup as bs
-soup = bs(webres_html,'lxml')  # 构建Soup
+soup = bs(webres_html, 'lxml')  # 构建Soup
 print soup
+
 ```
 
 ![图 - 6]({{ site.baseurl }}/img/in-post/2017090401/pic06.png)
@@ -168,34 +178,36 @@ print soup
 ```python
 print soup.contents
 print soup.html.body.contents
+
 ```
 
 通过源码我们大概知道，在每条单独微博都在一个class为"WB_dertail"的div里，使用find_all的方法，得到所有符合条件的标签，以数组形式返回，然后我们，将微博里的含信息标签全部提取出来。
 
 ```python
 # 微博每张图片有id，缩略图URL、URL分别为以下格式：
-# http://wx4.sinaimg.cn/mw690/(pic_id).jpg   #URL
-# http://wx4.sinaimg.cn/square/(pic_id).jpg  #缩略图URL
+# http://wx4.sinaimg.cn/mw690/(pic_id).jpg   # URL
+# http://wx4.sinaimg.cn/square/(pic_id).jpg  # 缩略图URL
 
 infos = soup.find_all(class_="WB_detail")
 pattern_pic = re.compile(r'pic_id=(.*)')
 for info in infos:
-  Stxt=""
-  try:
-    txts = info.find_all(class_="WB_text W_f14")[0].contents
-    pics = info.find_all('li')
-    for txt in txts:
-      try:
-        for txtc in txt.contents:
-          Stxt+=txtc              #对于链接文本，提取其内容
-      except:
-        Stxt+=txt                 #否则原样输出
-    for pic in pics:              #得到图片URL
-        picid = re.findall(pattern_pic,pic.get('action-data'))
-        print "http://wx1.sinaimg.cn/mw690/" + picid[0] + '.jpg'
-  except:
-    pass
-  print Stxt
+    Stxt=""
+    try:
+        txts = info.find_all(class_="WB_text W_f14")[0].contents
+        pics = info.find_all('li')
+        for txt in txts:
+            try:
+              for txtc in txt.contents:
+                Stxt+=txtc              # 对于链接文本，提取其内容
+            except:
+                Stxt+=txt               # 否则原样输出
+        for pic in pics:                # 得到图片URL
+              picid = re.findall(pattern_pic, pic.get('action-data'))
+              print "http://wx1.sinaimg.cn/mw690/" + picid[0] + '.jpg'
+    except:
+        pass
+    print Stxt
+
 ```
 
 打印出来的效果：
@@ -216,14 +228,15 @@ imghdir的what模块可以返回图片的文件格式。
 from imghdr import what
 import urllib2
 pic_url = 'http://rimoe.ml/assets/img/9030.jpg'
-save_dir = '/Users/_nA/Desktop/'    #存储路径
+save_dir = '/Users/_nA/Desktop/'    # 存储路径
 photo = urllib2.urlopen(pic_url).read()
-pic_type = what('', h = photo)      #判断图片格式
-if not pic_type :                   #若无法识别格式返回None
-  pic_type = ''
+pic_type = what('', h=photo)      # 判断图片格式
+if not pic_type :                   # 若无法识别格式返回None
+    pic_type = ''
 name = save_dir + 'pic.' + pic_type
-with open(name,'w') as f:
-  f.write(photo)
+with open(name, 'w') as f:
+    f.write(photo)
+
 ```
 
 ---
@@ -236,7 +249,9 @@ with open(name,'w') as f:
 
 ```python
 page = 1
-url = 'http://weibo.com/u/3803639941?is_search=0&visible=0&is_all=1&is_tag=0&profile_ftype=1&page=%d'%page
+url = ("http://weibo.com/u/3803639941?is_search=0&visible=0&is_all=1&is_tag=0&"
+       "profile_ftype=1&page=%d" % page)
+
 ```
 
 最后程序可以写成函数，写个循环就开始跑了。
