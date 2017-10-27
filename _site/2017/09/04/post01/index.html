@@ -334,7 +334,7 @@ pip install lxml
 
 <p><img src="/img/in-post/2017090401/pic06.png" alt="图 - 6" /></p>
 
-<p>打印出来的东西十分整齐，真实一个beautiful的soup，看着就很舒服。使用contents可以逐级分析html下的标签元素。</p>
+<p>打印出来的东西十分整齐，真是一个beautiful的soup，看着就很舒服。使用contents可以逐级分析html下的标签元素。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">contents</span>
 <span class="k">print</span> <span class="n">soup</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">contents</span>
@@ -388,7 +388,7 @@ pip install lxml
 <span class="n">pic_url</span> <span class="o">=</span> <span class="s">'http://rimoe.ml/assets/img/9030.jpg'</span>
 <span class="n">save_dir</span> <span class="o">=</span> <span class="s">'/Users/_nA/Desktop/'</span>    <span class="c"># 存储路径</span>
 <span class="n">photo</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">pic_url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">pic_type</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">photo</span><span class="p">)</span>      <span class="c"># 判断图片格式</span>
+<span class="n">pic_type</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">photo</span><span class="p">)</span>        <span class="c"># 判断图片格式</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">pic_type</span> <span class="p">:</span>                   <span class="c"># 若无法识别格式返回None</span>
     <span class="n">pic_type</span> <span class="o">=</span> <span class="s">''</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">'pic.'</span> <span class="o">+</span> <span class="n">pic_type</span>

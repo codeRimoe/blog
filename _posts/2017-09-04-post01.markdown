@@ -173,7 +173,7 @@ print soup
 
 ![图 - 6]({{ site.baseurl }}/img/in-post/2017090401/pic06.png)
 
-打印出来的东西十分整齐，真实一个beautiful的soup，看着就很舒服。使用contents可以逐级分析html下的标签元素。
+打印出来的东西十分整齐，真是一个beautiful的soup，看着就很舒服。使用contents可以逐级分析html下的标签元素。
 
 ```python
 print soup.contents
@@ -230,7 +230,7 @@ import urllib2
 pic_url = 'http://rimoe.ml/assets/img/9030.jpg'
 save_dir = '/Users/_nA/Desktop/'    # 存储路径
 photo = urllib2.urlopen(pic_url).read()
-pic_type = what('', h=photo)      # 判断图片格式
+pic_type = what('', h=photo)        # 判断图片格式
 if not pic_type :                   # 若无法识别格式返回None
     pic_type = ''
 name = save_dir + 'pic.' + pic_type
