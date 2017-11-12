@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="作家是杂家">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>爬虫入门笔记（三） - 凝萌小记 - Rimoe's</title>
+
+    <link rel="canonical" href="http://localhost:4000/2017/11/12/post01/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <!--<link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">凝萌小记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://rimoe.ml">Home - 柠萌</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2017111201.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg/post2017111201.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#爬虫" title="爬虫">爬虫</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                        <a class="tag" href="/tags/#数据获取" title="数据获取">数据获取</a>
+                        
+                    </div>
+                    <h1>爬虫入门笔记（三）</h1>
+                    
+                    
+                    <h2 class="subheading">硒？Selenium！某自动控制模块</h2>
+                    
+                    <span class="meta">Posted by 柠萌 on November 12, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="某魔法学院">某魔法学院</h2>
+
+<p>今天校庆，和小伙伴出去吃了顿火锅有点高兴，所以写了一篇blog。（然而作业还没写完……）</p>
+
+<p>然而期中小长假结束了，有点不开心。</p>
+
+<h2 id="如果坐上来自己动就好了">如果坐上来自己动就好了</h2>
+
+<p>最近尝试爬知网上的一些数据(<a href="http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd">专利数据库</a>)，他的界面是这个样子的。</p>
+
+<p><img src="/img/in-post/2017111201/pic01.png" alt="图 - 1" /></p>
+
+<p>嗯，那我们首先要进行查询才能获得数据，我们输入以下条件进行搜索。</p>
+
+<p><img src="/img/in-post/2017111201/pic02.png" alt="图 - 2" /></p>
+
+<p><img src="/img/in-post/2017111201/pic03.png" alt="图 - 3" /></p>
+
+<p>得出一堆结果，点开发现是一些有规律的表格。</p>
+
+<p><img src="/img/in-post/2017111201/pic04.png" alt="图 - 4" /></p>
+
+<p>如果我们能让浏览器自动搜索，不就可以让他一直获取网页的数据了吗？</p>
+
+<h2 id="selenium简介与配置">Selenium简介与配置</h2>
+
+<p>是的， 因此我们今天试着用selenium这个框架。说起这个框架，其实这还是我一个接触的爬虫框架，当时也正是因为觉得这个框架很酷才继续研究爬虫的。下一篇文章将会介绍我第一次学习爬虫时曲折旅途，其中就还会提到selenium。</p>
+
+<p>Selenium用于编写自动控制浏览器的脚本，除了在爬虫上有应用，在并发模拟上也有应用。</p>
+
+<p>配置selenium需要以下几个步骤：</p>
+
+<blockquote>
+  <p>安装selenium模块
+配置driver</p>
+</blockquote>
+
+<h4 id="安装selenium模块">安装selenium模块</h4>
+
+<p>用对应python的pip(或conda)安装：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install selenium
+</code></pre></div></div>
+
+<h4 id="配置driverchrome">配置driver(Chrome)</h4>
+
+<p>各种浏览器有各自的driver，这里推荐使用chrome的driver。</p>
+
+<p>首先要下载(<a href="http://chromedriver.storage.googleapis.com/index.html">地址</a>)对应Chrome版本的chromedriver，版本映射表如下：</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>v2.33</td>
+      <td>v2.32</td>
+      <td>v2.31</td>
+      <td>v2.30</td>
+      <td>v2.29</td>
+      <td>v2.28</td>
+    </tr>
+    <tr>
+      <td>v60-62</td>
+      <td>v59-61</td>
+      <td>v58-60</td>
+      <td>v58-60</td>
+      <td>v56-58</td>
+      <td>v55-57</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>v2.27</td>
+      <td>v2.26</td>
+      <td>v2.25</td>
+      <td>v2.24</td>
+      <td>v2.23</td>
+      <td>v2.22</td>
+    </tr>
+    <tr>
+      <td>v54-56</td>
+      <td>v53-55</td>
+      <td>v53-55</td>
+      <td>v52-54</td>
+      <td>v51-53</td>
+      <td>v49-52</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>v2.21</td>
+      <td>v2.20</td>
+      <td>v2.19</td>
+      <td>v2.18</td>
+      <td>v2.17</td>
+      <td>v2.13</td>
+    </tr>
+    <tr>
+      <td>v46-50</td>
+      <td>v43-48</td>
+      <td>v43-47</td>
+      <td>v43-46</td>
+      <td>v42-43</td>
+      <td>v42-45</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>v2.15</td>
+      <td>v2.14</td>
+      <td>v2.13</td>
+      <td>v2.12</td>
+      <td>v2.11</td>
+      <td>v2.10</td>
+    </tr>
+    <tr>
+      <td>v40-43</td>
+      <td>v39-42</td>
+      <td>v38-41</td>
+      <td>v36-40</td>
+      <td>v36-40</td>
+      <td>v33-36</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>v2.9</td>
+      <td>v2.8</td>
+      <td>v2.7</td>
+      <td>v2.6</td>
+      <td>v2.5</td>
+      <td>v2.4</td>
+    </tr>
+    <tr>
+      <td>v31-34</td>
+      <td>v30-33</td>
+      <td>v30-33</td>
+      <td>v29-32</td>
+      <td>v29-32</td>
+      <td>v29-32</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>参考自<a href="http://blog.csdn.net/huilan_same/article/details/51896672">selenium之 chromedriver与chrome版本映射表（更新至v2.33）</a></p>
+
+<p>这里一定要注意安装与你的Chrome版本对应的driver，不然会报错（这是个大坑）。</p>
+
+<p>把chromedriver放在环境变量的任一路径下即可。</p>
+
+<p>或者将chromedriver放在chrome的目录下，并将chrome的目录添加进去环境变量也是可以的。</p>
+
+<p>打开Python，测试一下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>           <span class="c"># 若配置成功，将会弹出Chrome浏览器界面</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.sysu.edu.cn'</span><span class="p">)</span>  <span class="c"># 浏览中大的网站</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                        <span class="c"># 关闭webdriver</span>
+
+</code></pre></div></div>
+
+<p>这样，selenium的环境就配置好了。</p>
+
+<h2 id="数据获取思路">数据获取思路</h2>
+
+<p>我们思考一下我们搜索的流程。</p>
+
+<ol>
+  <li>打开<a href="http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd">专利数据库</a>.</li>
+  <li>输入条件，搜索。</li>
+  <li>点击专利链接进入专利页面。</li>
+  <li>获取专利表格数据。</li>
+</ol>
+
+<p>接下来我们将会按以上流程依次获取数据。</p>
+
+<h2 id="使用selenium操作浏览器">使用Selenium操作浏览器</h2>
+
+<p>Selenium作为一个自动化的框架，用在爬虫技术上最好的优点就是十分弱智，一句话概括就是“写一个Script来控制浏览器”，操作基本上只有两个：</p>
+
+<ul>
+  <li>创建一个webdriver对象（其实就是浏览器）</li>
+  <li>通过webdriver的函数控制浏览器</li>
+</ul>
+
+<p>在测试Chrome的时候我们就知道怎么让webdriver打开一个网页了，用webdriver.get(url)就行了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+
+<span class="n">search_whe</span> <span class="o">=</span> <span class="s">u'地址'</span>
+<span class="n">search_key</span> <span class="o">=</span> <span class="s">u'东莞'</span>
+<span class="n">search_type</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>   <span class="c"># 创建一个webdriver，接下来的操作都基于此</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>               <span class="c"># 用get的方法打开网站</span>
+
+</code></pre></div></div>
+
+<p>要对webdriver进行控制，每个操作只要执行两步：</p>
+
+<ol>
+  <li>获取网页元素（Xpath）</li>
+  <li>操作网页元素</li>
+</ol>
+
+<p>比如我们要在输入框输入，首先要获取要输入的文本框元素这一个对象，获取元素可以用webdriver.find_element_by_xpath(xpath)这个函数。</p>
+
+<p>这里提到Xpath，那到底什么是Xpath呢？</p>
+
+<p>这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：<a href="http://cuiqingcai.com/2621.html">静觅 - Python爬虫利器三之Xpath语法与lxml库的用法</a>），在这里介绍一个获取Xpath的快捷方法。</p>
+
+<p>在Chrome里，对要获取的元素右键-检查元素，弹出开发者工具，对元素的html标签右键，复制Xpath即可得到对应的Xpath，如图的文本框元素Xpath为<code class="highlighter-rouge">//*[@id="Text1"]</code>。</p>
+
+<p>获取了Xpath我们就可以获取元素，然后对元素进行操作，比如这里在文本框中输入关键词“东莞”。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inbox</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="Text1"]'</span><span class="p">)</span>  <span class="c"># 获取元素</span>
+<span class="n">inbox</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>                                             <span class="c"># 清空文本框内容</span>
+<span class="n">inbox</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">u"东莞"</span><span class="p">)</span>                                  <span class="c"># 在已有内容后添加文本</span>
+
+</code></pre></div></div>
+
+<p>我们可以发现文本框内容变成了<code class="highlighter-rouge">东莞</code>。</p>
+
+<p>其他操作类似，具体方法可以参考：</p>
+
+<p><a href="http://cuiqingcai.com/2599.html">静觅 - Python爬虫利器五之Selenium的用法</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 此处接上，driver已经打开知网数据库网页。</span>
+<span class="c"># 获取元素</span>
+<span class="c"># inbox：输入文本框 buton：搜索按钮 where：检索项 pages：每页条目 types：专利类别</span>
+<span class="n">inbox</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="Text1"]'</span><span class="p">)</span>
+<span class="n">buton</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span>
+        <span class="s">'//*[@id="Table6"]/tbody/tr[1]/td[3]/table/tbody/tr/td/input'</span><span class="p">)</span>
+<span class="n">where</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="Select1"]'</span><span class="p">)</span>
+<span class="n">pages</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="Table8"]/tbody/tr/td/select[3]'</span><span class="p">)</span>
+<span class="n">types</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="专利类别1"]'</span><span class="p">),</span>   <span class="c"># 专利发明</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="专利类别2"]'</span><span class="p">),</span>   <span class="c"># 外观设计</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="专利类别3"]'</span><span class="p">)</span>    <span class="c"># 实用新型</span>
+<span class="p">]</span>
+
+<span class="n">inbox</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>                               <span class="c"># 清空文本框内容</span>
+<span class="n">inbox</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">search_key</span><span class="p">)</span>                 <span class="c"># 在已有内容后添加文本</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>                               <span class="c"># 清除所有已选专利类别</span>
+<span class="n">types</span><span class="p">[</span><span class="n">search_type</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>                  <span class="c"># 选择需要的专利类别</span>
+
+<span class="n">Select</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span><span class="o">.</span><span class="n">select_by_value</span><span class="p">(</span><span class="s">'50'</span><span class="p">)</span>         <span class="c"># 设置每页50条专利</span>
+<span class="n">Select</span><span class="p">(</span><span class="n">where</span><span class="p">)</span><span class="o">.</span><span class="n">select_by_value</span><span class="p">(</span><span class="n">search_whe</span><span class="p">)</span>   <span class="c"># 设置按地址搜索</span>
+
+<span class="n">buton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>                               <span class="c"># 点击搜索按钮</span>
+
+</code></pre></div></div>
+
+<h2 id="获取专利数据">获取专利数据</h2>
+
+<p>接下来就只需要定位专利条目，获取链接地址，然后提取相应链接里的信息。</p>
+
+<p>定位链接的话，我们仍然可以使用Selenium了啦，然后可以使用get_attribute这个方法来获取元素的属性。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="s">'//*[@id="contentBox"]/table/tbody/tr[2]/td[2]/a'</span>
+<span class="n">txt</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">"href"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>有很多个链接的话，我们可以看到他的Xpath是有规律的，于是写一个循环就可以了。</p>
+
+<p>获取了链接，之后我们可以就用正则表达式来获取专利的具体信息了，另外这里用requests代替urblib和urllib2，但其实作用是差不多的。</p>
+
+<h2 id="爬虫对象与多线程">爬虫对象与多线程</h2>
+
+<p>在Spider_Lv3的代码里，将爬虫写成一个类，这样在我们调用时可以比较方便一些，每个小步骤也写成对应函数，因此在代码修改时可以更加简单。</p>
+
+<p>为了可以一边定位网页链接同时也一边获取网页数据，代码中使用了多线程，过程中了解到有人认为Python的多线程比较鸡肋，此次使用多线程到底有没有提高效率暂时也没有深究，多线程作为一个待学习的内容将来再研究。</p>
+
+<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_3">Github - Spider</a>。</p>
+
+<p>2017.11.12 晚 于广州</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/10/23/post01/" data-toggle="tooltip" data-placement="top" title="一些收获">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="4">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#文艺" title="文艺" rel="5">
+                                    文艺
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="6">
+                                    技术
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="4">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#数据获取" title="数据获取" rel="4">
+                                    数据获取
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#爬虫" title="爬虫" rel="3">
+                                    爬虫
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="http://jekyllcn.com/">Jekyll</a></li>
+                    
+                        <li><a href="http://gp.sysu.edu.cn/">GP,SYSU</a></li>
+                    
+                        <li><a href="http://www.sysu.edu.cn/">SYSU</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        </br>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="icons-header" >
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+                    <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
+                    <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                    <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+                </br>
+                <p style="font-size:13px;">
+                All right reserved. &copy; 凝萌小记-2017</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                <iframe
+                    style="margin-left: 2px; margin-bottom:-5px;"
+                    frameborder="0" scrolling="0" width="100px" height="20px"
+                    src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/sweet-scroll.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+
+
+
+
+</body>
+
+</html>

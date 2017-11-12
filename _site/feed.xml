@@ -5,9 +5,318 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 27 Oct 2017 09:17:09 +0800</pubDate>
-    <lastBuildDate>Fri, 27 Oct 2017 09:17:09 +0800</lastBuildDate>
+    <pubDate>Mon, 13 Nov 2017 00:39:03 +0800</pubDate>
+    <lastBuildDate>Mon, 13 Nov 2017 00:39:03 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>爬虫入门笔记（三）</title>
+        <description>&lt;h2 id=&quot;某魔法学院&quot;&gt;某魔法学院&lt;/h2&gt;
+
+&lt;p&gt;今天校庆，和小伙伴出去吃了顿火锅有点高兴，所以写了一篇blog。（然而作业还没写完……）&lt;/p&gt;
+
+&lt;p&gt;然而期中小长假结束了，有点不开心。&lt;/p&gt;
+
+&lt;h2 id=&quot;如果坐上来自己动就好了&quot;&gt;如果坐上来自己动就好了&lt;/h2&gt;
+
+&lt;p&gt;最近尝试爬知网上的一些数据(&lt;a href=&quot;http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd&quot;&gt;专利数据库&lt;/a&gt;)，他的界面是这个样子的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017111201/pic01.png&quot; alt=&quot;图 - 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;嗯，那我们首先要进行查询才能获得数据，我们输入以下条件进行搜索。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017111201/pic02.png&quot; alt=&quot;图 - 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017111201/pic03.png&quot; alt=&quot;图 - 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;得出一堆结果，点开发现是一些有规律的表格。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2017111201/pic04.png&quot; alt=&quot;图 - 4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果我们能让浏览器自动搜索，不就可以让他一直获取网页的数据了吗？&lt;/p&gt;
+
+&lt;h2 id=&quot;selenium简介与配置&quot;&gt;Selenium简介与配置&lt;/h2&gt;
+
+&lt;p&gt;是的， 因此我们今天试着用selenium这个框架。说起这个框架，其实这还是我一个接触的爬虫框架，当时也正是因为觉得这个框架很酷才继续研究爬虫的。下一篇文章将会介绍我第一次学习爬虫时曲折旅途，其中就还会提到selenium。&lt;/p&gt;
+
+&lt;p&gt;Selenium用于编写自动控制浏览器的脚本，除了在爬虫上有应用，在并发模拟上也有应用。&lt;/p&gt;
+
+&lt;p&gt;配置selenium需要以下几个步骤：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;安装selenium模块
+配置driver&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;安装selenium模块&quot;&gt;安装selenium模块&lt;/h4&gt;
+
+&lt;p&gt;用对应python的pip(或conda)安装：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install selenium
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;配置driverchrome&quot;&gt;配置driver(Chrome)&lt;/h4&gt;
+
+&lt;p&gt;各种浏览器有各自的driver，这里推荐使用chrome的driver。&lt;/p&gt;
+
+&lt;p&gt;首先要下载(&lt;a href=&quot;http://chromedriver.storage.googleapis.com/index.html&quot;&gt;地址&lt;/a&gt;)对应Chrome版本的chromedriver，版本映射表如下：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v2.33&lt;/td&gt;
+      &lt;td&gt;v2.32&lt;/td&gt;
+      &lt;td&gt;v2.31&lt;/td&gt;
+      &lt;td&gt;v2.30&lt;/td&gt;
+      &lt;td&gt;v2.29&lt;/td&gt;
+      &lt;td&gt;v2.28&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v60-62&lt;/td&gt;
+      &lt;td&gt;v59-61&lt;/td&gt;
+      &lt;td&gt;v58-60&lt;/td&gt;
+      &lt;td&gt;v58-60&lt;/td&gt;
+      &lt;td&gt;v56-58&lt;/td&gt;
+      &lt;td&gt;v55-57&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v2.27&lt;/td&gt;
+      &lt;td&gt;v2.26&lt;/td&gt;
+      &lt;td&gt;v2.25&lt;/td&gt;
+      &lt;td&gt;v2.24&lt;/td&gt;
+      &lt;td&gt;v2.23&lt;/td&gt;
+      &lt;td&gt;v2.22&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v54-56&lt;/td&gt;
+      &lt;td&gt;v53-55&lt;/td&gt;
+      &lt;td&gt;v53-55&lt;/td&gt;
+      &lt;td&gt;v52-54&lt;/td&gt;
+      &lt;td&gt;v51-53&lt;/td&gt;
+      &lt;td&gt;v49-52&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v2.21&lt;/td&gt;
+      &lt;td&gt;v2.20&lt;/td&gt;
+      &lt;td&gt;v2.19&lt;/td&gt;
+      &lt;td&gt;v2.18&lt;/td&gt;
+      &lt;td&gt;v2.17&lt;/td&gt;
+      &lt;td&gt;v2.13&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v46-50&lt;/td&gt;
+      &lt;td&gt;v43-48&lt;/td&gt;
+      &lt;td&gt;v43-47&lt;/td&gt;
+      &lt;td&gt;v43-46&lt;/td&gt;
+      &lt;td&gt;v42-43&lt;/td&gt;
+      &lt;td&gt;v42-45&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v2.15&lt;/td&gt;
+      &lt;td&gt;v2.14&lt;/td&gt;
+      &lt;td&gt;v2.13&lt;/td&gt;
+      &lt;td&gt;v2.12&lt;/td&gt;
+      &lt;td&gt;v2.11&lt;/td&gt;
+      &lt;td&gt;v2.10&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v40-43&lt;/td&gt;
+      &lt;td&gt;v39-42&lt;/td&gt;
+      &lt;td&gt;v38-41&lt;/td&gt;
+      &lt;td&gt;v36-40&lt;/td&gt;
+      &lt;td&gt;v36-40&lt;/td&gt;
+      &lt;td&gt;v33-36&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v2.9&lt;/td&gt;
+      &lt;td&gt;v2.8&lt;/td&gt;
+      &lt;td&gt;v2.7&lt;/td&gt;
+      &lt;td&gt;v2.6&lt;/td&gt;
+      &lt;td&gt;v2.5&lt;/td&gt;
+      &lt;td&gt;v2.4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;v31-34&lt;/td&gt;
+      &lt;td&gt;v30-33&lt;/td&gt;
+      &lt;td&gt;v30-33&lt;/td&gt;
+      &lt;td&gt;v29-32&lt;/td&gt;
+      &lt;td&gt;v29-32&lt;/td&gt;
+      &lt;td&gt;v29-32&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;参考自&lt;a href=&quot;http://blog.csdn.net/huilan_same/article/details/51896672&quot;&gt;selenium之 chromedriver与chrome版本映射表（更新至v2.33）&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这里一定要注意安装与你的Chrome版本对应的driver，不然会报错（这是个大坑）。&lt;/p&gt;
+
+&lt;p&gt;把chromedriver放在环境变量的任一路径下即可。&lt;/p&gt;
+
+&lt;p&gt;或者将chromedriver放在chrome的目录下，并将chrome的目录添加进去环境变量也是可以的。&lt;/p&gt;
+
+&lt;p&gt;打开Python，测试一下：&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;           &lt;span class=&quot;c&quot;&gt;# 若配置成功，将会弹出Chrome浏览器界面&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://www.sysu.edu.cn'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 浏览中大的网站&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                        &lt;span class=&quot;c&quot;&gt;# 关闭webdriver&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样，selenium的环境就配置好了。&lt;/p&gt;
+
+&lt;h2 id=&quot;数据获取思路&quot;&gt;数据获取思路&lt;/h2&gt;
+
+&lt;p&gt;我们思考一下我们搜索的流程。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;打开&lt;a href=&quot;http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd&quot;&gt;专利数据库&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;输入条件，搜索。&lt;/li&gt;
+  &lt;li&gt;点击专利链接进入专利页面。&lt;/li&gt;
+  &lt;li&gt;获取专利表格数据。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;接下来我们将会按以上流程依次获取数据。&lt;/p&gt;
+
+&lt;h2 id=&quot;使用selenium操作浏览器&quot;&gt;使用Selenium操作浏览器&lt;/h2&gt;
+
+&lt;p&gt;Selenium作为一个自动化的框架，用在爬虫技术上最好的优点就是十分弱智，一句话概括就是“写一个Script来控制浏览器”，操作基本上只有两个：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;创建一个webdriver对象（其实就是浏览器）&lt;/li&gt;
+  &lt;li&gt;通过webdriver的函数控制浏览器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在测试Chrome的时候我们就知道怎么让webdriver打开一个网页了，用webdriver.get(url)就行了。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;search_whe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;u'地址'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;search_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;u'东莞'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;search_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# 创建一个webdriver，接下来的操作都基于此&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;               &lt;span class=&quot;c&quot;&gt;# 用get的方法打开网站&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;要对webdriver进行控制，每个操作只要执行两步：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;获取网页元素（Xpath）&lt;/li&gt;
+  &lt;li&gt;操作网页元素&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;比如我们要在输入框输入，首先要获取要输入的文本框元素这一个对象，获取元素可以用webdriver.find_element_by_xpath(xpath)这个函数。&lt;/p&gt;
+
+&lt;p&gt;这里提到Xpath，那到底什么是Xpath呢？&lt;/p&gt;
+
+&lt;p&gt;这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：&lt;a href=&quot;http://cuiqingcai.com/2621.html&quot;&gt;静觅 - Python爬虫利器三之Xpath语法与lxml库的用法&lt;/a&gt;），在这里介绍一个获取Xpath的快捷方法。&lt;/p&gt;
+
+&lt;p&gt;在Chrome里，对要获取的元素右键-检查元素，弹出开发者工具，对元素的html标签右键，复制Xpath即可得到对应的Xpath，如图的文本框元素Xpath为&lt;code class=&quot;highlighter-rouge&quot;&gt;//*[@id=&quot;Text1&quot;]&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;获取了Xpath我们就可以获取元素，然后对元素进行操作，比如这里在文本框中输入关键词“东莞”。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;inbox&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;Text1&quot;]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 获取元素&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;inbox&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                                             &lt;span class=&quot;c&quot;&gt;# 清空文本框内容&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;inbox&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;u&quot;东莞&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                                  &lt;span class=&quot;c&quot;&gt;# 在已有内容后添加文本&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;我们可以发现文本框内容变成了&lt;code class=&quot;highlighter-rouge&quot;&gt;东莞&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;其他操作类似，具体方法可以参考：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://cuiqingcai.com/2599.html&quot;&gt;静觅 - Python爬虫利器五之Selenium的用法&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 此处接上，driver已经打开知网数据库网页。&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 获取元素&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# inbox：输入文本框 buton：搜索按钮 where：检索项 pages：每页条目 types：专利类别&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;inbox&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;Text1&quot;]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;buton&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;Table6&quot;]/tbody/tr[1]/td[3]/table/tbody/tr/td/input'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;Select1&quot;]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pages&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;Table8&quot;]/tbody/tr/td/select[3]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;types&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;专利类别1&quot;]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# 专利发明&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;专利类别2&quot;]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# 外观设计&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_xpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;专利类别3&quot;]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;# 实用新型&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;inbox&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                               &lt;span class=&quot;c&quot;&gt;# 清空文本框内容&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;inbox&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                 &lt;span class=&quot;c&quot;&gt;# 在已有内容后添加文本&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                               &lt;span class=&quot;c&quot;&gt;# 清除所有已选专利类别&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                  &lt;span class=&quot;c&quot;&gt;# 选择需要的专利类别&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select_by_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'50'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;         &lt;span class=&quot;c&quot;&gt;# 设置每页50条专利&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select_by_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search_whe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# 设置按地址搜索&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;buton&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                               &lt;span class=&quot;c&quot;&gt;# 点击搜索按钮&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;获取专利数据&quot;&gt;获取专利数据&lt;/h2&gt;
+
+&lt;p&gt;接下来就只需要定位专利条目，获取链接地址，然后提取相应链接里的信息。&lt;/p&gt;
+
+&lt;p&gt;定位链接的话，我们仍然可以使用Selenium了啦，然后可以使用get_attribute这个方法来获取元素的属性。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'//*[@id=&quot;contentBox&quot;]/table/tbody/tr[2]/td[2]/a'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;href&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;有很多个链接的话，我们可以看到他的Xpath是有规律的，于是写一个循环就可以了。&lt;/p&gt;
+
+&lt;p&gt;获取了链接，之后我们可以就用正则表达式来获取专利的具体信息了，另外这里用requests代替urblib和urllib2，但其实作用是差不多的。&lt;/p&gt;
+
+&lt;h2 id=&quot;爬虫对象与多线程&quot;&gt;爬虫对象与多线程&lt;/h2&gt;
+
+&lt;p&gt;在Spider_Lv3的代码里，将爬虫写成一个类，这样在我们调用时可以比较方便一些，每个小步骤也写成对应函数，因此在代码修改时可以更加简单。&lt;/p&gt;
+
+&lt;p&gt;为了可以一边定位网页链接同时也一边获取网页数据，代码中使用了多线程，过程中了解到有人认为Python的多线程比较鸡肋，此次使用多线程到底有没有提高效率暂时也没有深究，多线程作为一个待学习的内容将来再研究。&lt;/p&gt;
+
+&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/Spider/tree/master/demo/Level_3&quot;&gt;Github - Spider&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;2017.11.12 晚 于广州&lt;/p&gt;
+</description>
+        <pubDate>Sun, 12 Nov 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/11/12/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/12/post01/</guid>
+        
+        <category>爬虫</category>
+        
+        <category>技术</category>
+        
+        <category>Python</category>
+        
+        <category>数据获取</category>
+        
+        
+      </item>
     
       <item>
         <title>一些收获</title>
@@ -1457,130 +1766,6 @@ brew install qt
         <category>游戏</category>
         
         <category>技术</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>为政之学与入徳之门</title>
-        <description>&lt;h2 id=&quot;本文缘起&quot;&gt;本文缘起&lt;/h2&gt;
-
-&lt;p&gt;本学期选了一门通识课，《礼记》导读，因交作业作了一篇文章，遂记录于此。&lt;/p&gt;
-
-&lt;p&gt;原文题为《〈四书·大学〉与〈礼记·大学〉之异》，本文在原文上有作修改。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;两版本大学之异&quot;&gt;两版本大学之异&lt;/h2&gt;
-
-&lt;p&gt;目前《大学》主要有两个版本，一是&lt;a href=&quot;https://zh.wikisource.org/wiki/%E7%A6%AE%E8%A8%98%E6%AD%A3%E7%BE%A9/60&quot;&gt;《礼记·大学》&lt;/a&gt;，二是&lt;a href=&quot;https://zh.wikisource.org/wiki/%E5%9B%9B%E6%9B%B8%E7%AB%A0%E5%8F%A5%E9%9B%86%E8%A8%BB/%E5%A4%A7%E5%AD%B8%E7%AB%A0%E5%8F%A5&quot;&gt;《四书·大学》&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;此处《礼记·大学》即《礼记·大学第四十二》原文，《四书·大学》是南宋朱熹的《四书章句集注·大学章句集注》。二者有许多不同，如在篇目顺序上，《四书·礼记》经过朱子的移文补传，体系更为严谨。&lt;/p&gt;
-
-&lt;p&gt;《礼记·大学》可以分为“道”、“诚意篇”、“正心篇”、“修身篇”、“治国篇”，《四书·大学》则是“经”一章与“传”十章的结构，又补朱子《格物致知补传》，诚意篇往后编排，形成以“明明德”、“新民”、“止于至善”为&lt;strong&gt;三纲&lt;/strong&gt;，以“格物”、“致知”、“诚意”、“正心”、“修身”、“齐家“、“治国“、”平天下”为&lt;strong&gt;八目&lt;/strong&gt;的理论体系。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017051201/pic01.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;大学新义与其在四书中定位&quot;&gt;《大学》新义与其在《四书》中定位&lt;/h2&gt;
-
-&lt;p&gt;朱子移文补传，实是借古文立新学，《大学》原文经朱子一番悉心打扮后，不仅形式变更了，含意也变得有所不同。
-朱子在《大学章句·序》中写道：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“及周之衰，賢聖之君不作，學校之政不修，教化陵夷，風俗頹敗，時則有若孔子之聖，而不得君師之位以行其政教，於是獨取先王之法，誦而傳之以詔後世。”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017051201/pic02.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;可见，朱子对《大学》赞赏有嘉，认为这是教化风俗的学问，因此将此文从礼记中提出来，作为四书之一，定为“为学之纲”。&lt;/p&gt;
-
-&lt;p&gt;《礼记·大学》原为《小戴礼记》中的一篇，阐述的是一种“博学可以为政”的“太学”，讲的是如何以礼治国，而朱子对大学则有新的理解。他认为，《大学》讲的是从格物致知到治国平天下的“修德之学“，是四书里的”&lt;strong&gt;入徳之门&lt;/strong&gt;“。朱子在作集注时，提出了许多自己的看法，在有的人看来，这些章句曲解了原文，是伪学。但朱子反本开新，使得《四书·礼记》成为南宋后的“正统之学”，构成了理学发展的重要一环。&lt;/p&gt;
-
-&lt;p&gt;朱子章句中，有许多对旧文的新解，援“亲，当作新”一句为例，《大学》中“在亲民”的“亲”字，被解释为新，这一注解，某种程度上是为了与后文“茍日新，日日新，又日新”所照应，但这一全新的诠释，使得《大学》从为政之道转变为入徳之学。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;补传与格物致知的新诠释&quot;&gt;补传与“格物致知”的新诠释&lt;/h2&gt;
-
-&lt;p&gt;朱子的移文补传，包括对篇目的重新编排，形成了新的体系结构，还包括了补写了《格物致知补传》，解释“格物”与“致知”。&lt;/p&gt;
-
-&lt;p&gt;朱子移文后，前三传分别解释了三纲，即“明明德”、“亲民”、“止于至善”，第四章解释“本末”，第六至八章解释了八目中的“诚意”、“正心修身”、“修身齐家”、“齐家治国”、“治国平天下”，唯独没解释“格物致知”。朱子认为第五章是“格物致知传”，但丢失了，故补一传。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“右傳之五章，蓋釋格物、致知之義，而今亡矣。閒嘗竊取程子之意以補之。——朱熹《四书·大学》”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;而朱子补传的这一做法，是否符合《大学》之本意？&lt;/p&gt;
-
-&lt;p&gt;朱子之所谓“格物”、“致知”，讲的是人有“&lt;strong&gt;认知天下之事物，把握事物之理&lt;/strong&gt;”的能力，讲人可以通过由认知事物而把握事物的“理”。后来，王阳明又提出了“诚意”、“致良知”为《大学》之本，提倡恢复古本《大学》。王阳明的学说重“诚意”，以孟子“良知”解释“致知”，强调“心即理”。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“物者，事也，凡意之所发必有其事，意所在之事谓之物。格者，正也，正其不正以归于正之谓也。正其不正者，去恶之谓也。归于正者，为善之谓也。夫是之谓格。——王守仁《大学问》”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;王阳明认为“格物“、”致知”、“诚意”、“正心”本意都是一样，都是为了“修身”。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“「格物」者,格其心之物也,格其意之物也,挌其知之物也:「正心」者,正其物之心也:「誠意」者,誠其物之意也:「致知」者,致其物之知也。此岂有内外彼此之分哉?——王守仁《传习录》”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;依照此观点，《礼记》不必将四者分开。由此观之，从王阳明的学说来理解“格物致知”，并不一定比朱子学说更加符合《礼记》原意。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017051201/pic03.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;钱穆先生在《〈大学〉格物新释》中提出，《大学》中并无对“物”的解释，而《大学》节选自《小戴礼记》，故对“格物”的理解应当在《小戴礼记》的别篇中找寻，并指出《礼记·乐记》中的“物至知知”便是对“格物致知”的解释：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“人心所动，物使之然也。——《礼记·乐记》”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;体现了在“物”的经验后才有人的“知”，与朱子的解释相符，由此推断朱子的解释合理。&lt;/p&gt;
-
-&lt;p&gt;但朱子的“格物致知”与《礼记·大学》提到的“格物致知”应当是不同的，我们所《礼记·大学》讲的是“为政之道”，为政的“格物“应当是不必”穷极事物之理以推极吾之知识“的，郑玄与孔颖达在《礼记正义》注疏中给出了理解：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“格，來也。物、猶事也。其知於善深，則來善物。其知於惡深，則來惡物。言事緣人所好來也。——郑玄《礼记正义·注》”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;在郑孔二人的理解中，”格物“是果，”致知“是因，由一个人的格物来事而致其知，由果推因，以人之待物推知其知之善恶，因为只有知善者才能行善事。依照此观点，通过”格善物“，使得他人”致善知“，于是”诚意“、”正心“，”由天子以至庶人，壹是以修身为本“，从而”家齐国治天下平“。&lt;/p&gt;
-
-&lt;p&gt;因此，朱子的理解是与郑孔所不同的。&lt;/p&gt;
-
-&lt;p&gt;朱子补传，意在重新诠释”格物致知“的本义，从而使《大学》从”为政“之学泛化为”入徳“之学。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;小议朱子移文补传&quot;&gt;小议朱子移文补传&lt;/h2&gt;
-
-&lt;p&gt;朱子移文补传的理由是旧本错简、传文遗失，而其做法在日后亦备受诟病，如国学大师南怀瑾先生在《原本大学微言》中批判道：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“其实，孔家老店，倒还货真价实，只是从南宋以后，这一班宋儒学家们，加入了孔家店，喧宾夺主，改变了孔家店原来的产品，掺入的冒牌太多。尤其以程、朱之说，更为明显。“&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017051201/pic04.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;但朱子的移文补传并不是毫无道理的，这是基于唐中后期经学僵化、儒家心性理论薄弱而提出的对儒学的重建，是对当时被佛学思想深入的儒学进行清理与重整。有学者认为，”阐发经学中的‘义理’符合当时的社会现实向儒家提出的要求，也是儒家解经学依照自身逻辑发展的必然结果“。&lt;/p&gt;
-
-&lt;p&gt;《礼记·大学》本来就条理比较清晰，能自成体系。朱子通过移文补传，使得本来就条理清晰的《大学》变得更加严谨，从而形成了较为完整的理论体系。中国古代的学说理论一般是”潜隐型“的体系，如《论语》以孔子言行载道，《庄子》借寓言辨理，而朱子修《大学》补传，在理学发展上可以说是一个创举，奠定了心理学的理论基础。&lt;/p&gt;
-
-&lt;p&gt;朱子移文补传赋予了《大学》”修德“的新含义，是思想上的一次再创造。或者说《四书·大学》是《礼记·大学》在新的历史背景下作出的转型与发展。&lt;/p&gt;
-
-&lt;p&gt;2017.05.11 于珠海&lt;/p&gt;
-
-&lt;p&gt;文章同步发于&lt;a href=&quot;http://www.jianshu.com/p/701d5cd24d8f&quot;&gt;简书 - 为政之学与入徳之门？ - 酸的柠萌&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/12/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/12/post01/</guid>
-        
-        <category>读书</category>
-        
-        <category>议论</category>
-        
-        <category>文艺</category>
         
         
       </item>
