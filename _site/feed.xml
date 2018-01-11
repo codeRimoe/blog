@@ -5,12 +5,166 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 13 Nov 2017 00:39:03 +0800</pubDate>
-    <lastBuildDate>Mon, 13 Nov 2017 00:39:03 +0800</lastBuildDate>
+    <pubDate>Thu, 11 Jan 2018 17:18:46 +0800</pubDate>
+    <lastBuildDate>Thu, 11 Jan 2018 17:18:46 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
-        <title>爬虫入门笔记（三）</title>
+        <title>随笔偶成</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;知乎上，看到了一个问题，如何评价&lt;a href=&quot;http://mp.weixin.qq.com/s/nZulTHBPbd9Panc7XSciyQ&quot;&gt;《可怕的是，我们的孩子一直在通过动漫认识世界》&lt;/a&gt;一文。于是我便写了本文，原回答为&lt;a href=&quot;https://www.zhihu.com/question/265391277/answer/293707377&quot;&gt;如何评价《可怕的是，我们的孩子一直在通过动漫认识世界》一文？ - 罗玥的回答 - 知乎&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;总的来说，&lt;strong&gt;原文借“动漫”这一个热点，以一个不当的点切题，举一系列不正确的例证，来说明一个正常人都应该知道的常识&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;1-片面描述动画内容错误引导读者&quot;&gt;1. 片面描述动画内容，错误引导读者&lt;/h2&gt;
+
+&lt;p&gt;原文取优酷和B站前三来作为“孩子“群体的动漫观影偏好，这一点本身是有偏的，优酷、B站的用户群年龄文中未考虑，而而且原文未作对“孩子”的定义。&lt;/p&gt;
+
+&lt;p&gt;此外，原文对动漫作品的污名化可以说是十分不讲道理了。&lt;/p&gt;
+
+&lt;p&gt;原文对《火影忍者》是这样描述的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;总的来说，《火影忍者》是一部针对性的描写仇恨的作品，因此也有一定的悲剧成分在里面，主题的最终目的性是于化解仇恨，歌颂和平，但&lt;strong&gt;内容方面以战斗和厮杀为主&lt;/strong&gt;。抛开里面的暴力画面，他的三观细看有许多扭曲的地方。&lt;br /&gt;
+比如主角每次都喊着一个伟大的目标“我要当火影”，但平时却不怎么努力，&lt;strong&gt;总是拥有“主角特殊光环”&lt;/strong&gt;，一遇到事儿就临时抱佛脚，还总是能化险为夷；&lt;br /&gt;
+比如故事中的友情观也是奇葩，&lt;strong&gt;为了保护朋友什么事儿都干得出来&lt;/strong&gt;，是一种非常偏激的友情观，爱情也是一样，基本都是生离死别，十分沉重；&lt;br /&gt;
+比如其中的正义也是非常奇葩，很多台词都是正义的旗号，但基本上都非常肤浅又莫名其妙，男二号“佐助”的正义观更是满腹槽点，但却被很多粉丝着迷，&lt;strong&gt;这其中的人物极端理想化，正义极端化，盲目的积极向上&lt;/strong&gt;，盲目的友谊和爱情，对于异己一律都是强行洗脑模式，也难怪被认定成年观众级别。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这段批驳，我认为是不成立的，至少这一段话套在别的作品中同样成立。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;总的来说，&lt;strong&gt;抗日电视剧&lt;/strong&gt;是一系列针对性的描写仇恨的作品，因此也有一定的悲剧成分在里面，主题的最终目的性是于化解仇恨，歌颂和平，但&lt;strong&gt;内容方面以战斗和厮杀为主&lt;/strong&gt;。抛开里面的暴力画面，他的三观细看有许多扭曲的地方。&lt;br /&gt;
+比如主角每次都喊着一个伟大的目标&lt;strong&gt;“打倒日本帝国主义”&lt;/strong&gt;，但总是拥有“主角特殊光环”，一遇到事儿总是能化险为夷；&lt;br /&gt;
+比如故事中的&lt;strong&gt;爱国观&lt;/strong&gt;也是奇葩，&lt;strong&gt;为了保护战友和国家什么事儿都干得出来&lt;/strong&gt;，是一种非常偏激的&lt;strong&gt;价值观&lt;/strong&gt;，爱情也是一样，基本都是生离死别，十分沉重；&lt;br /&gt;
+比如其中的正义也是非常奇葩，很多台词都是正义的旗号，但基本上都非常肤浅又莫名其妙，&lt;strong&gt;这其中的人物极端理想化，正义极端化，盲目的积极向上&lt;/strong&gt;，盲目的&lt;strong&gt;爱国&lt;/strong&gt;和爱情，对于异己一律都是强行洗脑模式。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;（此外，文中还提到大部分动漫作品&lt;strong&gt;追求和平的手段依然是暴力&lt;/strong&gt;，而且，他认为这是扭曲的价值观。而这个价值观并没有扭曲，在别无他法的时候，采用暴力追求和平是没有错的。大家总是瞎嚷嚷“犯我中华者虽远必诛”的时候并没有认为自己价值观有问题吧？南京起义的时候、抗日战争的时候，不扛起枪谁给你和平？在恐怖分子咄咄逼人的时候，是谁维护我们社会的和平？非暴力不抵抗的甘地吗？要知道，日常维持法律的公安、检察、法院、监狱的本质就是暴力机关。虽然跑题了，但这点还希望原文作者思考一下。）&lt;/p&gt;
+
+&lt;p&gt;对《干物妹小埋》的描述也是主观带着偏见的。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;这部动漫主要讲述的也就是小埋和哥哥在一起的“吃、睡、玩”的干物妹生活，主角小埋&lt;strong&gt;又懒又馋可是漂亮&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;“小埋又懒又馋可是漂亮”这样的表述明显是有偏向性的，文中还列出一系列的截图，反映了小埋在家里懒散的一面，却对小埋在学校在其他人面前的优秀表现避而不谈，以证明该动漫三观不正的结论。小埋这一角色最大的特点就是，既有外人面前优秀的一面，又有对哥哥撒娇的一面，仅以一面作为对作品中的角色进行描述都是有失偏颇的。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;就连制作组在制作时也刻意回避了小埋他哥为什么要忍受小埋的任性，而对小埋一再纵容和宠爱。因为这个问题是个炸弹，无论怎么去解释处理，小埋这么做都是不合理而且错误的。只会加大观众的厌恶感和不适感。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;制作组从未回避过小埋哥哥对小埋的态度，如果你真的了解过这一部作品，你就知道，小埋哥哥对小埋的懒散并没有纵容，对于小埋在家的懒散表现，小埋哥哥总是会厉声训斥的。&lt;/p&gt;
+
+&lt;p&gt;《干物妹小埋》这部作品中最突出表现的是小埋日常和他的好朋友们玩耍学习的场景，可以说是三观十分正确的一部作品了。&lt;/p&gt;
+
+&lt;p&gt;不知原文作者是对动画很了解还是很不了解，在他笔下任何一个动画都能以特殊的视角描述成反面的，更具体地说，&lt;strong&gt;任何一个作品都能被描述成反面的&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;有一些动漫，儿童观看确实过于血腥，比如文化部就曾禁止过一批动漫，但这些动漫并没有在网络上停止传播，孩子依然可能会看到，而且像《寄生兽》、《东京食尸鬼》、《黑执事》和《进击的巨人》这些还很火。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当然这里&lt;strong&gt;不否认动漫中存在一些血腥、暴力的行为&lt;/strong&gt;。“有一些动漫，儿童观看确实过于血腥”，对于文中这一点，我是十分认同的。可是，这类作品本身就不是面向儿童群体的，在日本，这一类的动画播放时间是深夜凌晨，刻意回避了儿童群体，此外，在国外，影视作品分级制度十分完善，因此，儿童很难会受到作品的影响。然而，在中国的情况却是一刀切，我们可以看到一些优秀的作品被禁播，同时另一些儿童不宜的作品却允许全年龄人群观看。去年，《战狼》热播，在电影院里我看到有家长带着孩子来看，其中一些血腥的打斗场景难道不也是儿童不宜吗？&lt;strong&gt;缺乏分级制度，才是导致儿童观影时接受不宜信息的根本原因&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;2-以错误例子夸大动漫的不良影响&quot;&gt;2. 以错误例子夸大动漫的不良影响：&lt;/h2&gt;
+
+&lt;p&gt;文中举了数例案件，以图证明动漫对人产生不良影响。其例证大致可以分为以下两类：&lt;/p&gt;
+
+&lt;h5 id=&quot;1-成年人的不理智行为&quot;&gt;1. 成年人的不理智行为&lt;/h5&gt;
+
+&lt;p&gt;原文作者以“你要扣了我的车，我就毁灭地球”、“90后女效仿红太郎将70后老公拍成植物人”这两例案件举例，以图例证动漫导致这些不良后果。&lt;/p&gt;
+
+&lt;p&gt;但是看动漫的人这么多，能出这种新闻的人有几个？以偏概全，&lt;strong&gt;用几个离群值表征全体样本&lt;/strong&gt;，这种低级的统计错误在原文作者的包装下，变成了误导读者的trick。一个人成长过程中，价值观没有培养好，无论他有没有看动漫，他最终都会做出类似的事情。诚然，动漫对一个人价值观的形成是有影响的，可是我不认为这种影响一定是负面的。就像科学对人的价值观的影响，有人最终成为学者，有人最终成为民科，你不能就此说科学对人的影响是正面还是负面的。&lt;/p&gt;
+
+&lt;h5 id=&quot;2-未成年人的不良行为&quot;&gt;2. 未成年人的不良行为&lt;/h5&gt;
+
+&lt;p&gt;“模仿动画片跳楼”、“偷钱买书”、“模仿猪叫”这几例，则是着重表现动漫导致“未成年人的不良行为”。&lt;/p&gt;
+
+&lt;p&gt;首先，“模仿动画片跳楼”中的责任不在动画片，而在监护人。在我国法律中，8岁以下属于“无民事行为能力人”，8-16岁或16-18岁不以自己收入为生活来源的人属于“限制民事行为能力人”。对于未成年人的不良行为，难道不是监护人未做好监管职责吗？幼童坠落事件在家长监护下是不应该发生的。几个月前，我陪我的小外甥女玩，他套上游泳圈说要去马路上游泳，我跟他说不可以。同样地，如果一个小朋友说要飞起来，你会让他跳下去吗？作为儿童地陪同人，就应该负起自己地监管责任。&lt;/p&gt;
+
+&lt;p&gt;至于“偷钱买书”、“模仿猪叫”这些例证根本就站不住脚，谁小时候没犯过错误，谁小时候没干过蠢蠢的事情？我小时候就经常偷家里的零钱去买辣条，也经常和隔壁家的男孩子比赛看谁叫的更像门口的那只黄狗。但我最后不也好好地长大吗？至少现在的我，考上好的中学、大学，既没有变成小偷，也没有变成文中所谓的“新品种”。现在与父母谈起这些事，却变成了美好的回忆。（Ps. 当然，偷东西是不好的，我偷零钱买辣条的事情暴露后，可是父母被打得很惨的。）&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;在未成年人的成长中，家长的引导作用十分重要&lt;/strong&gt;。孩子被一个人扔在家里，不管他看动漫还是看课本，都很难形成正确的价值观。希望各位家长明白这点，负起自己的责任，而不要把过错推卸给动漫。&lt;/p&gt;
+
+&lt;h2 id=&quot;3-总结&quot;&gt;3. 总结&lt;/h2&gt;
+
+&lt;p&gt;原文的结论，我是非常赞同的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;真正该带着孩子认识世界的，本来就是父母。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这点和我之前反驳原文的态度是一致的。&lt;/p&gt;
+
+&lt;p&gt;可是为什么我要花一篇文章的力气来批驳原文，那是因为&lt;strong&gt;原文借“动漫”这一个热点，以一个不当的点切题，举一系列不正确的例证，来说明一个正常人都应该知道的常识&lt;/strong&gt;，给读者带来“动漫是不好的”这种印象。&lt;/p&gt;
+
+&lt;p&gt;首先，文章开始着笔描写动漫对95后的影响，以图夸大动漫危害，视动漫为洪水猛兽，营造一种95后被动漫毁了的氛围。但文章最后得出的却是家长要对孩子进行指引。我们注意到，95后们都已经成年了，应当不是没有分辨力的儿童了，这和文章。也就是说，文章的主体本身就不明确，只是为了批判二次元而将一些数据、新闻和结论拼凑起来。&lt;/p&gt;
+
+&lt;p&gt;其次，以偏概全，以优酷、B站前三的动漫代表“孩子”的观影偏好，本身就是有偏的，文章还片面地描述一些动画，以图让读者以为流行地动漫都是三观不正的，还以广电总局的招牌，给日本动画打上暴力血腥的标签；又举一些有统计偏差的例子，引导读者形成“看动漫会造成不良后果“的概念。&lt;/p&gt;
+
+&lt;p&gt;最后，文章又直接抛出真正该带着孩子认识世界的，本来就是父母的结论，然而这一个结论根本不必基于“动漫”而得出。因为，父母的指引本来就是理所当然的，这是父母作为监护人的责任，这个结论，套在任何一个名词上都是合适的。而文章却偏偏举动漫，由此推断，其意图无非是想借“动漫”的热点通过批驳动漫以提高阅读量罢了。&lt;/p&gt;
+
+&lt;p&gt;2018.01.11 午后 于广州&lt;/p&gt;
+</description>
+        <pubDate>Thu, 11 Jan 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/01/11/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/01/11/post01/</guid>
+        
+        <category>生活</category>
+        
+        <category>文艺</category>
+        
+        <category>ACG</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>我们的时代</title>
+        <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;他们说，等今天过去了，就再没有未成年的90后了,他们说这将是00后的时代了，他们摆出自己的照片，开始怀缅意气风发的年纪。&lt;/p&gt;
+
+&lt;h2 id=&quot;文&quot;&gt;文&lt;/h2&gt;
+
+&lt;p&gt;那是我们的时代，可以肆无忌惮地畅谈未来，可以花一个下午的时间为秋风落叶感伤，可以不计后果地说“永远”。那是，我记得，我说过我永远爱着那个女孩，我说过我要永远保持热情，我说过我永远不要成为像父母一样的人……&lt;/p&gt;
+
+&lt;p&gt;但少年口中的“永远”，永远是不可信的。他们连一生的长度都没有概念，他们怎么能知道“永远”有多远？&lt;/p&gt;
+
+&lt;p&gt;那个本该永远被我爱着的女孩，早已不在我的心上；那份本应永远保持的热情，也早已屈服于生活的琐碎；至于我永远不想成为的父母啊，不知何时，雪花般的银色早已悄悄地爬上了他们的发梢。&lt;/p&gt;
+
+&lt;p&gt;我已不再年少。那曾经的少年，开始为生计或欲望日夜疲于奔波，开始变得油腻、市侩、固执、自以为是。那曾经的少年，在他充满想象力的年纪里，大概是从未想到过自己将慢慢地成为自己所鄙夷的人。&lt;/p&gt;
+
+&lt;p&gt;同年的人常说自己老了，但我从不这样说，因为我没有变老，我只是不再年少。倘若我说自己死了，那么比我更年长的人，未免也太可怜了些罢。我应当是永远不老的，即便不再年少，即便死去，也不要让世界看到我孱弱的模样。&lt;/p&gt;
+
+&lt;p&gt;这是我们的时代，我们的时代已经过去了，但我们的时代才刚刚到来。&lt;/p&gt;
+
+&lt;h2 id=&quot;后语&quot;&gt;后语&lt;/h2&gt;
+
+&lt;p&gt;文章是归家时写在纸上，今日才post到blog上的。&lt;/p&gt;
+
+&lt;p&gt;伏在家里的书桌前写字的感觉就像回到了年少的时候。&lt;/p&gt;
+
+&lt;p&gt;以前我常在那张桌子上涂鸦、听电台、写小小的故事，后来我还经常涂鸦、听电台、写小小的故事，但碰到那张桌子的时间也渐渐少了。&lt;/p&gt;
+
+&lt;p&gt;许久才回家一次，但因为母亲的打理，那张桌子一直没有积尘。&lt;/p&gt;
+
+&lt;p&gt;2017.12.31 午后 于佛山&lt;/p&gt;
+</description>
+        <pubDate>Mon, 01 Jan 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/01/01/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/01/01/post01/</guid>
+        
+        <category>生活</category>
+        
+        <category>文艺</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>爬虫入门笔记（四）</title>
         <description>&lt;h2 id=&quot;某魔法学院&quot;&gt;某魔法学院&lt;/h2&gt;
 
 &lt;p&gt;今天校庆，和小伙伴出去吃了顿火锅有点高兴，所以写了一篇blog。（然而作业还没写完……）&lt;/p&gt;
@@ -1397,375 +1551,6 @@ pip install lxml
         <category>技术</category>
         
         <category>微博</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>大概是最弱鸡的2D仿真</title>
-        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
-
-&lt;p&gt;大二下学期的基础课特别多，大作业也特别多，就在几周前，我在大作业与考试复习的夹缝里顽强地生存。&lt;/p&gt;
-
-&lt;p&gt;大概是一个模拟草原上狼吃羊的过程，要求C++语言，使用OOP思想，使用图像可视化。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;实验过程&quot;&gt;实验过程&lt;/h2&gt;
-
-&lt;p&gt;具体的实验报告可以在&lt;a href=&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&gt;GitHub - Wolf and Sheep&lt;/a&gt;上看，这里就不多叙述惹。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic01.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;狼和羊的人工智障&quot;&gt;狼和羊的人工智障&lt;/h2&gt;
-
-&lt;p&gt;比原来的要求增加了一些东西，优化的移动策略：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;狼会往狼多的方向移动&lt;/li&gt;
-  &lt;li&gt;羊会往远离追逐他的狼的方向逃跑，往狼少的地方移动&lt;/li&gt;
-  &lt;li&gt;繁殖时会为出生的宝宝选择最佳出生位置&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;实现方法非常简单，其实就是计算权重，也就是提供了一个决策方案的实现思路，越优先的考虑节点的权重乘以越高的位置。原理相当于设计一个函数计算优先度，我们考虑问题往往会一层一层的考虑比较（类似于决策树）。&lt;/p&gt;
-
-&lt;p&gt;如下图，羊首先考虑有没有狼在身边，一步就能吃掉自己，其次考虑移动后附近狼的数目多少，最后考虑移动后的草的数量。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic02.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;因为活命永远是最重要的，所以首先不要逃离最接近的狼，然后再长远考虑移动后的情况。最后权重计算公式是W=A&lt;em&gt;w1+B&lt;/em&gt;w2+C*w3，这里的为w1、w2、w3参数是可以变化的，具体要视情况而定，这个线性模拟策略参数设置可以考虑通过神经网络模型等得出。当然这里保证A、B、C小于10，将参数w1、w2、w3分别设为100、10、1，就可以得到一种简单的模拟方式：就是先比较A，再比较B，再比较C，只要策略一的A比策略二的大，就不考虑BC的值。&lt;/p&gt;
-
-&lt;p&gt;这部分也不是本文重点，就此略过。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;可视化qt&quot;&gt;可视化（QT）&lt;/h2&gt;
-
-&lt;p&gt;最后我选择QT进行可视化，其中一个原因是QT是开源的，最重要的原因是跨平台，对于使用MacOS的我来说，写作业给老师比较烦就是老师用的是Windows，好多库都是不一样的。QT可以跨三个平台，大概有点不好的就是UI文件会有点错位，不过关系不大。&lt;/p&gt;
-
-&lt;p&gt;QT是一个可视化架构，通过QT可以很容易做出一些比较好看耐用的交互界面。而QT creator则是一个配套的IDE。&lt;/p&gt;
-
-&lt;p&gt;QT简介请看：&lt;a href=&quot;http://blog.csdn.net/xuancailinggan/article/details/50620829&quot;&gt;关于QT、QT creator和编译器，新手入门必知的一些知识&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic03.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;1-qt的安装与配置&quot;&gt;1. QT的安装与配置&lt;/h4&gt;
-
-&lt;p&gt;对于MacOS来说，下载一个QT Creater，这是一个大概是IDE的东西。感觉Mac版的话要自己配置Qt版本，之前我搞了好久都不行。建议安装编译器的时候用brew安装，&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew update
-brew install qt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;安装成功后然后终端会提示安装的路径（大概是/usr/local/Cellar/qt/5.9.0），然后在Qt Creator中设置版本（偏好设置-&amp;gt;构建与运行-&amp;gt;Qt Version-&amp;gt;添加…）。这里最坑的是Mac的打开文件窗口不能直接访问系统保护的目录，这里有几个方法，一是直接Command+Shift+G，输入路径，二是前往文件夹或者终端cd路径，然后创建个快捷方式（替身），然后通过替身跳到文件夹。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic04.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic05.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;配置完就可以使用了，左下角有个类似资源管理器的东西，选“项目”里面会有工程文件的Source和资源文件等。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic06.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后旁边可以选择编译器、release、debug、build。&lt;/p&gt;
-
-&lt;p&gt;在Windows下的安装就傻瓜得多了，大概就是一个引导程序，比较傻瓜的装好就OK。编译器建议只选MingW的就够了。&lt;/p&gt;
-
-&lt;h4 id=&quot;2-qt的控件对象&quot;&gt;2. QT的控件对象&lt;/h4&gt;
-
-&lt;p&gt;QT的工程文件是.pro，项目的文件框架如下图所示。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic07.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Headers和Source是头文件和源文件，一般就是cpp实现的Source，Form是.ui文件，大概就是初始界面的框架。Resources是资源文件，一些图片一般放在里面用于调取。&lt;/p&gt;
-
-&lt;p&gt;.ui文件可以在“设计“模式（designer）中直接画出窗口相应的框架，这个有点像VB，如下图所示。这里指出在windows下里面的控件对象会错位。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic08.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;操纵窗口是通过工程创建的一个类MainWindow实现的。该类相当于是一个窗口，包含一个指针成员ui，调用窗口的预先绘制好控件对象时，使用ui-&amp;gt;ObjName作为对象名使用，尤其菜单栏，状态栏等就更应该如此。&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ui&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mainToolBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setFixedHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//设置工具栏高度为10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;当然，还可以自己创建控件对象，为了方便调用自己创建的对象，一般在MainWindow类中会创建一个指针成员，用于记录该对象。&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QTimer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//创建一个QTimer，之后可以使用timer来调用该对象
-&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/* ----------------- */&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;               &lt;span class=&quot;c1&quot;&gt;//一般在析构函数中会调用delete删除对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;简而言之，QT是通过控制控件对象完成界面操作的。&lt;/p&gt;
-
-&lt;h4 id=&quot;3-qt的资源库&quot;&gt;3. QT的资源库&lt;/h4&gt;
-
-&lt;p&gt;前面说到QT的resources文件夹用于存放资源，比如图片素材这类东西就可以放在里面，以备调用。&lt;/p&gt;
-
-&lt;p&gt;在右下角文件管理器中选项目，Resources文件夹右键-添加新文件，创建一个.qrc文件，然后往.qrc文件中添加资源，自后就可以调用其中的资源了。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic09.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072701/pic10.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:/jpg/resource/green.png&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//从资源库调取文件green.png
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setPixmap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QPixmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//在QLabel中显示图片
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;4-qt的信号-槽机制&quot;&gt;4. QT的信号-槽机制&lt;/h4&gt;
-
-&lt;p&gt;信号与槽是QT的两个重要概念，两者可以将不同对象联系起来，使程序更安全简洁。&lt;/p&gt;
-
-&lt;p&gt;信号指的是对象发出的触发指令，槽则是接受信号并触发的函数，两者以connect函数连接起来。&lt;/p&gt;
-
-&lt;p&gt;可以参考文章&lt;a href=&quot;http://www.cnblogs.com/MuyouSome/p/3515941.html&quot;&gt;Qt入门之信号与槽机制&lt;/a&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MainWindow&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;QMainWindow&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;Q_OBJECT&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;explicit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QWidget&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MainWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//other code...
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;slots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//槽函数必须要在类的public/private/protected slots中声明，否则无法使用
-&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
-&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pushButton1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGNAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SLOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()));&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pushButton2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGNAL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clicked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SLOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()));&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h4 id=&quot;5-qt的编译打包&quot;&gt;5. QT的编译打包&lt;/h4&gt;
-
-&lt;p&gt;release编译后，将.exe文件提取出来，用Qt命令行使用windeployqt来拷贝依赖包即可发布。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;windeployqt Programme.exe
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;命令自动会将程序需要的第三方库（.dll文件）复制到.exe文件的的路径中。&lt;/p&gt;
-
-&lt;p&gt;在Mac下生成的app文件，也可以用macdeployqt来进行依赖库拷贝。&lt;/p&gt;
-
-&lt;p&gt;具体可以参考：&lt;a href=&quot;http://blog.csdn.net/liuyez123/article/details/50462637&quot;&gt;Qt 程序打包发布总结&lt;/a&gt;。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
-
-&lt;p&gt;做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。&lt;/p&gt;
-
-&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;2017.07.27 于广州&lt;/p&gt;
-</description>
-        <pubDate>Thu, 27 Jul 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/07/27/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/07/27/post01/</guid>
-        
-        <category>C/C++</category>
-        
-        <category>QT</category>
-        
-        <category>可视化</category>
-        
-        <category>仿真</category>
-        
-        <category>技术</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>胡乱写了个小游戏</title>
-        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
-
-&lt;p&gt;H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港回到学校，就开始着手撸起来。&lt;/p&gt;
-
-&lt;p&gt;本来想做一个像机械迷城一样的H5游戏，但想想工程量太大赶不及交作业，而且最近事还不少，于是就想着做一个简单一点的。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;游戏设计&quot;&gt;游戏设计&lt;/h2&gt;
-
-&lt;p&gt;因为没有想法，所以上网找了一下别人blog的文章，于是发现了一篇2011年的文章&lt;a href=&quot;http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/&quot;&gt;《How to make a simple HTML5 Canvas game》&lt;/a&gt;，这也是有够古老的，但足够简单。&lt;/p&gt;
-
-&lt;p&gt;但是只是上下左右吃小妖怪这样的设定既不有趣也不可爱，而且也不可能直接copy别人的代码交作业。&lt;/p&gt;
-
-&lt;p&gt;所以结合以前玩过的一个叫泡泡堂的游戏来了灵感，设计了一个小游戏。&lt;/p&gt;
-
-&lt;p&gt;·玩家通过控制一个角色单位的【移动】和【放炸弹】来躲避并消灭怪物。&lt;/p&gt;
-
-&lt;p&gt;·怪物定时产生，跟随玩家角色移动，碰到玩家角色即消失，玩家扣血。&lt;/p&gt;
-
-&lt;p&gt;·胜利条件是杀敌数一定或一定时间内不死。&lt;/p&gt;
-
-&lt;p&gt;·当然怪物、炸弹可以有不同类型和效果。&lt;/p&gt;
-
-&lt;p&gt;然后为了变得萌萌哒就把游戏做成《小林家的龙女仆》的同人啦。&lt;/p&gt;
-
-&lt;p&gt;设定是托尔追坎娜，后来又加上一个不动的小林在中间，游戏中不能碰到。&lt;/p&gt;
-
-&lt;p&gt;（有人问我为什么是坎娜不是康娜，其实就是单纯喜欢这个小众的译名（误）。）&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic01.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;构建对象与移动&quot;&gt;构建对象与移动&lt;/h2&gt;
-
-&lt;p&gt;说干就干，首先要构建对象，先构建了三个对象，一是坎娜，二是托尔，三是炸弹。后来又加了个小林类。&lt;/p&gt;
-
-&lt;p&gt;基本上都有img、x、y、hp这三个数据成员，其实可以搞个基类的，不过当时有点赶着写完于是就直接撸没有设计类。&lt;/p&gt;
-
-&lt;p&gt;类图大概是下面这样的。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic02.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;画图、移动、设置炸弹，另外写了几个检查状态的函数。&lt;/p&gt;
-
-&lt;p&gt;键盘输入控制的话，当然是用键盘的上下左右啦，其实这个也只是设置一个监听。&lt;/p&gt;
-
-&lt;p&gt;代码如下&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-&lt;span class=&quot;c1&quot;&gt;//监听键盘事件&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;                                     &lt;span class=&quot;c1&quot;&gt;//记录当前按着的键&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;keydown&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;keyup&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;keyCode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add key value*/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add code*/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//松开某键盘执行代码&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add key value*/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*add code*/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//检测长按对应事件&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;Kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//使用（value in dictionary）判断&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;38&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;39&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;keysDown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;spd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBW&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CBW&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;48&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;kanna&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kimg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ctx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;其他的话就是托尔跟踪的函数了，算法大概就是每次算出xy差值，然后得到连线斜率，然后用速度算一下移动的xy值。&lt;/p&gt;
-
-&lt;p&gt;游戏实现方面还是比较简单的。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;手机端支持g感应&quot;&gt;手机端支持（G感应）&lt;/h2&gt;
-
-&lt;p&gt;本来只做PC端就能交作业了，但我突然觉得h5不做手机端这游戏发在票圈里肯定没人玩了，于是我就开始研究手机端了。&lt;/p&gt;
-
-&lt;p&gt;第一个问题首先是如何检测网页在手机端打开，为了图方便就直接用了别人的库&lt;a href=&quot;https://github.com/matthewhudson/device.js/blob/master/lib/device.js&quot;&gt;Device.js&lt;/a&gt;,然后就直接用device.mobile()判断就OK了。&lt;/p&gt;
-
-&lt;p&gt;然后控制的话当然是触摸画板放炸弹了，很简单就直接加一个object.onclick()就可以了，不过这里mark一下，canvas是不能直接onclick的，我们要造一个div然后get这个div再div.onclick()。&lt;/p&gt;
-
-&lt;p&gt;至于移动的话，我先是想用触摸canvas外的空白处，但一是不好实现，二是用户不好操作，三是竖屏状态下自适应后没有空白了，后来我就想到G感应。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic03.jpg&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;首先我去找了些文章，比较有参考价值的是&lt;a href=&quot;http://blog.csdn.net/hursing/article/details/9046837&quot;&gt;iOS Safari/WebKit对DeviceOrientationEvent的实现&lt;/a&gt;。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自&lt;a href=&quot;http://www.haorooms.com/post/html5_DeviceMotionEvent&quot;&gt;html5重力感应事件之DeviceMotionEvent&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;陀螺仪的监听器是”deviceorientation”，监听手机的转动，即手机一转动就触发监听。返回5个值：webkitCompassHeading，webkitCompassAccuracy，alpha，beta，gamma。&lt;/p&gt;
-
-&lt;p&gt;webkitCompassHeading：与正北方向的角度差值。正北为0度，正东为90度，正南为180度，正西为270度。&lt;/p&gt;
-
-&lt;p&gt;webkitCompassAccuracy：指北针的精确度，表示偏差为正负多少度。一般是10。&lt;/p&gt;
-
-&lt;p&gt;alpha: 在围绕 z 轴旋转时，手机屏幕面转过的度数，设备顶部指向地球正北方向时为0，取值[0,360]。&lt;/p&gt;
-
-&lt;p&gt;beta: 在围绕 x 轴旋转时，手机屏幕面转过的度数，设备水平放置时为0，取值[-180,180]。&lt;/p&gt;
-
-&lt;p&gt;gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水平放置时为0，取值[-90,90]。&lt;/p&gt;
-
-&lt;p&gt;具体的直观感受请就看下图：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017060901/pic04.png&quot; alt=&quot;avatar&quot; /&gt;
-&lt;img src=&quot;/img/in-post/2017060901/pic05.png&quot; alt=&quot;avatar&quot; /&gt;
-&lt;img src=&quot;/img/in-post/2017060901/pic06.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我们可以发现这里的原理很简单，大概是：通过正北（地磁场感应）判断alpha，通过重力加速度方向（重力感应）确定beta和gamma。&lt;/p&gt;
-
-&lt;p&gt;我们这里只用到beta和gamma，也就是说所谓的G感应其实是陀螺仪的两个返回值。&lt;/p&gt;
-
-&lt;p&gt;所以每当监听到转动时就往keysdown字典里添加对应方向的keycode，检测到轴线水平时删除该轴线上两个方向的keycode。当然，我设置了允许5度以内的偏差，就是返回正负5度都认为是水平。&lt;/p&gt;
-
-&lt;p&gt;此外要注意横屏时的方向和竖屏的不一样，利用window.orientation可以返回-90、0、90、180分别代表屏幕四个方向。&lt;/p&gt;
-
-&lt;p&gt;手机端测试时比较麻烦的是要先推到网站上再用手机打开，开始以为chrome的设备模拟不支持GSencor，后来发现是有Sencor模拟的。
-&lt;img src=&quot;/img/in-post/2017060901/pic07.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;另外我还发现chrome有remote devices功能，可以用USB连上手机，这次没用上，下次可以探索一下。
-&lt;img src=&quot;/img/in-post/2017060901/pic08.png&quot; alt=&quot;avatar&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;网页自适应&quot;&gt;网页自适应&lt;/h2&gt;
-
-&lt;p&gt;网页自适应对我来说一直挺麻烦的，可能是因为CSS和Style没学好，其实个人觉得吧，CSS写错了都不知道哪出问题，颇为心累。&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;坎娜与托尔 - Rimoe Game&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;user-scalable=0&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;style&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;98%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;98%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;justify-content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nl&quot;&gt;align-items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;   
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;这里mark一下meta里面的user-scalable=0，这样的话可以避免双击放大，在游戏中就很好地避免狂点屏幕放大网页的问题。&lt;/p&gt;
-
-&lt;p&gt;限时设置html和body的宽高98%，避免100%时出现滚动条，然后我用js控制缩放，直接修改div.style.zoom（缩放）。&lt;/p&gt;
-
-&lt;p&gt;因为canvas一开始就设置好宽高多少px，如果后面改的话其他图片大小什么的也要改，所以直接采用缩放的办法。用document.body.clientWidth和Height获取宽高，求其与画板的比值作为缩放尺度。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
-
-&lt;p&gt;随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。&lt;/p&gt;
-
-&lt;p&gt;不过这次的代码写的并不完美，挺混乱的。&lt;/p&gt;
-
-&lt;p&gt;嗯，本人的H5学习之路还要任重道远呢。&lt;/p&gt;
-
-&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&gt;Github - h5_game_kanna&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;2017.06.09 于珠海&lt;/p&gt;
-</description>
-        <pubDate>Fri, 09 Jun 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/06/09/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/06/09/post01/</guid>
-        
-        <category>H5/JS</category>
-        
-        <category>游戏</category>
-        
-        <category>技术</category>
         
         
       </item>
