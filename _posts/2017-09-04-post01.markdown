@@ -24,7 +24,7 @@ tags:
 
 那不如用爬虫爬一份相亲列表出来吧，嘿嘿嘿。
 
-我们尝试用[上一篇文章](http://blog.rimoe.ml/2017/08/24/post01/)的方法获取[二次元交往平台](http://weibo.com/u/3803639941?refer_flag=1001030001_&nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0)的主页。
+我们尝试用[上一篇文章](http://blog.rimoe.xyz/2017/08/24/post01/)的方法获取[二次元交往平台](http://weibo.com/u/3803639941?refer_flag=1001030001_&nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0)的主页。
 
 ```python
 import urllib2
@@ -79,7 +79,7 @@ print site.read().decode('gbk')  # 以gbk方式解码
 
 ## 配置请求头
 
-之前写[API调研究](http://blog.rimoe.ml/2017/07/29/post01/)的时候也提到了HTML请求方式和Header。
+之前写[API调研究](http://blog.rimoe.xyz/2017/07/29/post01/)的时候也提到了HTML请求方式和Header。
 
 具体可以查阅[HTTP教程](http://www.runoob.com/http/http-tutorial.html)
 
@@ -227,7 +227,7 @@ imghdir的what模块可以返回图片的文件格式。
 ```python
 from imghdr import what
 import urllib2
-pic_url = 'http://rimoe.ml/assets/img/9030.jpg'
+pic_url = 'http://rimoe.xyz/assets/img/9030.jpg'
 save_dir = '/Users/_nA/Desktop/'    # 存储路径
 photo = urllib2.urlopen(pic_url).read()
 pic_type = what('', h=photo)        # 判断图片格式

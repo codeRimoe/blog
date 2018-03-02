@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: yue.rimoe@gmail.com
 description: "作家是杂家"
 keyword: ""
-url: "http://rimoe.ml"              # your host, for absolute URL
+url: "http://rimoe.xyz"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 

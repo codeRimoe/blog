@@ -29,7 +29,7 @@ tags:
 
 ## 开荒
 
-我一直就在试着建个小站，申请了个免费的域名[rimoe.ml](https://rimoe.ml/)，用[GitHub Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/)搭了个简易的小网页，后来因为忙就荒废了。  
+我一直就在试着建个小站，申请了个免费的域名[rimoe.xyz](https://rimoe.xyz/)，用[GitHub Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/)搭了个简易的小网页，后来因为忙就荒废了。  
 
 后来想写点东西时，就继续搭建我的小站，在GitHub上pull了两个模版，捣鼓一下代码，便出来了这个简单的网页。
 

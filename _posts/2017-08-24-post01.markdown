@@ -58,7 +58,7 @@ tags:
 ```python
 import urllib2
 
-res = urllib2.urlopen("http://rimoe.ml")  # 打开网页http://rimoe.ml
+res = urllib2.urlopen("http://rimoe.xyz")  # 打开网页http://rimoe.xyz
 print res
 print res.read()                          # 解析re，输出html格式
 
@@ -119,7 +119,7 @@ Python的re模块可以使用正则表达式匹配字符串：
 import re
 
 ### 举例1
-txt1 = 'rimoe,rimoe.ml'          #从txt1中搜索关键字'rimoe'
+txt1 = 'rimoe,rimoe.xyz'          #从txt1中搜索关键字'rimoe'
 pattern1 = re.compile('rimoe')   #用正则表达式生成pattern对象
 re.findall(pattern1, txt1)        #查找所有符合表达式的子串
 
@@ -160,8 +160,8 @@ re.findall(pattern2, txt2)
 <ul>
   <li>
     <a href="https://github.com/codeRimoe/h5_game_kanna">h5 Game - 坎娜与托尔</a>  
-    <a href="http://blog.rimoe.ml/2017/06/09/post01/">[NOTE BLOG]</a>
-    <a href="http://rimoe.ml/kanna">[TRY NOW]</a>
+    <a href="http://blog.rimoe.xyz/2017/06/09/post01/">[NOTE BLOG]</a>
+    <a href="http://rimoe.xyz/kanna">[TRY NOW]</a>
   </li>
   <li>
     <a href="https://github.com/codeRimoe/Wolf_and_Sheep">OOP Homework - Wolf and Sheep</a>
@@ -194,16 +194,16 @@ for txt in txt2:
 
 输出：
 ```python
-1 ['\n          <a href="https://github.com/codeRimoe/h5_game_kanna">h5 Game - \xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94</a>  <a href="http://blog.rimoe.ml/2017/06/09/post01/">[NOTE BLOG]</a>  <a href="http://rimoe.ml/kanna">[TRY NOW]</a>\n        ', '\n          <a href="https://github.com/codeRimoe/Wolf_and_Sheep">OOP Homework - Wolf and Sheep</a>  <a href="http://blog.rimoe.ml/2017/07/27/post01/">[NOTE BLOG]</a>\n        ']
+1 ['\n          <a href="https://github.com/codeRimoe/h5_game_kanna">h5 Game - \xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94</a>  <a href="http://blog.rimoe.xyz/2017/06/09/post01/">[NOTE BLOG]</a>  <a href="http://rimoe.xyz/kanna">[TRY NOW]</a>\n        ', '\n          <a href="https://github.com/codeRimoe/Wolf_and_Sheep">OOP Homework - Wolf and Sheep</a>  <a href="http://blog.rimoe.xyz/2017/07/27/post01/">[NOTE BLOG]</a>\n        ']
 
 2 Project:
 3 h5 Game - 坎娜与托尔:"https://github.com/codeRimoe/h5_game_kanna"
-4 [NOTE BLOG]:"http://blog.rimoe.ml/2017/06/09/post01/"
-5 [TRY NOW]:"http://rimoe.ml/kanna"
+4 [NOTE BLOG]:"http://blog.rimoe.xyz/2017/06/09/post01/"
+5 [TRY NOW]:"http://rimoe.xyz/kanna"
 
 6 Project：
 7 OOP Homework - Wolf and Sheep:"https://github.com/codeRimoe/Wolf_and_Sheep"
-8 [NOTE BLOG]:"http://blog.rimoe.ml/2017/07/27/post01/"
+8 [NOTE BLOG]:"http://blog.rimoe.xyz/2017/07/27/post01/"
 ```
 
 ![图 - 8]({{ site.baseurl }}/img/in-post/2017082401/pic08.jpg)
@@ -237,7 +237,7 @@ with open('data.txt','w') as file:
 import urllib2
 import re
 
-res = urllib2.urlopen("http://rimoe.ml")        # 打开网页http://rimoe.ml
+res = urllib2.urlopen("http://rimoe.xyz")        # 打开网页http://rimoe.xyz
 
 txt1 = res.read()
 pattern1 = re.compile(r'<li>(.*?)</li>', re.S)  # 提取列表标签<li>
