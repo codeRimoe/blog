@@ -5,9 +5,326 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 11 Jan 2018 17:18:46 +0800</pubDate>
-    <lastBuildDate>Thu, 11 Jan 2018 17:18:46 +0800</lastBuildDate>
+    <pubDate>Sun, 13 May 2018 23:02:00 +0800</pubDate>
+    <lastBuildDate>Sun, 13 May 2018 23:02:00 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>Batch Gradient Descent</title>
+        <description>&lt;h2 id=&quot;0-前言&quot;&gt;0. 前言&lt;/h2&gt;
+
+&lt;p&gt;上一次写blog居然已经是4个月之前了，这学期课虽不多，但各种零零散散的事情总是在忙，再加上上半学期几乎天天都要早起，也不知道为什么我还天天都晚睡，然后就很累。&lt;/p&gt;
+
+&lt;p&gt;这周是期中考假期，一周下来好像没干啥，值得纪念的就是天天在外面各种地方吃了许多奇奇怪怪的好吃的，嗯，真难得有机会出去玩。昨天在机房值班，天气颇好，卡了很久的作业又有了做下去的方向，心情十分舒畅，于是花了一个多小时造了个轮子（写了一个梯度下降）。稍微整理一下，写一篇blog当作笔记吧。&lt;/p&gt;
+
+&lt;p&gt;讲真，到现在为止我也没有自己实现过梯度下降的算法，于是我很兴奋地就开始干了。&lt;/p&gt;
+
+&lt;p&gt;梯度下降原理很简单，我也不知道为什么各种书讲得很不清楚（其实是太多细节导致乍一看抓不住主干）。&lt;/p&gt;
+
+&lt;p&gt;梯度下降和最小二乘法有点像，梯度下降可以用来求解最小二乘法问题，但除此之外，还能求解其他得优化问题。&lt;/p&gt;
+
+&lt;p&gt;可以说，只要是函数，都能用梯度下降来求最小值，不过求到得也只能是局部最小值。&lt;/p&gt;
+
+&lt;h2 id=&quot;1-机器学习的套路&quot;&gt;1. 机器学习的套路&lt;/h2&gt;
+
+&lt;p&gt;不管你听哪个老师的课，看哪一本机器学习的书，一开始讲有监督学习时基本上是这个三步走套路，我称之为HLO——Hypothesis，Loss，Optimization。&lt;/p&gt;
+
+&lt;p&gt;首先要明确有监督学习要解决的问题：给定特征x，求一个y。这个y可以是连续的、也可以是离散的，y连续时就是回归问题，y离散时就是分类问题。如果我给了你很多x和对应的y，下次我给你新的x你能不能算出对应的y呢？&lt;/p&gt;
+
+&lt;h6 id=&quot;1-hypothesis&quot;&gt;[1] Hypothesis&lt;/h6&gt;
+
+&lt;p&gt;对于一个n维向量&lt;img src=&quot;/img/in-post/2018051301/math01.png&quot; alt=&quot;x&quot; /&gt;定义函数&lt;img src=&quot;/img/in-post/2018051301/math02.png&quot; alt=&quot;htx&quot; /&gt;该函数称为Hypothesis，我们假设通过该函数可以算出预测值。值得一提的是，这里的m维向量&lt;img src=&quot;/img/in-post/2018051301/math03.png&quot; alt=&quot;htx&quot; /&gt;
+是参数，θ只要确定了，函数就能确定，但因为有很多个θ，所以Hypothesis可以看成是一个函数集合，我们要做的就是从所有thata的组合中找出最优秀的θ，确定h(x)。&lt;/p&gt;
+
+&lt;h6 id=&quot;2-loss&quot;&gt;[2] Loss&lt;/h6&gt;
+
+&lt;p&gt;算出的预测值和真实值y还是有区别的，所以我们定义了一个Loss函数&lt;img src=&quot;/img/in-post/2018051301/math04.png&quot; alt=&quot;loss&quot; /&gt;以量化这种区别，一般来说我们会使得Loss随着预测值接近真实值y而变小。&lt;/p&gt;
+
+&lt;h6 id=&quot;3-optimization&quot;&gt;[3] Optimization&lt;/h6&gt;
+
+&lt;p&gt;对于同样的x，不同的θ算出不同的预测值，因此Loss也会不同，所谓“最优秀的”θ，就是使得Loss最小的θ嘛！那么，我们实际上就是求Loss的最值问题，也就是优化问题（Optimization）。&lt;/p&gt;
+
+&lt;h2 id=&quot;2-least-square&quot;&gt;2. Least Square&lt;/h2&gt;
+
+&lt;p&gt;说起Gradient Descent就会让人想起Least Square。&lt;/p&gt;
+
+&lt;p&gt;我们看看Loss函数，简单粗暴地算预测值和真实值y的差，取平方去掉正负号，故有&lt;img src=&quot;/img/in-post/2018051301/math05.png&quot; alt=&quot;x&quot; /&gt;
+这里N是所有训练样本，这个函数越小，预测值自然越接近真实值y。&lt;/p&gt;
+
+&lt;p&gt;最值处的必要条件就是导数为零（最值点必为极值点），于是，简单粗暴地求偏导并使之为零。&lt;img src=&quot;/img/in-post/2018051301/math06.png&quot; alt=&quot;p0&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;解这个方程，解的θ就是极值点。对于L为凸函数的问题，该方程只有一个解，非凸的话自然有多个解，如果能求到多个解自然可以比较多个解里面那个θ更优秀啦，可是很难把所有解都找出来。&lt;/p&gt;
+
+&lt;p&gt;凸函数问题的话，最典型的就是线性回归了，一般我们第一次接触最小二乘都是在学线性回归的时候，也就是定义&lt;img src=&quot;/img/in-post/2018051301/math07.png&quot; alt=&quot;p0&quot; /&gt;考虑bias的话
+&lt;img src=&quot;/img/in-post/2018051301/math08.png&quot; alt=&quot;x_bias&quot; /&gt;
+然后求Loss的的偏导数，直接解方程，可以得到具体得公式，这种可以将解用通式表示的解的形式叫closed-form。不是closed-form的可以用迭代法来求解，迭代法常用的有Newton’s Method，还有就是我们这里的Gradient Descent了。&lt;/p&gt;
+
+&lt;p&gt;小结一下：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;最小二乘的本质就是定义了一个Loss函数。&lt;br /&gt;
+梯度下降是求解最小二乘的一种算法。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;3-gradient-descent&quot;&gt;3. Gradient Descent&lt;/h2&gt;
+
+&lt;p&gt;然后我们就开始讲Gradient Descent了。&lt;/p&gt;
+
+&lt;p&gt;我们可以暂时忘记最小二乘了，要把握住算法，最重要地是丢掉细枝末节，我们这里地Loss是可以任意定义地，它就是一个函数&lt;img src=&quot;/img/in-post/2018051301/math04.png&quot; alt=&quot;loss&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们的问题仍旧是：找一个θ使得Loss最小。&lt;/p&gt;
+
+&lt;p&gt;梯度下降的做法是：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;先随便瞎猜一个θ;&lt;/li&gt;
+  &lt;li&gt;然后把Loss看成θ的函数,计算Loss的梯度∇L，根据梯度更新θ;&lt;/li&gt;
+  &lt;li&gt;不断重复第2步使得Loss基本不变.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;更新梯度的公式为&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018051301/math09.png&quot; alt=&quot;gd&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这里的α是学习率，简单理解就是参数更新的步长，从初始的θ开始移动改变θ，算出的梯度∇L是运动的方向，而α则是我们移动的步长了。常见的说法就是，在山地里面我们不断寻找最陡峭的地方往下走，这样总会找到一个局部最低点。&lt;/p&gt;
+
+&lt;p&gt;有一个无聊的人（误）录了一个视频 &lt;a href=&quot;https://www.youtube.com/watch?v=1_HBTJyWgNA&amp;amp;index=6&amp;amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49&quot;&gt;李宏毅 - ML Lecture 3-2: Gradient Descent (Demo by AOE)&lt;/a&gt;，讲世纪帝国里是怎么做的Gradient Descent的。&lt;/p&gt;
+
+&lt;h2 id=&quot;4-计算梯度&quot;&gt;4. 计算梯度&lt;/h2&gt;
+
+&lt;p&gt;以上提到的最难的步骤就是计算梯度∇L了，实际上就是分别对各个θ求偏导数而已&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018051301/math10.png&quot; alt=&quot;grad&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这里的t是指当前已经迭代的次数，而我们知道求偏导数实际就是求一元倒数，所谓导数就是：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018051301/math11.png&quot; alt=&quot;div&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们将h设成一个很小很小的数，直接代入就能求到近似解了，求到梯度之后就是不断重复迭代就行了。&lt;/p&gt;
+
+&lt;h2 id=&quot;5-python实现&quot;&gt;5. Python实现&lt;/h2&gt;
+
+&lt;p&gt;首先定义Hypothesis Function和Loss Function：&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# define hypothesis function&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hypothesis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# define you hypothesis function here...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# define loss function&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# define you loss function here...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Hypothesis就是我们的机器学习模型，定义成参数和特征（自变量）的函数，基于Hypothesis定义合适的Loss，一般来说Loss的输入包括了Hypothesis的输入，同时还需要输入实际值/Ground True（因变量）。&lt;/p&gt;
+
+&lt;p&gt;这里没有定义具体的Hypothesis和Loss，因为我们主要目的是实现梯度下降的算法。&lt;/p&gt;
+
+&lt;p&gt;再次明确我们的目的：优化Loss，求使得Loss为局部最小值时的θ。&lt;/p&gt;
+
+&lt;p&gt;首先,定义计算梯度的函数，该函数的输入和Loss一样，这里的是依次对各个求导，注意自变量是P，输入X、Y一般是训练样本。直接用导数的定义公式，把dh设成1e-7(足够小的值)。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# count gradient&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gradient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;nP&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1e-7&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dh&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dh&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后定义每一次迭代更新参数的方法，也就是输入当前参数，返回下一参数。每一次计算就是参数减去学习率乘以梯度。最后整个BGD的实现就是循环多次这一步而已。这里lr就是学习率，init_P是初始的参数，X、Y是训练样本，niter是迭代次数，这里每迭代一定次数（vbose）打印一下当前的Loss。&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# BGD Algorithm&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BGD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;niter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vbose&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_P&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;niter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gradient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vbose&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;iter:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s, loss: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;6-例子&quot;&gt;6. 例子&lt;/h2&gt;
+
+&lt;p&gt;为了测试我们的算法，我写了两个例子，试运行了一下。&lt;/p&gt;
+
+&lt;h5 id=&quot;1-多元线性回归&quot;&gt;1. 多元线性回归&lt;/h5&gt;
+
+&lt;p&gt;定义多元线性回归的函数，h(X)=PX。基于最小二乘原理定义损失函数。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;def hypothesis(P, X):
+    # h(X) = PX
+    bias = np.ones(X.shape[:-1])
+    input_ = np.insert(X, -1, bias, axis=-1)  # channel_last
+    return np.dot(input_, P)
+
+def loss(P, X, Y):
+    # Square Loss
+    d = (Y - hypothesis(P, X)) ** 2
+    return np.sum(d) / len(d)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;生成一些随机样本，这里设置3个自变量，因此有4个参数（还有一个常数项），生成2000个随机的X并求出对应Y。这里还加了一点噪声。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;X = np.random.rand(2000, 3)                                # random samples
+para_t = np.array([115, -12, -3, 44],dtype=np.float64)     # true_parameters
+Y = hypothesis(para_t, X) + np.random.rand(1)
+print(X)
+print(Y)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;因为是凸优化，所以是唯一解，不用考虑局部最优，所有随意初始化都能求到结果啦。那我们初始化参数设为0，开始训练，然后把参数打印一下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;para = np.array([0, 0, 0, 0],dtype=np.float64)              # init_para
+print(&quot;Para_h: %s&quot; % BGD(0.01, 10000, para, X, Y))
+print(&quot;Para_t: %s&quot; % para_t)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iter:0, loss: 6051.55206953
+iter:1000, loss: 51.0304688772
+iter:2000, loss: 5.0273756556
+iter:3000, loss: 0.68016847629
+iter:4000, loss: 0.101467038909
+iter:5000, loss: 0.0154896290322
+iter:6000, loss: 0.00237660362235
+iter:7000, loss: 0.000365047416709
+iter:8000, loss: 5.60845545895e-05
+iter:9000, loss: 8.61695483353e-06
+Para_h: [ 114.99777458  -12.0023768    -2.05467269   43.99780741]
+Para_t: [ 115.  -12.   -3.   44.]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Para_h是我们拟合出来的参数，Para_t是真实的参数（基于这个函数生成模拟样本的），解这个就是a peace of cake啦。&lt;/p&gt;
+
+&lt;h5 id=&quot;2-简单的人工神经网络&quot;&gt;2. 简单的人工神经网络&lt;/h5&gt;
+
+&lt;p&gt;数据是Nerlove收集的1955年145家美国电力企业的总成本(TC)、产量(Q)、工资率(PL)、燃料价格(PF)及资本租赁价格(PK)，X为(Q, PL, PF, PK)，Y为TC。&lt;/p&gt;
+
+&lt;p&gt;别听神经网络好像很腻害的样子，本质就是花式堆叠广义线性回归。还是先定义Hypothesis和Loss，这里定义了一个reLU函数作为激活函数，Hypothesis是一个只有两个隐含层的神经网络，输入层有4个神经元，第一层有6个神经元，第二层有3个神经元，一共有47个参数。&lt;/p&gt;
+
+&lt;p&gt;reLU定义如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018051301/math12.png&quot; alt=&quot;div&quot; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;def reLU(X):
+    return X * (X &amp;gt; 0)
+
+def hypothesis(P, X):
+    # ANN(2 Layers)
+    p1 = P[:5]
+    p2 = P[5:10]
+    p3 = P[10:]
+    bias = np.ones(X.shape[:-1])
+    input_ = np.insert(X, -1, bias, axis=-1)  # channel_last
+    nn11 = reLU(np.dot(input_, p1))
+    nn12 = reLU(np.dot(input_, p2))
+    nn1 = np.stack([nn11, nn12, bias], axis=-1)
+    return reLU(np.dot(nn1, p3))
+
+def loss(P, X, Y):
+    # Square Loss
+    d = (Y - hypothesis(P, X)) ** 2
+    return np.sum(d) / len(d)
+
+# Load Data
+data = np.loadtxt(r'data.csv', delimiter=',')
+Y = data[:, 0]
+X = data[:, 1:]
+X.shape            # (145L, 4L)
+
+# get train sample and test sample
+N = 100
+Ytrain = Y[:N]
+Xtrain = X[:N, :]
+Ytest = Y[N:]
+Xtest = X[N:, :]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;一共145个样本，我们用100个做训练，45个做测试，先跑一下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;para = np.random.rand(47)
+print(para)
+print(BGD(1e-3, 5000, para, Xtrain, Ytrain, 1000))
+print(&quot;RMSE:%s&quot; % loss(para, Xtest, Ytest) ** 0.5)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iter:0, loss: 32.43822935
+iter:1000, loss: 32.43822935
+iter:2000, loss: 32.43822935
+iter:3000, loss: 32.43822935
+iter:4000, loss: 32.43822935
+RMSE:41.5248204328
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;发现结果坏掉了，打印一下预测值，发现全部变成0了，再打印一下梯度。发现梯度全是0，这就是传说中的Gradient Vanish，在神经网络多层传播后，参数的变动很有可能无法计算出梯度（梯度弥散，Gradient Vanish），又或者参数的微微变动就会导致梯度骤变（梯度爆炸，Gradient Explosion）。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Y_hat, Y, dY
+[[  -0.      11.982   11.982]
+ [  -0.      16.674   16.674]
+ [  -0.      12.62    12.62 ]
+ [  -0.      12.905   12.905]
+ ...]
+...
+ [ 0.  0.  ...  0.  0.]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;事实上我们这里算出来的梯度也是很大的，因此把学习率调成了一个很小的值（1e-7），再多跑几次（使得初始化参数落到了一个比较好的位置上）。出来的结果还是能看的。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iter:0, loss: 56115.2138837
+iter:1000, loss: 2.58377124655
+iter:2000, loss: 2.20030671483
+iter:3000, loss: 1.88540868509
+iter:4000, loss: 1.6693258371
+RMSE:10.2699172204
+...
+Y_hat, Y, dY
+[[  12.94779536   11.982        -0.96579536]
+ [  13.91592103   16.674         2.75807897]
+ [  14.50662844   12.62         -1.88662844]
+ [  13.98164501   12.905        -1.07664501]
+ ...]
+...
+[  186.86534503 -4.51131314 ... 2328.47006998 4.02859825]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;7-总结&quot;&gt;7. 总结&lt;/h2&gt;
+
+&lt;p&gt;大概写了一下BGD的笔记，还是有一点收获的，也算是加深了对梯度下降理解啦。&lt;/p&gt;
+
+&lt;p&gt;不过不知道为什么，代码只写了不到一个小时，写blog却写了一天（心累）。&lt;/p&gt;
+
+&lt;p&gt;代码已上传到&lt;a href=&quot;https://github.com/codeRimoe/ML_demo/tree/master/MLD01_BGD&quot;&gt;Github - MLD01_BGD&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;2018.05.13 晚上 于广州&lt;/p&gt;
+</description>
+        <pubDate>Sun, 13 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/05/13/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/13/post01/</guid>
+        
+        <category>机器学习</category>
+        
+        <category>深度学习</category>
+        
+        <category>算法</category>
+        
+        
+      </item>
     
       <item>
         <title>随笔偶成</title>
@@ -596,7 +913,7 @@ B=greater magnitude than the actual observed results（更小概率的情况）.
 
 &lt;p&gt;那不如用爬虫爬一份相亲列表出来吧，嘿嘿嘿。&lt;/p&gt;
 
-&lt;p&gt;我们尝试用&lt;a href=&quot;http://blog.rimoe.ml/2017/08/24/post01/&quot;&gt;上一篇文章&lt;/a&gt;的方法获取&lt;a href=&quot;http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;amp;nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&amp;amp;is_hot=1&amp;amp;noscale_head=1#_0&quot;&gt;二次元交往平台&lt;/a&gt;的主页。&lt;/p&gt;
+&lt;p&gt;我们尝试用&lt;a href=&quot;http://blog.rimoe.xyz/2017/08/24/post01/&quot;&gt;上一篇文章&lt;/a&gt;的方法获取&lt;a href=&quot;http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;amp;nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&amp;amp;is_hot=1&amp;amp;noscale_head=1#_0&quot;&gt;二次元交往平台&lt;/a&gt;的主页。&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;site&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;amp;&quot;&lt;/span&gt;
@@ -653,7 +970,7 @@ B=greater magnitude than the actual observed results（更小概率的情况）.
 
 &lt;h2 id=&quot;配置请求头&quot;&gt;配置请求头&lt;/h2&gt;
 
-&lt;p&gt;之前写&lt;a href=&quot;http://blog.rimoe.ml/2017/07/29/post01/&quot;&gt;API调研究&lt;/a&gt;的时候也提到了HTML请求方式和Header。&lt;/p&gt;
+&lt;p&gt;之前写&lt;a href=&quot;http://blog.rimoe.xyz/2017/07/29/post01/&quot;&gt;API调研究&lt;/a&gt;的时候也提到了HTML请求方式和Header。&lt;/p&gt;
 
 &lt;p&gt;具体可以查阅&lt;a href=&quot;http://www.runoob.com/http/http-tutorial.html&quot;&gt;HTTP教程&lt;/a&gt;&lt;/p&gt;
 
@@ -792,7 +1109,7 @@ pip install lxml
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;imghdr&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;what&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pic_url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://rimoe.ml/assets/img/9030.jpg'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pic_url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://rimoe.xyz/assets/img/9030.jpg'&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;save_dir&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/Users/_nA/Desktop/'&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;# 存储路径&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;photo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pic_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;pic_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;what&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# 判断图片格式&lt;/span&gt;
@@ -906,7 +1223,7 @@ pip install lxml
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 打开网页http://rimoe.ml&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 打开网页http://rimoe.xyz&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                          &lt;span class=&quot;c&quot;&gt;# 解析re，输出html格式&lt;/span&gt;
 
@@ -969,7 +1286,7 @@ pip install lxml
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;### 举例1&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'rimoe,rimoe.ml'&lt;/span&gt;          &lt;span class=&quot;c&quot;&gt;#从txt1中搜索关键字'rimoe'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'rimoe,rimoe.xyz'&lt;/span&gt;          &lt;span class=&quot;c&quot;&gt;#从txt1中搜索关键字'rimoe'&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rimoe'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#用正则表达式生成pattern对象&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;#查找所有符合表达式的子串&lt;/span&gt;
 
@@ -1008,8 +1325,8 @@ pip install lxml
 &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;h5 Game - 坎娜与托尔&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;  
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.ml/2017/06/09/post01/&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[NOTE BLOG]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml/kanna&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[TRY NOW]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.xyz/2017/06/09/post01/&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[NOTE BLOG]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.xyz/kanna&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;[TRY NOW]&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;OOP Homework - Wolf and Sheep&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
@@ -1040,16 +1357,16 @@ pip install lxml
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;输出：&lt;/p&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;          &amp;lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&amp;gt;h5 Game - &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://blog.rimoe.ml/2017/06/09/post01/&quot;&amp;gt;[NOTE BLOG]&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://rimoe.ml/kanna&quot;&amp;gt;[TRY NOW]&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;          &amp;lt;a href=&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&amp;gt;OOP Homework - Wolf and Sheep&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://blog.rimoe.ml/2017/07/27/post01/&quot;&amp;gt;[NOTE BLOG]&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;          &amp;lt;a href=&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&amp;gt;h5 Game - &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://blog.rimoe.xyz/2017/06/09/post01/&quot;&amp;gt;[NOTE BLOG]&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://rimoe.xyz/kanna&quot;&amp;gt;[TRY NOW]&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;          &amp;lt;a href=&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&amp;gt;OOP Homework - Wolf and Sheep&amp;lt;/a&amp;gt;  &amp;lt;a href=&quot;http://blog.rimoe.xyz/2017/07/27/post01/&quot;&amp;gt;[NOTE BLOG]&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;        '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 
 &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
 &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Game&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;坎娜与托尔&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/h5_game_kanna&quot;&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.ml/2017/06/09/post01/&quot;&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TRY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml/kanna&quot;&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.xyz/2017/06/09/post01/&quot;&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TRY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.xyz/kanna&quot;&lt;/span&gt;
 
 &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;
 &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OOP&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Homework&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Wolf&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sheep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://github.com/codeRimoe/Wolf_and_Sheep&quot;&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.ml/2017/07/27/post01/&quot;&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOTE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BLOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://blog.rimoe.xyz/2017/07/27/post01/&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/2017082401/pic08.jpg&quot; alt=&quot;图 - 8&quot; /&gt;
@@ -1081,7 +1398,7 @@ pip install lxml
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.ml&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# 打开网页http://rimoe.ml&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urllib2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://rimoe.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# 打开网页http://rimoe.xyz&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;txt1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;pattern1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'&amp;lt;li&amp;gt;(.*?)&amp;lt;/li&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 提取列表标签&amp;lt;li&amp;gt;&lt;/span&gt;
@@ -1245,312 +1562,6 @@ pip install lxml
         <category>生活</category>
         
         <category>文艺</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>API调用研究</title>
-        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
-
-&lt;p&gt;有一段时间想从微博中获取数据，于是就向试一下用API获取数据。基于这个出发点，我学会了使用微博API，虽然并没有通过weiboAPI获得什么实际用到的数据。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;一管中窥豹&quot;&gt;一、管中窥豹&lt;/h2&gt;
-
-&lt;p&gt;在使用API之前，我们有必要了解一下到底什么是API。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;API英文全称Application Programming Interface，即应用程序接口。接口（Interface）指两个独立部分用于传递信息的共同边界（a shared boundary across which two separate components of a computer system exchange information，from Wikipedia）。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;所谓接口，就像USB插口一样，插上去就能传递信息。API就是提供给应用程序使用的接口，应用程序通过这个接口就可以简单地获取信息，而不需要知道底层代码或工作机制等细节，就像我们使用移动硬盘时只需要知道怎么将USB插口接到电脑上而不需要知道计算机是怎样实现从硬盘拷贝数据的。&lt;/p&gt;
-
-&lt;p&gt;这样的好处就是，我们获取数据时，早已有了预先定义好的通道，数据提供方已经将访问数据的方法打包好，我们直接用就可以了，不用担心到底是怎么访问数据的——这些琐事就交给新浪吧。当然，API也不只是用于获取数据，还能用于发送数据，即接口的传输可以是双向的。比如我们通过调用新浪微博的API不仅可以获取最新的微博消息，还能通过接口发布一则微博或评论。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;二牛刀小试&quot;&gt;二、牛刀小试&lt;/h2&gt;
-
-&lt;p&gt;既然API是现成的数据获取渠道，那么调用方式也应该被精心设计，所以接口的调用应该是相对人性化的，也就是说对于要获取数据的一般用户，并不需要太深奥的知识都能使用，那么怎么调用API呢？&lt;/p&gt;
-
-&lt;p&gt;以下以新浪微博API为例初探如何调用API。&lt;/p&gt;
-
-&lt;p&gt;首先我们可以很容易找到&lt;a href=&quot;http://open.weibo.com/wiki/API&quot;&gt;新浪微博的API&lt;/a&gt;，里面有各种各样的接口（如图-1）。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic01.jpg&quot; alt=&quot;图 - 1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我们先从“获取最新的公共微博”开始，点入左边的链接&lt;a href=&quot;http://open.weibo.com/wiki/2/statuses/public_timeline&quot;&gt;statuses/public_timeline&lt;/a&gt;，可以看到里面有许多项内容——URL、支持格式、请求方式、是否需要登录等等（如图-2）。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic02.jpg&quot; alt=&quot;图 - 2&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;从这里我们可以知道这个接口调用要注意的东西，但现在我们似乎还看不懂，没关系我们，先把他放在一边，回到最初的问题上：如何调用API。&lt;/p&gt;
-
-&lt;p&gt;要知道如何调用，首先我们我知道在哪调用，这里采用一种简洁的语言——Python来调用我们API，如果不会Python也没关系，事实上你只要学会运行一个python程序就可以调用API了。&lt;/p&gt;
-
-&lt;h4 id=&quot;1-调用环境的搭建&quot;&gt;1. 调用环境的搭建&lt;/h4&gt;
-
-&lt;p&gt;搭建调用环境听起来很高端，其实说白了就是装软件和设置的过程。&lt;/p&gt;
-
-&lt;h6 id=&quot;-python的运行&quot;&gt;* Python的运行&lt;/h6&gt;
-
-&lt;h6 id=&quot;-sdk的获取&quot;&gt;* SDK的获取&lt;/h6&gt;
-
-&lt;p&gt;SDK即软件开发工具包（Software Development Kit），为了方便调用API，sina提供了各种语言下调用API的SDK，具体参见网站&lt;a href=&quot;http://open.weibo.com/wiki/SDK&quot;&gt;Weibo SDK&lt;/a&gt;。其中python的SDK是由大神廖雪峰&lt;a href=&quot;https://github.com/michaelliao&quot;&gt;github&lt;/a&gt;写的，他的git上也有一些python教程。关于SDK，可以戳：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;下载页&lt;a href=&quot;https://github.com/michaelliao/sinaweibopy&quot;&gt;新浪微博Python SDK&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;介绍页&lt;a href=&quot;http://github.liaoxuefeng.com/sinaweibopy/&quot;&gt;sinaweibopy&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h6 id=&quot;-创建应用&quot;&gt;* 创建应用&lt;/h6&gt;
-
-&lt;p&gt;我们要调用数据，数据提供者必然不能随便开放数据，在新浪微博API中，要获取数据，就需要app-key和app-secret。这两个东西就像是账号密码，用来证明你是开发者，通过你开发的这个应用来使用API。&lt;/p&gt;
-
-&lt;p&gt;要获得app-key和app-secret，我们首先要有一个app-，我们在&lt;a href=&quot;http://open.weibo.com/&quot;&gt;新浪开发平台&lt;/a&gt;上创建一个应用，点击我的应用，然后认证信息后，点击微连接-其他，创建一个网页应用，不需要审核。&lt;/p&gt;
-
-&lt;p&gt;然后在【应用信息-基本信息】里面的app-key和app-secret（如图-3）。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic03.png&quot; alt=&quot;图 - 3&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在【应用信息-高级信息】里面【OAuth2.0授权设置】（如图-4）里输入回调地址，这个地址是授权后跳转的页面，你可以自己做一个网页作为回调页，也可以随便找一个网页作为回调页，图中我用的是我自己做的一个简易页面。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic04.png&quot; alt=&quot;图 - 4&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2-尝试调用&quot;&gt;2. 尝试调用&lt;/h4&gt;
-
-&lt;p&gt;在任意路径新建一个文件夹作为代码存储区，也作为我们的工作环境。&lt;/p&gt;
-
-&lt;p&gt;将SDK里的文件复制进该文件夹中。&lt;/p&gt;
-
-&lt;p&gt;新建一个文本文档，命名随意但后缀要为.py，我们将通过这个文件来调用API，注意创建的文档要是纯文本文档。&lt;/p&gt;
-
-&lt;p&gt;然后在文档中粘贴以下代码（&lt;a href=&quot;https://github.com/codeRimoe/api/blob/master/weiboAPI/apicode/demo1_pub_timeline.py&quot;&gt;demo1_pub_timeline.py&lt;/a&gt;），我们试着用下面这段代码来扒一些简单的数据吧。&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# _*_ coding: utf-8 _*_&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;weibo&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;webbrowser&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;reload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                                              &lt;span class=&quot;c&quot;&gt;# 使用UTF-8输出&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setdefaultencoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;APP_KEY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'xxx'&lt;/span&gt;             &lt;span class=&quot;c&quot;&gt;# 将引号中的xxx替换为你的APP_KEY，保留引号&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;MY_APP_SECRET&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'yyy'&lt;/span&gt;       &lt;span class=&quot;c&quot;&gt;# 将引号中的yyy替换为你的APP_SECRET，保留引号&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;REDIRECT_URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'zzz'&lt;/span&gt;        &lt;span class=&quot;c&quot;&gt;# 将引号中的zzz替换为你的回调地址，保留引号&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 请求用户授权的过程&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weibo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;APIClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;APP_KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MY_APP_SECRET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;authorize_url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_authorize_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REDIRECT_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 自动打开浏览器，授权后复制地址栏中URL里的code字段&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;webbrowser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;authorize_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                              &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 将code字段后的值复制输入&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;raw_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;input the code: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 获得用户授权&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request_access_token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;REDIRECT_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 保存返回的access_token,exires_in,uid&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;access_token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access_token&lt;/span&gt;                         &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;expires_in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;expires_in&lt;/span&gt;                             &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uid&lt;/span&gt;                                           &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 设置accsess_token&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_access_token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access_token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expires_in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;           &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 调用API&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statuses__public_timeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'statuses'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-----------the results is : &quot;&lt;/span&gt;                        &lt;span class=&quot;c&quot;&gt;# 输出信息&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;                                       &lt;span class=&quot;c&quot;&gt;# 确定获取的信息条数&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'昵称：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'screen_name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; \
-        &lt;span class=&quot;s&quot;&gt;' 来自：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'user'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'location'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'时间：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'created_at'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'来源：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'source'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'微博：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'text'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'转发：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'reposts_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; \
-        &lt;span class=&quot;s&quot;&gt;' 评论：'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'comments_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; \
-        &lt;span class=&quot;s&quot;&gt;' 喜欢：'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'attitudes_count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;-----------all--------------&quot;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;在运行这段代码之前，我们要先将app-key和app-secret放进代码中，这样新浪微博才知道谁要调用这些数据。当然我们也要把回调地址写上，注意要和上面创建APP时你填的地址一样。&lt;/p&gt;
-
-&lt;p&gt;然后我们在终端中运行这段代码。如无意外，代码运行后，终端会提示输入code，同时浏览器会打开，然后会出现授权提示页面（如图-5）。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic05.png&quot; alt=&quot;图 - 5&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这是选择授权就会跳转到授权提示页面，我们需要将跳转后的URL地址中的“code=”后面的部分复制，输入到终端中（如图-6）。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic06.png&quot; alt=&quot;图 - 6&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后我们就能看到终端上显示出了我们扒下来的数据(可以写文件保存：&lt;a href=&quot;https://github.com/codeRimoe/api/tree/master/weiboAPI/result_example&quot;&gt;result.txt&lt;/a&gt;)啦（如图-7）！&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic07.jpg&quot; alt=&quot;图 - 7&quot; /&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;三更上层楼&quot;&gt;三、更上层楼&lt;/h2&gt;
-
-&lt;p&gt;API实质上是访问网站数据库的窗口，我们递交一个申请，网站返回数据，API和爬虫不同，爬虫是模拟人访问网页的行为获取网页，然后在获取的网页上提取数据，并通过网页的链接跳转继续获取数据，而API则是向服务器发送请求，服务器返回json格式的文件。所以API其实是官方提供的数据获取源。通常会对数据流量有一定的限制。&lt;/p&gt;
-
-&lt;p&gt;因此API调用的本质是：发送请求-&amp;gt;返回数据-&amp;gt;解析数据&lt;/p&gt;
-
-&lt;h4 id=&quot;1-http请求&quot;&gt;1. HTTP请求&lt;/h4&gt;
-
-&lt;p&gt;首先我们要发送的请求是通过HTTP进行请求的，HTTP的请求方式有几种：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。&lt;/li&gt;
-  &lt;li&gt;HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;方法&lt;/td&gt;
-      &lt;td&gt;描述&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;GET&lt;/td&gt;
-      &lt;td&gt;请求指定的页面信息，并返回实体主体。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;HEAD&lt;/td&gt;
-      &lt;td&gt;类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;POST&lt;/td&gt;
-      &lt;td&gt;向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;PUT&lt;/td&gt;
-      &lt;td&gt;从客户端向服务器传送的数据取代指定的文档的内容。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;DELETE&lt;/td&gt;
-      &lt;td&gt;请求服务器删除指定的页面。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;CONNECT&lt;/td&gt;
-      &lt;td&gt;HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;OPTIONS&lt;/td&gt;
-      &lt;td&gt;允许客户端查看服务器的性能。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;TRACE&lt;/td&gt;
-      &lt;td&gt;回显服务器收到的请求，主要用于测试或诊断。&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;一般用到的就只有GET和POST，区别大概是GET用于获取数据，POST要在header中提交更多的参数用于提交数据。我们浏览网页，实际上是提交一个表单，向服务器请求数据。关于http协议的教程，具体可以看&lt;a href=&quot;http://www.runoob.com/http/http-tutorial.html&quot;&gt;HTTP教程&lt;/a&gt;，具体请求方式python中一般是使用urllib和urllib2两个模块的urlopen()函数。&lt;/p&gt;
-
-&lt;p&gt;我们在微博API的使用手册中可以看到，每个API都有写明HTTP请求方式，使用SDK可以不需要深入了解HTTP请求方式即可调用API。&lt;/p&gt;
-
-&lt;h4 id=&quot;2-oauth授权简介&quot;&gt;2. OAuth授权简介&lt;/h4&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;OAuth是一个关于授权(authorization)的开放网络标准,在全世界得到广泛应用,目前的版本是2.0版。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;新浪微博API采用OAuth2.0授权，具体原理可以参考&lt;a href=&quot;http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html&quot;&gt;理解OAuth 2.0&lt;/a&gt;，这里我们只需要知道通过授权码认证后，我们的程序可以获得用户账号的某些权限，比如查看微博、发微博等。这个授权码，其实就是上文提到“code=”后面的那串字符。&lt;/p&gt;
-
-&lt;h4 id=&quot;3-使用sdk&quot;&gt;3. 使用SDK&lt;/h4&gt;
-
-&lt;p&gt;使用SDK很方便的一点就是可以不用管这些，直接就使用SDK（weiboAPI模块）里的函数。&lt;/p&gt;
-
-&lt;p&gt;上文demo.py中调用了几个函数:&lt;/p&gt;
-
-&lt;p&gt;其中client.get_authorize_url()函数可以返回授权页；&lt;/p&gt;
-
-&lt;p&gt;client.request_access_token()用于获得包括access_token的返回数据；&lt;/p&gt;
-
-&lt;p&gt;使用client.set_access_token()函数设置access_token后就可以调用API了。&lt;/p&gt;
-
-&lt;p&gt;API接口有很多，demo中调用的是公众时间流，可以获取公共微博数据。这些接口的调用方式在微博开放平台-&lt;a href=&quot;http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI&quot;&gt;微博API&lt;/a&gt;中可以找到。&lt;/p&gt;
-
-&lt;p&gt;比如当前用户关注的人的最新微博的API&lt;a href=&quot;http://open.weibo.com/wiki/2/statuses/home_timeline&quot;&gt;statuses/home_timeline&lt;/a&gt;其URL是”https://api.weibo.com/2/statuses/home_timeline.json”，调用就可以直接使用如下方法，其实就是把“/”换成“.”，然后后面加上请求方式（.get/.post）。&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;statuses&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;home_timeline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;如果要调用某些API需要提交请求参数的，那就在括号里面加上参数名=具体参数，如&lt;a href=&quot;http://open.weibo.com/wiki/2/comments/create&quot;&gt;comments/create&lt;/a&gt;（这个API是POST请求方式,请求参数如图-8），那就应该写成如下形式。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic08.png&quot; alt=&quot;图 - 8&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;comment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;你好帅啊！&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                          &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4129569084024445&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;调用后结果如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2017072901/pic09.png&quot; alt=&quot;图 - 9&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;用API发条评论也是很有趣的嘛～&lt;/p&gt;
-
-&lt;h4 id=&quot;4-访问频次&quot;&gt;4. 访问频次&lt;/h4&gt;
-
-&lt;p&gt;API接口不是无限次数访问的，官方文档-&lt;a href=&quot;http://open.weibo.com/wiki/Rate-limiting&quot;&gt;接口访问频次权限&lt;/a&gt;这样写道：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;微博开放接口限制每段时间只能请求一定的次数。限制的单位时间有每小时、每天；限制的维度有单授权用户和单IP；部分特殊接口有单独的请求次数限制。例如：&lt;/p&gt;
-  &lt;ul&gt;
-    &lt;li&gt;一个应用内单授权用户每小时只能请求微博开放接口n次；&lt;/li&gt;
-    &lt;li&gt;一个应用内单授权用户每天累计只能请求微博开放接口m次；&lt;/li&gt;
-    &lt;li&gt;一个IP地址每小时只能请求微博开放接口x次；&lt;/li&gt;
-    &lt;li&gt;发微博接口单授权用户每小时只能请求y次；
-其中n、m、x、y的具体数值，微博开放平台将采用应用质量评估系统，实现智能评估应用质量，质量高的应用相应的这些数值就高，也就是请求限制小。因此限制值不固定，不同的应用有不同的限制，取决于应用自身的质量。&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;使用API接口&lt;a href=&quot;http://open.weibo.com/wiki/2/account/rate_limit_status&quot;&gt;account/rate_limit_status&lt;/a&gt;，可以查看当前应用的频次限制。&lt;/p&gt;
-
-&lt;h4 id=&quot;5-自动获取授权码&quot;&gt;5. 自动获取授权码&lt;/h4&gt;
-
-&lt;p&gt;这部分由于各种原因没有去研究，以后不知道什么时候才有空去研究，这里先贴一个链接：&lt;a href=&quot;http://blog.csdn.net/liujiandu101/article/details/52096654&quot;&gt;python模拟登录新浪微博自动获得调用新浪api所需的code&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;大概看了一下好像就是直接用requests请求的。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;四返躬内省&quot;&gt;四、返躬内省&lt;/h2&gt;
-
-&lt;p&gt;一开始研究API是为了通过API获取微博的数据，但后来发现，API对频次的限制比较严格，而且获取的方法比较单一，后来就转向使用爬虫。但如果要获取用户间的关系的话，使用API似乎也是可行的。&lt;/p&gt;
-
-&lt;p&gt;API的用途更多是用在应用接入方面，比如用在我们用某些软件或网页中的“分享到新浪微博”的接口，还是有其作用的。&lt;/p&gt;
-
-&lt;p&gt;另外新浪微博的API和twitter的API是很像的，《社交网站的数据挖掘与分析》第一章讲的就是twitte的API使用方法，大家有空可以看看。&lt;/p&gt;
-
-&lt;p&gt;其实这篇文章大约半年前就开始写了，最近才将之前的东西整理了一下，接下来我会写几篇关于上学期学习简单爬虫的艰苦历程，可能还会研究一下百度地图的API，不过不知道什么时候才能写出来。&lt;/p&gt;
-
-&lt;p&gt;代码已发到&lt;a href=&quot;https://github.com/codeRimoe/api&quot;&gt;Github - api&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;代码参考自：&lt;a href=&quot;http://blog.csdn.net/dijason/article/details/8251322&quot;&gt;微博 获取指定用户发表的所有微博&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;2017.07.27 于广州&lt;/p&gt;
-</description>
-        <pubDate>Sat, 29 Jul 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/07/29/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/07/29/post01/</guid>
-        
-        <category>Python</category>
-        
-        <category>API/SDK</category>
-        
-        <category>数据获取</category>
-        
-        <category>技术</category>
-        
-        <category>微博</category>
         
         
       </item>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="作家是杂家">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Batch Gradient Descent - 凝萌小记 - Rimoe's</title>
+
+    <link rel="canonical" href="http://localhost:4000/2018/05/13/post01/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <!--<link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">凝萌小记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://rimoe.xyz">Home - 柠萌</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post201801051301.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg/post201801051301.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#机器学习" title="机器学习">机器学习</a>
+                        
+                        <a class="tag" href="/tags/#深度学习" title="深度学习">深度学习</a>
+                        
+                        <a class="tag" href="/tags/#算法" title="算法">算法</a>
+                        
+                    </div>
+                    <h1>Batch Gradient Descent</h1>
+                    
+                    
+                    <h2 class="subheading">日常造轮子</h2>
+                    
+                    <span class="meta">Posted by 柠萌 on May 13, 2018</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="0-前言">0. 前言</h2>
+
+<p>上一次写blog居然已经是4个月之前了，这学期课虽不多，但各种零零散散的事情总是在忙，再加上上半学期几乎天天都要早起，也不知道为什么我还天天都晚睡，然后就很累。</p>
+
+<p>这周是期中考假期，一周下来好像没干啥，值得纪念的就是天天在外面各种地方吃了许多奇奇怪怪的好吃的，嗯，真难得有机会出去玩。昨天在机房值班，天气颇好，卡了很久的作业又有了做下去的方向，心情十分舒畅，于是花了一个多小时造了个轮子（写了一个梯度下降）。稍微整理一下，写一篇blog当作笔记吧。</p>
+
+<p>讲真，到现在为止我也没有自己实现过梯度下降的算法，于是我很兴奋地就开始干了。</p>
+
+<p>梯度下降原理很简单，我也不知道为什么各种书讲得很不清楚（其实是太多细节导致乍一看抓不住主干）。</p>
+
+<p>梯度下降和最小二乘法有点像，梯度下降可以用来求解最小二乘法问题，但除此之外，还能求解其他得优化问题。</p>
+
+<p>可以说，只要是函数，都能用梯度下降来求最小值，不过求到得也只能是局部最小值。</p>
+
+<h2 id="1-机器学习的套路">1. 机器学习的套路</h2>
+
+<p>不管你听哪个老师的课，看哪一本机器学习的书，一开始讲有监督学习时基本上是这个三步走套路，我称之为HLO——Hypothesis，Loss，Optimization。</p>
+
+<p>首先要明确有监督学习要解决的问题：给定特征x，求一个y。这个y可以是连续的、也可以是离散的，y连续时就是回归问题，y离散时就是分类问题。如果我给了你很多x和对应的y，下次我给你新的x你能不能算出对应的y呢？</p>
+
+<h6 id="1-hypothesis">[1] Hypothesis</h6>
+
+<p>对于一个n维向量<img src="/img/in-post/2018051301/math01.png" alt="x" />定义函数<img src="/img/in-post/2018051301/math02.png" alt="htx" />该函数称为Hypothesis，我们假设通过该函数可以算出预测值。值得一提的是，这里的m维向量<img src="/img/in-post/2018051301/math03.png" alt="htx" />
+是参数，θ只要确定了，函数就能确定，但因为有很多个θ，所以Hypothesis可以看成是一个函数集合，我们要做的就是从所有thata的组合中找出最优秀的θ，确定h(x)。</p>
+
+<h6 id="2-loss">[2] Loss</h6>
+
+<p>算出的预测值和真实值y还是有区别的，所以我们定义了一个Loss函数<img src="/img/in-post/2018051301/math04.png" alt="loss" />以量化这种区别，一般来说我们会使得Loss随着预测值接近真实值y而变小。</p>
+
+<h6 id="3-optimization">[3] Optimization</h6>
+
+<p>对于同样的x，不同的θ算出不同的预测值，因此Loss也会不同，所谓“最优秀的”θ，就是使得Loss最小的θ嘛！那么，我们实际上就是求Loss的最值问题，也就是优化问题（Optimization）。</p>
+
+<h2 id="2-least-square">2. Least Square</h2>
+
+<p>说起Gradient Descent就会让人想起Least Square。</p>
+
+<p>我们看看Loss函数，简单粗暴地算预测值和真实值y的差，取平方去掉正负号，故有<img src="/img/in-post/2018051301/math05.png" alt="x" />
+这里N是所有训练样本，这个函数越小，预测值自然越接近真实值y。</p>
+
+<p>最值处的必要条件就是导数为零（最值点必为极值点），于是，简单粗暴地求偏导并使之为零。<img src="/img/in-post/2018051301/math06.png" alt="p0" /></p>
+
+<p>解这个方程，解的θ就是极值点。对于L为凸函数的问题，该方程只有一个解，非凸的话自然有多个解，如果能求到多个解自然可以比较多个解里面那个θ更优秀啦，可是很难把所有解都找出来。</p>
+
+<p>凸函数问题的话，最典型的就是线性回归了，一般我们第一次接触最小二乘都是在学线性回归的时候，也就是定义<img src="/img/in-post/2018051301/math07.png" alt="p0" />考虑bias的话
+<img src="/img/in-post/2018051301/math08.png" alt="x_bias" />
+然后求Loss的的偏导数，直接解方程，可以得到具体得公式，这种可以将解用通式表示的解的形式叫closed-form。不是closed-form的可以用迭代法来求解，迭代法常用的有Newton’s Method，还有就是我们这里的Gradient Descent了。</p>
+
+<p>小结一下：</p>
+
+<blockquote>
+  <p>最小二乘的本质就是定义了一个Loss函数。<br />
+梯度下降是求解最小二乘的一种算法。</p>
+</blockquote>
+
+<h2 id="3-gradient-descent">3. Gradient Descent</h2>
+
+<p>然后我们就开始讲Gradient Descent了。</p>
+
+<p>我们可以暂时忘记最小二乘了，要把握住算法，最重要地是丢掉细枝末节，我们这里地Loss是可以任意定义地，它就是一个函数<img src="/img/in-post/2018051301/math04.png" alt="loss" /></p>
+
+<p>我们的问题仍旧是：找一个θ使得Loss最小。</p>
+
+<p>梯度下降的做法是：</p>
+
+<ol>
+  <li>先随便瞎猜一个θ;</li>
+  <li>然后把Loss看成θ的函数,计算Loss的梯度∇L，根据梯度更新θ;</li>
+  <li>不断重复第2步使得Loss基本不变.</li>
+</ol>
+
+<p>更新梯度的公式为</p>
+
+<p><img src="/img/in-post/2018051301/math09.png" alt="gd" /></p>
+
+<p>这里的α是学习率，简单理解就是参数更新的步长，从初始的θ开始移动改变θ，算出的梯度∇L是运动的方向，而α则是我们移动的步长了。常见的说法就是，在山地里面我们不断寻找最陡峭的地方往下走，这样总会找到一个局部最低点。</p>
+
+<p>有一个无聊的人（误）录了一个视频 <a href="https://www.youtube.com/watch?v=1_HBTJyWgNA&amp;index=6&amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49">李宏毅 - ML Lecture 3-2: Gradient Descent (Demo by AOE)</a>，讲世纪帝国里是怎么做的Gradient Descent的。</p>
+
+<h2 id="4-计算梯度">4. 计算梯度</h2>
+
+<p>以上提到的最难的步骤就是计算梯度∇L了，实际上就是分别对各个θ求偏导数而已</p>
+
+<p><img src="/img/in-post/2018051301/math10.png" alt="grad" /></p>
+
+<p>这里的t是指当前已经迭代的次数，而我们知道求偏导数实际就是求一元倒数，所谓导数就是：</p>
+
+<p><img src="/img/in-post/2018051301/math11.png" alt="div" /></p>
+
+<p>我们将h设成一个很小很小的数，直接代入就能求到近似解了，求到梯度之后就是不断重复迭代就行了。</p>
+
+<h2 id="5-python实现">5. Python实现</h2>
+
+<p>首先定义Hypothesis Function和Loss Function：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c"># define hypothesis function</span>
+<span class="k">def</span> <span class="nf">hypothesis</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="c"># define you hypothesis function here...</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="c"># define loss function</span>
+<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="c"># define you loss function here...</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+</code></pre></div></div>
+
+<p>Hypothesis就是我们的机器学习模型，定义成参数和特征（自变量）的函数，基于Hypothesis定义合适的Loss，一般来说Loss的输入包括了Hypothesis的输入，同时还需要输入实际值/Ground True（因变量）。</p>
+
+<p>这里没有定义具体的Hypothesis和Loss，因为我们主要目的是实现梯度下降的算法。</p>
+
+<p>再次明确我们的目的：优化Loss，求使得Loss为局部最小值时的θ。</p>
+
+<p>首先,定义计算梯度的函数，该函数的输入和Loss一样，这里的是依次对各个求导，注意自变量是P，输入X、Y一般是训练样本。直接用导数的定义公式，把dh设成1e-7(足够小的值)。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># count gradient</span>
+<span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="n">nP</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nP</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nP</span><span class="p">):</span>
+        <span class="n">dh</span> <span class="o">=</span> <span class="mf">1e-7</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nP</span><span class="p">)</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dh</span>
+        <span class="n">D</span><span class="p">[</span><span class="n">_i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss</span><span class="p">(</span><span class="n">P</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">-</span> <span class="n">loss</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span> <span class="o">/</span> <span class="n">dh</span>
+    <span class="k">return</span> <span class="n">D</span>
+
+</code></pre></div></div>
+
+<p>然后定义每一次迭代更新参数的方法，也就是输入当前参数，返回下一参数。每一次计算就是参数减去学习率乘以梯度。最后整个BGD的实现就是循环多次这一步而已。这里lr就是学习率，init_P是初始的参数，X、Y是训练样本，niter是迭代次数，这里每迭代一定次数（vbose）打印一下当前的Loss。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># BGD Algorithm</span>
+<span class="k">def</span> <span class="nf">BGD</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">niter</span><span class="p">,</span> <span class="n">init_P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">vbose</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">init_P</span>
+    <span class="k">for</span> <span class="n">_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">):</span>
+        <span class="n">P</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">gradient</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">_i</span> <span class="o">%</span> <span class="n">vbose</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"iter:</span><span class="si">%</span><span class="s">s, loss: </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">_i</span><span class="p">,</span> <span class="n">loss</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">P</span>
+
+</code></pre></div></div>
+
+<h2 id="6-例子">6. 例子</h2>
+
+<p>为了测试我们的算法，我写了两个例子，试运行了一下。</p>
+
+<h5 id="1-多元线性回归">1. 多元线性回归</h5>
+
+<p>定义多元线性回归的函数，h(X)=PX。基于最小二乘原理定义损失函数。</p>
+
+<pre><code class="language-Python">def hypothesis(P, X):
+    # h(X) = PX
+    bias = np.ones(X.shape[:-1])
+    input_ = np.insert(X, -1, bias, axis=-1)  # channel_last
+    return np.dot(input_, P)
+
+def loss(P, X, Y):
+    # Square Loss
+    d = (Y - hypothesis(P, X)) ** 2
+    return np.sum(d) / len(d)
+
+</code></pre>
+
+<p>生成一些随机样本，这里设置3个自变量，因此有4个参数（还有一个常数项），生成2000个随机的X并求出对应Y。这里还加了一点噪声。</p>
+
+<pre><code class="language-Python">X = np.random.rand(2000, 3)                                # random samples
+para_t = np.array([115, -12, -3, 44],dtype=np.float64)     # true_parameters
+Y = hypothesis(para_t, X) + np.random.rand(1)
+print(X)
+print(Y)
+
+</code></pre>
+
+<p>因为是凸优化，所以是唯一解，不用考虑局部最优，所有随意初始化都能求到结果啦。那我们初始化参数设为0，开始训练，然后把参数打印一下。</p>
+
+<pre><code class="language-Python">para = np.array([0, 0, 0, 0],dtype=np.float64)              # init_para
+print("Para_h: %s" % BGD(0.01, 10000, para, X, Y))
+print("Para_t: %s" % para_t)
+</code></pre>
+
+<p>结果如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iter:0, loss: 6051.55206953
+iter:1000, loss: 51.0304688772
+iter:2000, loss: 5.0273756556
+iter:3000, loss: 0.68016847629
+iter:4000, loss: 0.101467038909
+iter:5000, loss: 0.0154896290322
+iter:6000, loss: 0.00237660362235
+iter:7000, loss: 0.000365047416709
+iter:8000, loss: 5.60845545895e-05
+iter:9000, loss: 8.61695483353e-06
+Para_h: [ 114.99777458  -12.0023768    -2.05467269   43.99780741]
+Para_t: [ 115.  -12.   -3.   44.]
+</code></pre></div></div>
+
+<p>Para_h是我们拟合出来的参数，Para_t是真实的参数（基于这个函数生成模拟样本的），解这个就是a peace of cake啦。</p>
+
+<h5 id="2-简单的人工神经网络">2. 简单的人工神经网络</h5>
+
+<p>数据是Nerlove收集的1955年145家美国电力企业的总成本(TC)、产量(Q)、工资率(PL)、燃料价格(PF)及资本租赁价格(PK)，X为(Q, PL, PF, PK)，Y为TC。</p>
+
+<p>别听神经网络好像很腻害的样子，本质就是花式堆叠广义线性回归。还是先定义Hypothesis和Loss，这里定义了一个reLU函数作为激活函数，Hypothesis是一个只有两个隐含层的神经网络，输入层有4个神经元，第一层有6个神经元，第二层有3个神经元，一共有47个参数。</p>
+
+<p>reLU定义如下：</p>
+
+<p><img src="/img/in-post/2018051301/math12.png" alt="div" /></p>
+
+<pre><code class="language-Python">def reLU(X):
+    return X * (X &gt; 0)
+
+def hypothesis(P, X):
+    # ANN(2 Layers)
+    p1 = P[:5]
+    p2 = P[5:10]
+    p3 = P[10:]
+    bias = np.ones(X.shape[:-1])
+    input_ = np.insert(X, -1, bias, axis=-1)  # channel_last
+    nn11 = reLU(np.dot(input_, p1))
+    nn12 = reLU(np.dot(input_, p2))
+    nn1 = np.stack([nn11, nn12, bias], axis=-1)
+    return reLU(np.dot(nn1, p3))
+
+def loss(P, X, Y):
+    # Square Loss
+    d = (Y - hypothesis(P, X)) ** 2
+    return np.sum(d) / len(d)
+
+# Load Data
+data = np.loadtxt(r'data.csv', delimiter=',')
+Y = data[:, 0]
+X = data[:, 1:]
+X.shape            # (145L, 4L)
+
+# get train sample and test sample
+N = 100
+Ytrain = Y[:N]
+Xtrain = X[:N, :]
+Ytest = Y[N:]
+Xtest = X[N:, :]
+</code></pre>
+
+<p>一共145个样本，我们用100个做训练，45个做测试，先跑一下。</p>
+
+<pre><code class="language-Python">para = np.random.rand(47)
+print(para)
+print(BGD(1e-3, 5000, para, Xtrain, Ytrain, 1000))
+print("RMSE:%s" % loss(para, Xtest, Ytest) ** 0.5)
+</code></pre>
+
+<p>结果如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iter:0, loss: 32.43822935
+iter:1000, loss: 32.43822935
+iter:2000, loss: 32.43822935
+iter:3000, loss: 32.43822935
+iter:4000, loss: 32.43822935
+RMSE:41.5248204328
+</code></pre></div></div>
+
+<p>发现结果坏掉了，打印一下预测值，发现全部变成0了，再打印一下梯度。发现梯度全是0，这就是传说中的Gradient Vanish，在神经网络多层传播后，参数的变动很有可能无法计算出梯度（梯度弥散，Gradient Vanish），又或者参数的微微变动就会导致梯度骤变（梯度爆炸，Gradient Explosion）。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Y_hat, Y, dY
+[[  -0.      11.982   11.982]
+ [  -0.      16.674   16.674]
+ [  -0.      12.62    12.62 ]
+ [  -0.      12.905   12.905]
+ ...]
+...
+ [ 0.  0.  ...  0.  0.]
+</code></pre></div></div>
+
+<p>事实上我们这里算出来的梯度也是很大的，因此把学习率调成了一个很小的值（1e-7），再多跑几次（使得初始化参数落到了一个比较好的位置上）。出来的结果还是能看的。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iter:0, loss: 56115.2138837
+iter:1000, loss: 2.58377124655
+iter:2000, loss: 2.20030671483
+iter:3000, loss: 1.88540868509
+iter:4000, loss: 1.6693258371
+RMSE:10.2699172204
+...
+Y_hat, Y, dY
+[[  12.94779536   11.982        -0.96579536]
+ [  13.91592103   16.674         2.75807897]
+ [  14.50662844   12.62         -1.88662844]
+ [  13.98164501   12.905        -1.07664501]
+ ...]
+...
+[  186.86534503 -4.51131314 ... 2328.47006998 4.02859825]
+</code></pre></div></div>
+
+<h2 id="7-总结">7. 总结</h2>
+
+<p>大概写了一下BGD的笔记，还是有一点收获的，也算是加深了对梯度下降理解啦。</p>
+
+<p>不过不知道为什么，代码只写了不到一个小时，写blog却写了一天（心累）。</p>
+
+<p>代码已上传到<a href="https://github.com/codeRimoe/ML_demo/tree/master/MLD01_BGD">Github - MLD01_BGD</a>。</p>
+
+<p>2018.05.13 晚上 于广州</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/01/11/post01/" data-toggle="tooltip" data-placement="top" title="随笔偶成">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="6">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#文艺" title="文艺" rel="7">
+                                    文艺
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="6">
+                                    技术
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="4">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#数据获取" title="数据获取" rel="4">
+                                    数据获取
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#爬虫" title="爬虫" rel="3">
+                                    爬虫
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="http://jekyllcn.com/">Jekyll</a></li>
+                    
+                        <li><a href="http://gp.sysu.edu.cn/">GP,SYSU</a></li>
+                    
+                        <li><a href="http://www.sysu.edu.cn/">SYSU</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        </br>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="icons-header" >
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+                    <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
+                    <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                    <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+                </br>
+                <p style="font-size:13px;">
+                All right reserved. &copy; 凝萌小记-2018</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                <iframe
+                    style="margin-left: 2px; margin-bottom:-5px;"
+                    frameborder="0" scrolling="0" width="100px" height="20px"
+                    src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/sweet-scroll.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+
+
+
+
+</body>
+
+</html>

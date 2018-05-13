@@ -80,7 +80,7 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="http://rimoe.ml">Home - 柠萌</a>
+                        <a href="http://rimoe.xyz">Home - 柠萌</a>
                     </li>
                     
                     <li>
@@ -189,7 +189,7 @@
 
 <p>那不如用爬虫爬一份相亲列表出来吧，嘿嘿嘿。</p>
 
-<p>我们尝试用<a href="http://blog.rimoe.ml/2017/08/24/post01/">上一篇文章</a>的方法获取<a href="http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&amp;is_hot=1&amp;noscale_head=1#_0">二次元交往平台</a>的主页。</p>
+<p>我们尝试用<a href="http://blog.rimoe.xyz/2017/08/24/post01/">上一篇文章</a>的方法获取<a href="http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&amp;is_hot=1&amp;noscale_head=1#_0">二次元交往平台</a>的主页。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="n">site</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://weibo.com/u/3803639941?refer_flag=1001030001_&amp;"</span>
@@ -246,7 +246,7 @@
 
 <h2 id="配置请求头">配置请求头</h2>
 
-<p>之前写<a href="http://blog.rimoe.ml/2017/07/29/post01/">API调研究</a>的时候也提到了HTML请求方式和Header。</p>
+<p>之前写<a href="http://blog.rimoe.xyz/2017/07/29/post01/">API调研究</a>的时候也提到了HTML请求方式和Header。</p>
 
 <p>具体可以查阅<a href="http://www.runoob.com/http/http-tutorial.html">HTTP教程</a></p>
 
@@ -385,7 +385,7 @@ pip install lxml
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">imghdr</span> <span class="kn">import</span> <span class="n">what</span>
 <span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="n">pic_url</span> <span class="o">=</span> <span class="s">'http://rimoe.ml/assets/img/9030.jpg'</span>
+<span class="n">pic_url</span> <span class="o">=</span> <span class="s">'http://rimoe.xyz/assets/img/9030.jpg'</span>
 <span class="n">save_dir</span> <span class="o">=</span> <span class="s">'/Users/_nA/Desktop/'</span>    <span class="c"># 存储路径</span>
 <span class="n">photo</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">pic_url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">pic_type</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">photo</span><span class="p">)</span>        <span class="c"># 判断图片格式</span>
@@ -527,6 +527,12 @@ pip install lxml
                 				<a href="/tags/#爬虫" title="爬虫" rel="3">
                                     爬虫
                                 </a>
+                            
+        				
+                            
+        				
+                            
+        				
                             
         				
                             

@@ -4,7 +4,7 @@ title:      "随笔偶成"
 subtitle:   "驳《可怕的是，我们的孩子一直在通过动漫认识世界》"
 date:       2018-01-11
 author:     "柠萌"
-header-img: "img/post-bg/post2018010111.jpg"
+header-img: "img/post-bg/post2018011101.jpg"
 tags:
     - 生活
     - 文艺
