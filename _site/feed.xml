@@ -5,9 +5,159 @@
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 13 May 2018 23:02:00 +0800</pubDate>
-    <lastBuildDate>Sun, 13 May 2018 23:02:00 +0800</lastBuildDate>
+    <pubDate>Sun, 24 Jun 2018 16:13:42 +0800</pubDate>
+    <lastBuildDate>Sun, 24 Jun 2018 16:13:42 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>Recurrent Neural Network</title>
+        <description>&lt;h2 id=&quot;0-前言&quot;&gt;0. 前言&lt;/h2&gt;
+
+&lt;p&gt;最近在写期末作业，写完了一片小论文，大概就是用一个循环神经网络模型给高光谱影像分类，中间加了一点点小trick之类的。&lt;/p&gt;
+
+&lt;p&gt;整个过程中，反而感觉最有价值的是自己总结RNN和他的变体们的结构。在此把论文了的一部分记下来。&lt;/p&gt;
+
+&lt;p&gt;循环神经网络（Recurrent Neural Network, RNN）简单来说是指具有循环单元的人工神经网络（Artificial Neural Network）。其实个人感觉RNN并没有很“深度”，所以说RNN是Deep Learning其实有点不太名副其实。而RNN早在上个世纪80年代就已经很多人在做了，而LSTM在90年代也已经被提出了，所以所谓RNN并不是什么新鲜事。&lt;/p&gt;
+
+&lt;p&gt;但RNN被认为是有效处理序列数据的模型，他在最主要是在机器翻译中取得的很好的效果，也因此备受关注。&lt;/p&gt;
+
+&lt;h2 id=&quot;1-rnn&quot;&gt;1. RNN&lt;/h2&gt;
+
+&lt;p&gt;我们说RNN是有循环单元的神经网络，那么什么是循环单元呢？就是像下图所示，那个圈圈就表示一个循环。看不懂？其实他可以展开（unfold）成右边的样子就好懂了。有一个常常听到的说法就是单元在当前时间步的输出不仅和当前输入有关，还和上一次输入有关。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img03.jpg&quot; alt=&quot;ru&quot; /&gt;
+图片来源：&lt;a href=&quot;https://zybuluo.com/hanbingtao/note/541458&quot;&gt;零基础入门深度学习(5) - 循环神经网络&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;说的很玄乎，其实想要理解最好就是看公式啦。&lt;/p&gt;
+
+&lt;p&gt;其实下面就是将RNN的循环单元的前向传播过程复述一遍而已啦。&lt;/p&gt;
+
+&lt;p&gt;我截一个我写的课程论文里的图来说明。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img01.PNG&quot; alt=&quot;rnn_math&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;给定一个序列样本x，这个x其实是一个矩阵，我们将他写出含有m个向量的向量吧，像上面截图说的。
+注意这里不是有m个样本哦，而是一个样本就有m个向量，每个向量的先后顺序是固定的，对于一个循环单元他展开后相当于有m个“小单元”，我们不妨称之为时间步（timestep）吧。每个时间步可以有他自己的隐藏状态h。&lt;/p&gt;
+
+&lt;p&gt;h怎么算呢？就会式子（1）写得这样。&lt;/p&gt;
+
+&lt;p&gt;第0个状态，也就是初始状态要我们自己给定，经验上一般都设定为零向量。然后第t个h可以写成第t个（当前）时间步的输入和第t-1个（上一个）时间步的h的函数。是什么函数？怎么定义都行啦。一般的RNN会把它定义成像式子（3）那样，就是一般的广义线性模型（普通的神经元）。有没有感觉和Markov的感觉很像呢？&lt;/p&gt;
+
+&lt;p&gt;但这个h是不输出的，输出的y还会有一个函数对隐藏状态进行处理，其实就是再套一层而已啦，像式子（2）所示，具体到传统RNN就可以写成式子（4）那样。&lt;/p&gt;
+
+&lt;p&gt;我们举个例子来再过一次前向传播过程，假设我们观察一个小姐姐，观察她好多天，每天24小时都记下他的表情。我们就可以把每一天当成是一个样本x，这里m=24，xt表示小姐姐今天第t小时的心情。然后我们算h，h0的时候我们就设为0向量，毕竟小姐姐在碎美容觉嘛，然后我们算h1，把1点钟小姐姐的心情x1和h0代入函数h()，算出了h1。然后h1又用来配合x2算出h2，一直算到h24。接下来我想要输出的话，就讲h1到h24代入y()，就可以算出y1到y24，我们不管y到底是表示小姐姐穿的小裙子还是小姐姐的什么，反正算出了个用来输出的值就是了。&lt;/p&gt;
+
+&lt;p&gt;把循环单元的结构画成图的话就是像图1这样。是不是很简单？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img02.PNG&quot; alt=&quot;rnn_graph&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果还不懂，看这张图直接粗暴地画出来传统RNN的整体结构哦。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img04.jpg&quot; alt=&quot;rnn_3d&quot; /&gt;
+图片来源：&lt;a href=&quot;https://www.zhihu.com/question/41949741/answer/318771336&quot;&gt;LSTM神经网络输入输出究竟是怎样的？ - Scofield的回答 - 知乎&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;RNN的求解不是普通的BP算法，用的是BPTT，这里因为懒所以就不写了。&lt;/p&gt;
+
+&lt;h4 id=&quot;关于rnn的输入输出&quot;&gt;关于RNN的输入输出&lt;/h4&gt;
+
+&lt;p&gt;一般来说，按照输入输出，RNN解决的问题可以氛围：end2end，end2seq，seq2end，seq2seq。也就是输入输出分别是端（end）和序列（seq）。端就是指单个向量，序列就是只一列向量，但向量与向量之间是有序的。&lt;/p&gt;
+
+&lt;p&gt;举几个例子，比如我今天看到一只小姐姐，我把她的皂片（或者是升高，语调等等的特征向量）输入RNN，可以知道这个小姐姐是萝莉还是御姐，这个就是end2end模型。&lt;/p&gt;
+
+&lt;p&gt;如果我把她的照片输入RNN,可以知道搭讪这个小姐姐时说什么话最容易勾搭到这个小姐姐，那么这个就是end2seq模型。因为说的话是句子，也就是词语的序列，词语的先后顺序是会影响句子的含义的，所以是一个序列。&lt;/p&gt;
+
+&lt;p&gt;如果我把一句话输入到模型得到我能否勾搭上小姐姐得到的就是seq2end模型，同样的，如果我把一句话输入到模型里得到小姐姐回复我会说的话，那就是seq2seq模型。&lt;/p&gt;
+
+&lt;p&gt;其实这4个模型对应的应用可以是：图片分类（end2end）、图片概述（对图片生成一句话描述，end2seq）、有序序列分类（如高光谱像元分类，seq2end）、机器翻译与对话机器人（seq2seq）。&lt;/p&gt;
+
+&lt;p&gt;四种的输入结构是这样的：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img05.PNG&quot; alt=&quot;rnn_io&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图片截图：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/22107715&quot;&gt;[原创翻译]循环神经网络惊人的有效性（上） - 杜客的文章 - 知乎&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;如果输入是一个序列（seq），我们就在相应时间步输入对应时间的向量，如果输入是一个端（end），我们就在每个时间步都输入同样的向量。如果输出是一个end我们就取最后一次输出（或者是多个时间步输出求平均等），如果输出是一个seq那么我们就将每个时间步的输出做成一个序列就ok了。&lt;/p&gt;
+
+&lt;h2 id=&quot;2-lstm&quot;&gt;2. LSTM&lt;/h2&gt;
+
+&lt;p&gt;长短时记忆模型（Long Short-Term Memory， LSTM）刚刚提到它在1990年代就被提出了。它最主要就是解决了RNN中的长距离依赖问题（Long-distance Dpendence)。请注意LSTM的英文里，ST是Short-term，而它前面的L代表Long和Short-term是用空格隔开的。&lt;/p&gt;
+
+&lt;p&gt;其实我一开始以为LSTM就是又短又长，既能搞定短距离又能记住长距离的，但其实人家的意思是能够持续比较长时间的短期记忆，wiki是这样写的：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The expression long short-term refers to the fact that LSTM is a model for the short-term memory which can last for a long period of time.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;LSTM可以解决长距离依赖问题，处理RNN在长序列容易梯度弥散或梯度爆炸的问题，也就是说LSTM能让RNN真正“deep”起来。且不说效果好不好，至少能够“deep”。&lt;/p&gt;
+
+&lt;p&gt;所谓长距离依赖就是说当序列变长，RNN就变得无法连接时间步相隔较大的信息，也就是说最开始的输入到了后面就没什么卵用了。&lt;/p&gt;
+
+&lt;p&gt;LSTM看似很玄，但只要记住它再强，它始终是一个RNN。他的结构就是下面这样：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img06.PNG&quot; alt=&quot;lstm&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这里的结构和RNN本质是一样的，把黑框看成黑箱子，他们的输入都是前一步的状态h_t-1和当前的输入x_t，只是隐藏状态变成了两个，原来只有一个h，LSTM则有一个c和一个h。c被称为细胞状态，h有点像传统RNN里的y但它同时会参与下一个时间步的输入。&lt;/p&gt;
+
+&lt;p&gt;LSTM的内部结构主要是三个“门结构”（gate），包括遗忘门，输入门，输出门。“门”就是一个信息过滤器，也就是选择性地让信息通过一部分，看公式，发现他本质就是一个logistics回归，用了是一个sigmoid函数，其巧妙之处在于它选择性的让过去的信息通过（遗忘门），也选择性地让当前输入进入（输入门）。而sigmoid的值域是0到1，因此，可以把它理解成一个遗忘和记忆的概率。&lt;/p&gt;
+
+&lt;p&gt;LSTM的具体理解，请务必看这篇文章，写得实在是太好了：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;Understanding LSTM Networks&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/9dc9f41f0b29&quot;&gt;[译] 理解 LSTM 网络&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-gru&quot;&gt;3. GRU&lt;/h2&gt;
+
+&lt;p&gt;门循环单元（Gated Recurrent Unit， GRU）是LSTM的变体之一。在实践中，发现GRU参数更少，更容易训练，在某些问题能比LSTM效果更好。至少在高光谱分类中，GRU优于LSTM。&lt;/p&gt;
+
+&lt;p&gt;事实上，LSTM那么多变体里面，并没有哪一个是比其他更好，只是各自在不同问题中有不同优势而已。&lt;/p&gt;
+
+&lt;p&gt;GRU和LSTM的区别在于，它的隐含状态只有一个h，同时这也是他的对应时间步的输出。对比LSTM的三个门结构，GRU只有更新门和重置门两个门结构，因此其参数也比较少。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img07.PNG&quot; alt=&quot;gru&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-双向rnn与多层rnn&quot;&gt;4. 双向RNN与多层RNN&lt;/h2&gt;
+
+&lt;p&gt;RNN往继续拓展的话就有双向RNN和多层RNN。刚刚讲的LSTM和GRU是通过改变循环单元内部结构来改进RNN的。而双向RNN与多层RNN则是堆叠RNN得到一个更大更强的模型。&lt;/p&gt;
+
+&lt;p&gt;双向RNN是认为序列信息既与前面的时间步有关，又和后面的时间步有关，因此我正反各输入一次不就可以了吗。至于输出，就是两个RNN的加和。&lt;/p&gt;
+
+&lt;p&gt;多层RNN就是有多个隐藏层（隐藏状态h）而已。&lt;/p&gt;
+
+&lt;p&gt;下面两图分别是双向RNN和多层RNN的结构图，图源自&lt;a href=&quot;https://zybuluo.com/hanbingtao/note/541458&quot;&gt;零基础入门深度学习(5) - 循环神经网络&lt;/a&gt;,这篇文章也写得很好，值得一读。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img08.png&quot; alt=&quot;birnn&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img09.png&quot; alt=&quot;mulrnn&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5-encoding-decoding与attention&quot;&gt;5. Encoding-Decoding与Attention&lt;/h2&gt;
+
+&lt;p&gt;Encoding-Decoding在seq2seq的问题中比较有意义。其概念在于用一个编码器（Encoder）给序列编码，得到一个中间向量，再用一个解码器（Decoder）给中间向量解码。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img10.jpg&quot; alt=&quot;gru&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后有人在Encoding-Decoding中引入了注意力机制（Attention model）。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2018062401/img11.jpg&quot; alt=&quot;gru&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图片来源：&lt;a href=&quot;https://blog.csdn.net/tg229dvt5i93mxaq5a6u/article/details/78422216&quot;&gt;深度学习中的注意力机制&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;很多时候RNN其实不好计算，因为RNN的输入跟前一时间步有关，因此不好并行，所以很多人开始转向别的模型。如ResNet和Attention模型。&lt;/p&gt;
+
+&lt;p&gt;2018.06.24 于广州&lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Jun 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/06/24/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06/24/post01/</guid>
+        
+        <category>机器学习</category>
+        
+        <category>深度学习</category>
+        
+        <category>算法</category>
+        
+        
+      </item>
     
       <item>
         <title>Batch Gradient Descent</title>
@@ -1511,53 +1661,6 @@ pip install lxml
         <pubDate>Sat, 19 Aug 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/08/19/post01/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/08/19/post01/</guid>
-        
-        <category>生活</category>
-        
-        <category>文艺</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>玥</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;皓洁为月，佳文成玉。凤鸟神珠，寄吾德馨。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;二十年有二月记&quot;&gt;二十年有二月记&lt;/h2&gt;
-
-&lt;p&gt;是年丁酉，余及冠，自取表字为玥，记于此。&lt;/p&gt;
-
-&lt;p&gt;自民国新学盛起，气象变化，又及文革之乱，礼乐俱废。今举国崇尚数理，新学鼎盛，余逆潮流而行，复辟旧习，以缅古人，并规行自勉。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;大学&quot;&gt;大学&lt;/h2&gt;
-
-&lt;p&gt;前不久经过中大北门的牌坊，才发现背面铭着的是“格致诚正 修齐治平”，此中深意，引我沉思。&lt;/p&gt;
-
-&lt;p&gt;中大入学读《大学》，很多人会觉得不明所以，此大学与彼《大学》到底是同一个东西吗？&lt;/p&gt;
-
-&lt;p&gt;所谓大学，和《大学》中的明德、亲民、止于至善是关联的。所谓大学，和《大学》中的格物、致知、诚意、正心、修身、齐家、治国、平天下是一致的。&lt;/p&gt;
-
-&lt;p&gt;君子之志，不在名利。大丈夫理当以治国平天下为己任，而真正的大学，则是提供一条实现理想的道路。潜心学术研究，求学问道于先生学人，就是格物致知。在大学的生活、交往、锻炼，我们的通识课、我们听的讲座、我们谈论的一切，都是诚其意、正其心、修其身的过程。创业、工作则是齐家，齐家乃能安邦平天下。&lt;/p&gt;
-
-&lt;p&gt;朱子借大学所讲的理，至今依旧受用。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;回忆往事兼论教育&quot;&gt;回忆往事兼论教育&lt;/h2&gt;
-
-&lt;p&gt;再前不久经过磨碟沙，见到很久前的酒楼仍在，如今已落败了许多，令我想起一段往事。&lt;/p&gt;
-
-&lt;p&gt;本欲在此记下，兼论今日对教育之思考，然而夜已深，昏昏欲睡，便就此搁笔，待他日记起再叙。&lt;/p&gt;
-
-&lt;p&gt;2017.08.05 凌晨 于佛山&lt;/p&gt;
-</description>
-        <pubDate>Sun, 06 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/06/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/06/post01/</guid>
         
         <category>生活</category>
         

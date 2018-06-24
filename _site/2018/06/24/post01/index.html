@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>大概是最弱鸡的2D仿真 - 凝萌小记 - Rimoe's</title>
+    <title>Recurrent Neural Network - 凝萌小记 - Rimoe's</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/07/27/post01/">
+    <link rel="canonical" href="http://localhost:4000/2018/06/24/post01/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.css">
@@ -130,12 +130,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg/post2017072701.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post201801062401.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg/post2017072701.jpg')
+        background-image: url('/img/post-bg/post201801062401.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -145,23 +145,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#C/C++" title="C/C++">C/C++</a>
+                        <a class="tag" href="/tags/#机器学习" title="机器学习">机器学习</a>
                         
-                        <a class="tag" href="/tags/#QT" title="QT">QT</a>
+                        <a class="tag" href="/tags/#深度学习" title="深度学习">深度学习</a>
                         
-                        <a class="tag" href="/tags/#可视化" title="可视化">可视化</a>
-                        
-                        <a class="tag" href="/tags/#仿真" title="仿真">仿真</a>
-                        
-                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        <a class="tag" href="/tags/#算法" title="算法">算法</a>
                         
                     </div>
-                    <h1>大概是最弱鸡的2D仿真</h1>
+                    <h1>Recurrent Neural Network</h1>
                     
                     
-                    <h2 class="subheading">写作业中学到的可视化</h2>
+                    <h2 class="subheading">循环神经网络们</h2>
                     
-                    <span class="meta">Posted by 柠萌 on July 27, 2017</span>
+                    <span class="meta">Posted by 柠萌 on June 24, 2018</span>
                 </div>
             </div>
         </div>
@@ -179,165 +175,140 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h2 id="缘起">缘起</h2>
+				<h2 id="0-前言">0. 前言</h2>
 
-<p>大二下学期的基础课特别多，大作业也特别多，就在几周前，我在大作业与考试复习的夹缝里顽强地生存。</p>
+<p>最近在写期末作业，写完了一片小论文，大概就是用一个循环神经网络模型给高光谱影像分类，中间加了一点点小trick之类的。</p>
 
-<p>大概是一个模拟草原上狼吃羊的过程，要求C++语言，使用OOP思想，使用图像可视化。</p>
+<p>整个过程中，反而感觉最有价值的是自己总结RNN和他的变体们的结构。在此把论文了的一部分记下来。</p>
 
-<hr />
+<p>循环神经网络（Recurrent Neural Network, RNN）简单来说是指具有循环单元的人工神经网络（Artificial Neural Network）。其实个人感觉RNN并没有很“深度”，所以说RNN是Deep Learning其实有点不太名副其实。而RNN早在上个世纪80年代就已经很多人在做了，而LSTM在90年代也已经被提出了，所以所谓RNN并不是什么新鲜事。</p>
 
-<h2 id="实验过程">实验过程</h2>
+<p>但RNN被认为是有效处理序列数据的模型，他在最主要是在机器翻译中取得的很好的效果，也因此备受关注。</p>
 
-<p>具体的实验报告可以在<a href="https://github.com/codeRimoe/Wolf_and_Sheep">GitHub - Wolf and Sheep</a>上看，这里就不多叙述惹。</p>
+<h2 id="1-rnn">1. RNN</h2>
 
-<p><img src="/img/in-post/2017072701/pic01.png" alt="avatar" /></p>
+<p>我们说RNN是有循环单元的神经网络，那么什么是循环单元呢？就是像下图所示，那个圈圈就表示一个循环。看不懂？其实他可以展开（unfold）成右边的样子就好懂了。有一个常常听到的说法就是单元在当前时间步的输出不仅和当前输入有关，还和上一次输入有关。</p>
 
-<hr />
+<p><img src="/img/in-post/2018062401/img03.jpg" alt="ru" />
+图片来源：<a href="https://zybuluo.com/hanbingtao/note/541458">零基础入门深度学习(5) - 循环神经网络</a></p>
 
-<h2 id="狼和羊的人工智障">狼和羊的人工智障</h2>
+<p>说的很玄乎，其实想要理解最好就是看公式啦。</p>
 
-<p>比原来的要求增加了一些东西，优化的移动策略：</p>
+<p>其实下面就是将RNN的循环单元的前向传播过程复述一遍而已啦。</p>
 
-<ul>
-  <li>狼会往狼多的方向移动</li>
-  <li>羊会往远离追逐他的狼的方向逃跑，往狼少的地方移动</li>
-  <li>繁殖时会为出生的宝宝选择最佳出生位置</li>
-</ul>
+<p>我截一个我写的课程论文里的图来说明。</p>
 
-<p>实现方法非常简单，其实就是计算权重，也就是提供了一个决策方案的实现思路，越优先的考虑节点的权重乘以越高的位置。原理相当于设计一个函数计算优先度，我们考虑问题往往会一层一层的考虑比较（类似于决策树）。</p>
+<p><img src="/img/in-post/2018062401/img01.PNG" alt="rnn_math" /></p>
 
-<p>如下图，羊首先考虑有没有狼在身边，一步就能吃掉自己，其次考虑移动后附近狼的数目多少，最后考虑移动后的草的数量。</p>
+<p>给定一个序列样本x，这个x其实是一个矩阵，我们将他写出含有m个向量的向量吧，像上面截图说的。
+注意这里不是有m个样本哦，而是一个样本就有m个向量，每个向量的先后顺序是固定的，对于一个循环单元他展开后相当于有m个“小单元”，我们不妨称之为时间步（timestep）吧。每个时间步可以有他自己的隐藏状态h。</p>
 
-<p><img src="/img/in-post/2017072701/pic02.png" alt="avatar" /></p>
+<p>h怎么算呢？就会式子（1）写得这样。</p>
 
-<p>因为活命永远是最重要的，所以首先不要逃离最接近的狼，然后再长远考虑移动后的情况。最后权重计算公式是W=A<em>w1+B</em>w2+C*w3，这里的为w1、w2、w3参数是可以变化的，具体要视情况而定，这个线性模拟策略参数设置可以考虑通过神经网络模型等得出。当然这里保证A、B、C小于10，将参数w1、w2、w3分别设为100、10、1，就可以得到一种简单的模拟方式：就是先比较A，再比较B，再比较C，只要策略一的A比策略二的大，就不考虑BC的值。</p>
+<p>第0个状态，也就是初始状态要我们自己给定，经验上一般都设定为零向量。然后第t个h可以写成第t个（当前）时间步的输入和第t-1个（上一个）时间步的h的函数。是什么函数？怎么定义都行啦。一般的RNN会把它定义成像式子（3）那样，就是一般的广义线性模型（普通的神经元）。有没有感觉和Markov的感觉很像呢？</p>
 
-<p>这部分也不是本文重点，就此略过。</p>
+<p>但这个h是不输出的，输出的y还会有一个函数对隐藏状态进行处理，其实就是再套一层而已啦，像式子（2）所示，具体到传统RNN就可以写成式子（4）那样。</p>
 
-<hr />
+<p>我们举个例子来再过一次前向传播过程，假设我们观察一个小姐姐，观察她好多天，每天24小时都记下他的表情。我们就可以把每一天当成是一个样本x，这里m=24，xt表示小姐姐今天第t小时的心情。然后我们算h，h0的时候我们就设为0向量，毕竟小姐姐在碎美容觉嘛，然后我们算h1，把1点钟小姐姐的心情x1和h0代入函数h()，算出了h1。然后h1又用来配合x2算出h2，一直算到h24。接下来我想要输出的话，就讲h1到h24代入y()，就可以算出y1到y24，我们不管y到底是表示小姐姐穿的小裙子还是小姐姐的什么，反正算出了个用来输出的值就是了。</p>
 
-<h2 id="可视化qt">可视化（QT）</h2>
+<p>把循环单元的结构画成图的话就是像图1这样。是不是很简单？</p>
 
-<p>最后我选择QT进行可视化，其中一个原因是QT是开源的，最重要的原因是跨平台，对于使用MacOS的我来说，写作业给老师比较烦就是老师用的是Windows，好多库都是不一样的。QT可以跨三个平台，大概有点不好的就是UI文件会有点错位，不过关系不大。</p>
+<p><img src="/img/in-post/2018062401/img02.PNG" alt="rnn_graph" /></p>
 
-<p>QT是一个可视化架构，通过QT可以很容易做出一些比较好看耐用的交互界面。而QT creator则是一个配套的IDE。</p>
+<p>如果还不懂，看这张图直接粗暴地画出来传统RNN的整体结构哦。</p>
 
-<p>QT简介请看：<a href="http://blog.csdn.net/xuancailinggan/article/details/50620829">关于QT、QT creator和编译器，新手入门必知的一些知识</a>。</p>
+<p><img src="/img/in-post/2018062401/img04.jpg" alt="rnn_3d" />
+图片来源：<a href="https://www.zhihu.com/question/41949741/answer/318771336">LSTM神经网络输入输出究竟是怎样的？ - Scofield的回答 - 知乎</a></p>
 
-<p><img src="/img/in-post/2017072701/pic03.png" alt="avatar" /></p>
+<p>RNN的求解不是普通的BP算法，用的是BPTT，这里因为懒所以就不写了。</p>
 
-<h4 id="1-qt的安装与配置">1. QT的安装与配置</h4>
+<h4 id="关于rnn的输入输出">关于RNN的输入输出</h4>
 
-<p>对于MacOS来说，下载一个QT Creater，这是一个大概是IDE的东西。感觉Mac版的话要自己配置Qt版本，之前我搞了好久都不行。建议安装编译器的时候用brew安装，</p>
+<p>一般来说，按照输入输出，RNN解决的问题可以氛围：end2end，end2seq，seq2end，seq2seq。也就是输入输出分别是端（end）和序列（seq）。端就是指单个向量，序列就是只一列向量，但向量与向量之间是有序的。</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew update
-brew install qt
-</code></pre></div></div>
-<p>安装成功后然后终端会提示安装的路径（大概是/usr/local/Cellar/qt/5.9.0），然后在Qt Creator中设置版本（偏好设置-&gt;构建与运行-&gt;Qt Version-&gt;添加…）。这里最坑的是Mac的打开文件窗口不能直接访问系统保护的目录，这里有几个方法，一是直接Command+Shift+G，输入路径，二是前往文件夹或者终端cd路径，然后创建个快捷方式（替身），然后通过替身跳到文件夹。</p>
+<p>举几个例子，比如我今天看到一只小姐姐，我把她的皂片（或者是升高，语调等等的特征向量）输入RNN，可以知道这个小姐姐是萝莉还是御姐，这个就是end2end模型。</p>
 
-<p><img src="/img/in-post/2017072701/pic04.png" alt="avatar" /></p>
+<p>如果我把她的照片输入RNN,可以知道搭讪这个小姐姐时说什么话最容易勾搭到这个小姐姐，那么这个就是end2seq模型。因为说的话是句子，也就是词语的序列，词语的先后顺序是会影响句子的含义的，所以是一个序列。</p>
 
-<p><img src="/img/in-post/2017072701/pic05.png" alt="avatar" /></p>
+<p>如果我把一句话输入到模型得到我能否勾搭上小姐姐得到的就是seq2end模型，同样的，如果我把一句话输入到模型里得到小姐姐回复我会说的话，那就是seq2seq模型。</p>
 
-<p>配置完就可以使用了，左下角有个类似资源管理器的东西，选“项目”里面会有工程文件的Source和资源文件等。</p>
+<p>其实这4个模型对应的应用可以是：图片分类（end2end）、图片概述（对图片生成一句话描述，end2seq）、有序序列分类（如高光谱像元分类，seq2end）、机器翻译与对话机器人（seq2seq）。</p>
 
-<p><img src="/img/in-post/2017072701/pic06.png" alt="avatar" /></p>
+<p>四种的输入结构是这样的：</p>
 
-<p>然后旁边可以选择编译器、release、debug、build。</p>
+<p><img src="/img/in-post/2018062401/img05.PNG" alt="rnn_io" /></p>
 
-<p>在Windows下的安装就傻瓜得多了，大概就是一个引导程序，比较傻瓜的装好就OK。编译器建议只选MingW的就够了。</p>
+<p>图片截图：<a href="https://zhuanlan.zhihu.com/p/22107715">[原创翻译]循环神经网络惊人的有效性（上） - 杜客的文章 - 知乎</a></p>
 
-<h4 id="2-qt的控件对象">2. QT的控件对象</h4>
+<p>如果输入是一个序列（seq），我们就在相应时间步输入对应时间的向量，如果输入是一个端（end），我们就在每个时间步都输入同样的向量。如果输出是一个end我们就取最后一次输出（或者是多个时间步输出求平均等），如果输出是一个seq那么我们就将每个时间步的输出做成一个序列就ok了。</p>
 
-<p>QT的工程文件是.pro，项目的文件框架如下图所示。</p>
+<h2 id="2-lstm">2. LSTM</h2>
 
-<p><img src="/img/in-post/2017072701/pic07.png" alt="avatar" /></p>
+<p>长短时记忆模型（Long Short-Term Memory， LSTM）刚刚提到它在1990年代就被提出了。它最主要就是解决了RNN中的长距离依赖问题（Long-distance Dpendence)。请注意LSTM的英文里，ST是Short-term，而它前面的L代表Long和Short-term是用空格隔开的。</p>
 
-<p>Headers和Source是头文件和源文件，一般就是cpp实现的Source，Form是.ui文件，大概就是初始界面的框架。Resources是资源文件，一些图片一般放在里面用于调取。</p>
+<p>其实我一开始以为LSTM就是又短又长，既能搞定短距离又能记住长距离的，但其实人家的意思是能够持续比较长时间的短期记忆，wiki是这样写的：</p>
 
-<p>.ui文件可以在“设计“模式（designer）中直接画出窗口相应的框架，这个有点像VB，如下图所示。这里指出在windows下里面的控件对象会错位。</p>
+<blockquote>
+  <p>The expression long short-term refers to the fact that LSTM is a model for the short-term memory which can last for a long period of time.</p>
+</blockquote>
 
-<p><img src="/img/in-post/2017072701/pic08.png" alt="avatar" /></p>
+<p>LSTM可以解决长距离依赖问题，处理RNN在长序列容易梯度弥散或梯度爆炸的问题，也就是说LSTM能让RNN真正“deep”起来。且不说效果好不好，至少能够“deep”。</p>
 
-<p>操纵窗口是通过工程创建的一个类MainWindow实现的。该类相当于是一个窗口，包含一个指针成员ui，调用窗口的预先绘制好控件对象时，使用ui-&gt;ObjName作为对象名使用，尤其菜单栏，状态栏等就更应该如此。</p>
+<p>所谓长距离依赖就是说当序列变长，RNN就变得无法连接时间步相隔较大的信息，也就是说最开始的输入到了后面就没什么卵用了。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="o">-&gt;</span><span class="n">mainToolBar</span><span class="o">-&gt;</span><span class="n">setFixedHeight</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="c1">//设置工具栏高度为10
-</span></code></pre></div></div>
+<p>LSTM看似很玄，但只要记住它再强，它始终是一个RNN。他的结构就是下面这样：</p>
 
-<p>当然，还可以自己创建控件对象，为了方便调用自己创建的对象，一般在MainWindow类中会创建一个指针成员，用于记录该对象。</p>
+<p><img src="/img/in-post/2018062401/img06.PNG" alt="lstm" /></p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QTimer</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>   <span class="c1">//创建一个QTimer，之后可以使用timer来调用该对象
-</span><span class="cm">/* ----------------- */</span>
-<span class="k">delete</span> <span class="n">timer</span><span class="p">;</span>               <span class="c1">//一般在析构函数中会调用delete删除对象
-</span></code></pre></div></div>
+<p>这里的结构和RNN本质是一样的，把黑框看成黑箱子，他们的输入都是前一步的状态h_t-1和当前的输入x_t，只是隐藏状态变成了两个，原来只有一个h，LSTM则有一个c和一个h。c被称为细胞状态，h有点像传统RNN里的y但它同时会参与下一个时间步的输入。</p>
 
-<p>简而言之，QT是通过控制控件对象完成界面操作的。</p>
+<p>LSTM的内部结构主要是三个“门结构”（gate），包括遗忘门，输入门，输出门。“门”就是一个信息过滤器，也就是选择性地让信息通过一部分，看公式，发现他本质就是一个logistics回归，用了是一个sigmoid函数，其巧妙之处在于它选择性的让过去的信息通过（遗忘门），也选择性地让当前输入进入（输入门）。而sigmoid的值域是0到1，因此，可以把它理解成一个遗忘和记忆的概率。</p>
 
-<h4 id="3-qt的资源库">3. QT的资源库</h4>
+<p>LSTM的具体理解，请务必看这篇文章，写得实在是太好了：</p>
 
-<p>前面说到QT的resources文件夹用于存放资源，比如图片素材这类东西就可以放在里面，以备调用。</p>
+<p><a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
 
-<p>在右下角文件管理器中选项目，Resources文件夹右键-添加新文件，创建一个.qrc文件，然后往.qrc文件中添加资源，自后就可以调用其中的资源了。</p>
+<p><a href="https://www.jianshu.com/p/9dc9f41f0b29">[译] 理解 LSTM 网络</a></p>
 
-<p><img src="/img/in-post/2017072701/pic09.png" alt="avatar" /></p>
+<h2 id="3-gru">3. GRU</h2>
 
-<p><img src="/img/in-post/2017072701/pic10.png" alt="avatar" /></p>
+<p>门循环单元（Gated Recurrent Unit， GRU）是LSTM的变体之一。在实践中，发现GRU参数更少，更容易训练，在某些问题能比LSTM效果更好。至少在高光谱分类中，GRU优于LSTM。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span><span class="o">=</span><span class="k">new</span> <span class="n">QImage</span><span class="p">(</span><span class="s">":/jpg/resource/green.png"</span><span class="p">);</span>   <span class="c1">//从资源库调取文件green.png
-</span><span class="n">pLabel</span><span class="o">-&gt;</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">QPixmap</span><span class="o">::</span><span class="n">fromImage</span><span class="p">(</span><span class="o">*</span><span class="n">img</span><span class="p">));</span>  <span class="c1">//在QLabel中显示图片
-</span></code></pre></div></div>
+<p>事实上，LSTM那么多变体里面，并没有哪一个是比其他更好，只是各自在不同问题中有不同优势而已。</p>
 
-<h4 id="4-qt的信号-槽机制">4. QT的信号-槽机制</h4>
+<p>GRU和LSTM的区别在于，它的隐含状态只有一个h，同时这也是他的对应时间步的输出。对比LSTM的三个门结构，GRU只有更新门和重置门两个门结构，因此其参数也比较少。</p>
 
-<p>信号与槽是QT的两个重要概念，两者可以将不同对象联系起来，使程序更安全简洁。</p>
+<p><img src="/img/in-post/2018062401/img07.PNG" alt="gru" /></p>
 
-<p>信号指的是对象发出的触发指令，槽则是接受信号并触发的函数，两者以connect函数连接起来。</p>
+<h2 id="4-双向rnn与多层rnn">4. 双向RNN与多层RNN</h2>
 
-<p>可以参考文章<a href="http://www.cnblogs.com/MuyouSome/p/3515941.html">Qt入门之信号与槽机制</a>。</p>
+<p>RNN往继续拓展的话就有双向RNN和多层RNN。刚刚讲的LSTM和GRU是通过改变循环单元内部结构来改进RNN的。而双向RNN与多层RNN则是堆叠RNN得到一个更大更强的模型。</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MainWindow</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QMainWindow</span> <span class="p">{</span>
+<p>双向RNN是认为序列信息既与前面的时间步有关，又和后面的时间步有关，因此我正反各输入一次不就可以了吗。至于输出，就是两个RNN的加和。</p>
 
-    <span class="n">Q_OBJECT</span>
+<p>多层RNN就是有多个隐藏层（隐藏状态h）而已。</p>
 
-<span class="k">public</span><span class="o">:</span>
-    <span class="k">explicit</span> <span class="n">MainWindow</span><span class="p">(</span><span class="n">QWidget</span> <span class="o">*</span><span class="n">parent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="o">~</span><span class="n">MainWindow</span><span class="p">();</span>
-    <span class="c1">//other code...
-</span>
-<span class="k">private</span> <span class="n">slots</span><span class="o">:</span>  <span class="c1">//槽函数必须要在类的public/private/protected slots中声明，否则无法使用
-</span>    <span class="kt">void</span> <span class="n">function</span><span class="p">();</span>
+<p>下面两图分别是双向RNN和多层RNN的结构图，图源自<a href="https://zybuluo.com/hanbingtao/note/541458">零基础入门深度学习(5) - 循环神经网络</a>,这篇文章也写得很好，值得一读。</p>
 
-<span class="p">};</span>
+<p><img src="/img/in-post/2018062401/img08.png" alt="birnn" /></p>
 
-<span class="c1">//语法：connect(sender, SIGNAL(signal), receiver, SLOT(slot));
-</span>
-<span class="n">connect</span><span class="p">(</span><span class="n">pushButton1</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">clicked</span><span class="p">(</span><span class="kt">bool</span><span class="p">)),</span><span class="n">label</span><span class="p">,</span><span class="n">SLOT</span><span class="p">(</span><span class="n">close</span><span class="p">()));</span>
-<span class="n">connect</span><span class="p">(</span><span class="n">pushButton2</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="n">clicked</span><span class="p">(</span><span class="kt">bool</span><span class="p">)),</span><span class="k">this</span><span class="p">,</span><span class="n">SLOT</span><span class="p">(</span><span class="n">function</span><span class="p">()));</span>
-</code></pre></div></div>
+<p><img src="/img/in-post/2018062401/img09.png" alt="mulrnn" /></p>
 
-<h4 id="5-qt的编译打包">5. QT的编译打包</h4>
+<h2 id="5-encoding-decoding与attention">5. Encoding-Decoding与Attention</h2>
 
-<p>release编译后，将.exe文件提取出来，用Qt命令行使用windeployqt来拷贝依赖包即可发布。</p>
+<p>Encoding-Decoding在seq2seq的问题中比较有意义。其概念在于用一个编码器（Encoder）给序列编码，得到一个中间向量，再用一个解码器（Decoder）给中间向量解码。</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>windeployqt Programme.exe
-</code></pre></div></div>
+<p><img src="/img/in-post/2018062401/img10.jpg" alt="gru" /></p>
 
-<p>命令自动会将程序需要的第三方库（.dll文件）复制到.exe文件的的路径中。</p>
+<p>然后有人在Encoding-Decoding中引入了注意力机制（Attention model）。</p>
 
-<p>在Mac下生成的app文件，也可以用macdeployqt来进行依赖库拷贝。</p>
+<p><img src="/img/in-post/2018062401/img11.jpg" alt="gru" /></p>
 
-<p>具体可以参考：<a href="http://blog.csdn.net/liuyez123/article/details/50462637">Qt 程序打包发布总结</a>。</p>
+<p>图片来源：<a href="https://blog.csdn.net/tg229dvt5i93mxaq5a6u/article/details/78422216">深度学习中的注意力机制</a></p>
 
-<hr />
+<p>很多时候RNN其实不好计算，因为RNN的输入跟前一时间步有关，因此不好并行，所以很多人开始转向别的模型。如ResNet和Attention模型。</p>
 
-<h2 id="后记">后记</h2>
-
-<p>做这个课程作业最大的收获大概就是接触到QT，可以将一些小程序可视化，能够做出一个界面，这个过程也是挺有趣的。</p>
-
-<p>代码已发到<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>。</p>
-
-<p>2017.07.27 于广州</p>
+<p>2018.06.24 于广州</p>
 
 
                 <hr>
@@ -345,13 +316,9 @@ brew install qt
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/06/09/post01/" data-toggle="tooltip" data-placement="top" title="胡乱写了个小游戏">&larr; Previous Post</a>
+                        <a href="/2018/05/13/post01/" data-toggle="tooltip" data-placement="top" title="Batch Gradient Descent">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/07/29/post01/" data-toggle="tooltip" data-placement="top" title="API调用研究">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
