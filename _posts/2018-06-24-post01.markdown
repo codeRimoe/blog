@@ -4,7 +4,7 @@ title:      "Recurrent Neural Network"
 subtitle:   "循环神经网络们"
 date:       2018-06-24
 author:     "柠萌"
-header-img: "img/post-bg/post201801062401.jpg"
+header-img: "img/post-bg/post2018062401.jpg"
 tags:
     - 机器学习
     - 深度学习

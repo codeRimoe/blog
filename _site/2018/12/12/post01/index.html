@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="作家是杂家">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>从卷积到傅里叶变换（一） - 凝萌小记 - Rimoe's</title>
+
+    <link rel="canonical" href="http://localhost:4000/2018/12/12/post01/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.min.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <!--<link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="stylesheet" href="/css/main.min.css">
+    <link rel="stylesheet" href="/css/font.min.css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">凝萌小记</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://rimoe.xyz">Home - 柠萌</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2018121201.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg/post2018121201.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#信号" title="信号">信号</a>
+                        
+                        <a class="tag" href="/tags/#数学" title="数学">数学</a>
+                        
+                    </div>
+                    <h1>从卷积到傅里叶变换（一）</h1>
+                    
+                    
+                    <h2 class="subheading">卷积、相关与滤波</h2>
+                    
+                    <span class="meta">Posted by 柠萌 on December 12, 2018</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="0-前言">0. 前言</h2>
+
+<p>这是上学期期末考试前就想写的一篇文章了，因为之前看某文章时，发现自己对滤波还是有点不太明白，后来才发现是自己没有理解好什么是卷积。但一直拖到今天。</p>
+
+<p>一般来说，在图像处理中，卷积会是这样的含义。一个图像是一个大矩阵，使用一个小矩阵“卷积核”在图像上从左到右从上到下不断移动，每一次对重合部分对应元素相乘后求和，作为输出矩阵中的当前重合部分中心的值。这里有一张很腻害的动图：</p>
+
+<p><img src="/img/in-post/2018121201/img01.gif" alt="ru" />
+图片来源：<a href="https://www.cnblogs.com/TextEditor/p/6667992.html">[不定期更新长文]卷积神经网络工作原理研究</a></p>
+
+<p>这图看起来就很直观了嘛。</p>
+
+<p>可是当你搜素卷积，你就会看到这样的公式：</p>
+
+<p><img src="/img/in-post/2018121201/img02.svg" alt="ru" /></p>
+
+<p>这到底是什么鬼啊？</p>
+
+<h2 id="1-卷积">1. 卷积</h2>
+
+<p>这就是卷积的定义啊，怎么理解？其实很简单，看看左边发现可以看作是自变量t的函数，也就是两个函数的卷积还是函数。</p>
+
+<p>所以这个结果就是t的一个映射，就是说，给定一个t值，就能通过某种方式得到对应的输出值，也就是说我们可以把所有t算出来。</p>
+
+<p>比如我这里画了个图，f(x)是一个高斯函数，g(x)是二次函数的一部分。</p>
+
+<p><img src="/img/in-post/2018121201/img03.png" alt="ru" /></p>
+
+<p>我们算卷积是一个函数，不妨先记为y吧，我们算卷积就是要找出这个y的表达式子，或者说，是自变量x到y的映射——每给出一个x，得到一个y。那我们不妨先算一个特殊的x，比如给定x=2：</p>
+
+<p>我们算卷积f*g(x)在x=2时的值，此时x是常数，先不看积分号，发现就是两个函数的乘积：第一个函数是f(x)，第二个函数是g(x)的变形g(2-x)，我用python的matplotlib画出来了，其实就是将函数g(x)沿x轴翻折，然后再将翻折后的函数移动到x=2处，使得原来在原点的位置和当前要计算的自变量取值（x=2）重合。</p>
+
+<p>然后两函数相乘得到新函数f(x)g(2-x)，即图中透明的蓝色。那其实接下来的反常积分就是求新函数与x轴所夹的面积而已啦。计算到的这部分阴影面积就是x=2时卷积函数y的函数值啦。其中g(x)可以称卷积核函数。</p>
+
+<p><img src="/img/in-post/2018121201/img04.png" alt="ru" /></p>
+
+<p>然后我们就对所有x都可以按照这个算法算一次，每个x可以得到对应的值y。这个x到y的映射可以看成是函数记作y=(f*g)(x)，这个函数y就是g对f的卷积了。做了个动态图，看起来就是g在f上滑动。</p>
+
+<p><img src="/img/in-post/2018121201/img05.gif" alt="ru" /></p>
+
+<p>得到的结果有点奇怪（可能是dx精度的缘故？）。</p>
+
+<p><img src="/img/in-post/2018121201/img06.png" alt="ru" /></p>
+
+<h2 id="2-相关">2. 相关</h2>
+
+<p>相关包括自相关（Auto-correlation）和互相关函数，互相关函数的定义如下：</p>
+
+<p><img src="/img/in-post/2018121201/img07.svg" alt="ru" /></p>
+
+<p>其中*表示共轭复数，对于实数而言f*=f.</p>
+
+<p>而自相关就相当于自己跟自己做互相关。</p>
+
+<p>事实上卷积和相关的定义很类似，直观上差别就在于卷积中的g(x)函数水平翻转了。</p>
+
+<p>“相关”的定义在GNSS中也出现过“码相关”。</p>
+
+<h2 id="3-滤波">3. 滤波</h2>
+
+<p>滤波器 ，是信号处理中的一个概念，是用于去除信号中不想要的成分或者增强所需成分。其中较常听到的有低通滤波器和高通滤波器。</p>
+
+<p>简单来讲，低通滤波器容许低频信号通过，高通滤波器容许高频信号通过。应用到不同领域，这两个概念都分别有一些不同的表达术语，对低通滤波器，在图像处理里，就对应到边缘平滑、图像模糊，在时序预测里可以对应到平滑（比如各种moving average算法）。对高通滤波器，在图像处理里，就对应到边缘提取与边缘增强。</p>
+
+<p>那卷积又跟滤波有啥关系呢？卷积是一种数学方法，用在图像处理里，不但可以做滤波，还可以实现其他目的。</p>
+
+<p>总的来说，滤波是指从信号中剔除特定频率的波的过程，而该过程一般通过卷积来实现。</p>
+
+<h2 id="4-二维卷积">4. 二维卷积</h2>
+
+<p>二位卷积是一位卷积的推广，对于图像处理/卷积神经网络（CNN）的“卷积”概念其实是离散的二位卷积，更准确来说，我们一般意义上理解CNN中“卷积”其实是相关，但由于卷积核函数的参数是学习而来的故不影响逻辑。</p>
+
+<p>2018.12.12 于广州</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/06/24/post01/" data-toggle="tooltip" data-placement="top" title="Recurrent Neural Network">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/12/31/post01/" data-toggle="tooltip" data-placement="top" title="我想成为你的光">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="7">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#文艺" title="文艺" rel="8">
+                                    文艺
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="5">
+                                    技术
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="4">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#数据获取" title="数据获取" rel="4">
+                                    数据获取
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#爬虫" title="爬虫" rel="3">
+                                    爬虫
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#机器学习" title="机器学习" rel="2">
+                                    机器学习
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#深度学习" title="深度学习" rel="2">
+                                    深度学习
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#算法" title="算法" rel="2">
+                                    算法
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="http://jekyllcn.com/">Jekyll</a></li>
+                    
+                        <li><a href="http://gp.sysu.edu.cn/">GP,SYSU</a></li>
+                    
+                        <li><a href="http://www.sysu.edu.cn/">SYSU</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        </br>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="icons-header" >
+                    <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
+                    <a aria-label="My Github" target="_blank" href="https://github.com/coderimoe"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+                    <a aria-label="My Weibo" target="_blank" href="https://weibo.com/negatron"><i class="icon fa fa-weibo" aria-hidden="true"></i></a>
+                    <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+                    <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
+                    <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+                </br>
+                <p style="font-size:13px;">
+                All right reserved. &copy; 凝萌小记-2019</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                <iframe
+                    style="margin-left: 2px; margin-bottom:-5px;"
+                    frameborder="0" scrolling="0" width="100px" height="20px"
+                    src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-49627206-1';
+    var _gaDomain = 'huangxuan.me';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="/js/sweet-scroll.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+
+
+
+
+</body>
+
+</html>

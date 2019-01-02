@@ -5,8 +5,13 @@
  */
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Thasadith);
+@import url(https://fonts.googleapis.com/css?family=Julius+Sans+One);
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans+SC);
+
 html {
-  font-family: sans-serif;
+  font-family: 'Thasadith','Noto Sans SC',sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -265,10 +270,15 @@ th {
   }
 }
 @font-face {
-  font-family: 'Glyphicons Halflings';
-
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  /* font-family: 'Glyphicons Halflings'; */
+  font-family: 'fzyxT';
+  src: url('../fonts/fzyxtc.eot');
+  src: url('../fonts/fzyxtc.eot?#iefix') format('embedded-opentype'), url('../fonts/fzyxtc.woff2') format('woff2'), url('../fonts/fzyxtc.woff') format('woff'), url('../fonts/fzyxtc.ttf') format('truetype'), url('../fonts/fzyxtc.svg#glyphicons_halflingsregular') format('svg');
+}
+@font-face {
+  font-family: 'fzyxS';
+  src: url('../fonts/fzyxsc.eot');
+  src: url('../fonts/fzyxsc.eot?#iefix') format('embedded-opentype'), url('../fonts/fzyxsc.woff2') format('woff2'), url('../fonts/fzyxsc.woff') format('woff'), url('../fonts/fzyxsc.ttf') format('truetype'), url('../fonts/fzyxsc.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -1074,7 +1084,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Thasadith','Noto Sans SC',sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -5824,7 +5834,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Thasadith','Noto Sans SC',sans-serif;
   font-size: 12px;
   font-weight: normal;
   line-height: 1.4;
@@ -5932,7 +5942,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Thasadith','Noto Sans SC',sans-serif;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
