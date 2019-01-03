@@ -11,7 +11,7 @@
 }
 .sidebar-container {
   color: #bfbfbf;
-  font-size: 16px;
+  font-size: 14px;
 }
 .sidebar-container h5 {
   letter-spacing:1px;
@@ -492,7 +492,7 @@ pre code {
 }
 .post-preview > a > .post-subtitle {
   letter-spacing:1px;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.3;
   margin: 0;
   font-weight: 300;
@@ -522,7 +522,7 @@ pre code {
     font-size: 16px;
   }
   .post-preview .post-meta {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 .post-content-preview {
@@ -534,7 +534,7 @@ pre code {
 }
 @media only screen and (min-width: 768px) {
   .post-content-preview {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 .section-heading {
@@ -942,3 +942,6 @@ body {
   color: #ddd;
 }
 
+code{
+  padding: 0rem 1rem;
+}

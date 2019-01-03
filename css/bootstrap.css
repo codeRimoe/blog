@@ -11,7 +11,6 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans+SC);
 
 html {
-  font-family: 'Thasadith','Noto Sans SC',sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -270,7 +269,11 @@ th {
   }
 }
 @font-face {
-  /* font-family: 'Glyphicons Halflings'; */
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+@font-face {
   font-family: 'fzyxT';
   src: url('../fonts/fzyxtc.eot');
   src: url('../fonts/fzyxtc.eot?#iefix') format('embedded-opentype'), url('../fonts/fzyxtc.woff2') format('woff2'), url('../fonts/fzyxtc.woff') format('woff'), url('../fonts/fzyxtc.ttf') format('truetype'), url('../fonts/fzyxtc.svg#glyphicons_halflingsregular') format('svg');
@@ -279,6 +282,16 @@ th {
   font-family: 'fzyxS';
   src: url('../fonts/fzyxsc.eot');
   src: url('../fonts/fzyxsc.eot?#iefix') format('embedded-opentype'), url('../fonts/fzyxsc.woff2') format('woff2'), url('../fonts/fzyxsc.woff') format('woff'), url('../fonts/fzyxsc.ttf') format('truetype'), url('../fonts/fzyxsc.svg#glyphicons_halflingsregular') format('svg');
+}
+@font-face {
+  font-family: 'fzxdxT';
+  src: url('../fonts/fzxdxtc.eot');
+  src: url('../fonts/fzxdxtc.eot?#iefix') format('embedded-opentype'), url('../fonts/fzxdxtc.woff2') format('woff2'), url('../fonts/fzxdxtc.woff') format('woff'), url('../fonts/fzxdxtc.ttf') format('truetype'), url('../fonts/fzxdxtc.svg#glyphicons_halflingsregular') format('svg');
+}
+@font-face {
+  font-family: 'dengl';
+  src: url('../fonts/Dengl.eot');
+  src: url('../fonts/Dengl.eot?#iefix') format('embedded-opentype'), url('../fonts/Dengl.woff2') format('woff2'), url('../fonts/Dengl.woff') format('woff'), url('../fonts/Dengl.ttf') format('truetype'), url('../fonts/Dengl.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -1084,8 +1097,6 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: 'Thasadith','Noto Sans SC',sans-serif;
-  font-size: 14px;
   line-height: 1.42857143;
   color: #333;
   background-color: #fff;
@@ -1264,27 +1275,27 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 36px;
+  font-size: 42px;
 }
 h2,
 .h2 {
-  font-size: 30px;
+  font-size: 36px;
 }
 h3,
 .h3 {
-  font-size: 24px;
+  font-size: 30px;
 }
 h4,
 .h4 {
-  font-size: 18px;
+  font-size: 24px;
 }
 h5,
 .h5 {
-  font-size: 14px;
+  font-size: 20px;
 }
 h6,
 .h6 {
-  font-size: 12px;
+  font-size: 14px;
 }
 p {
   margin: 0 0 10px;
