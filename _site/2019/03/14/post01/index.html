@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>为政之学与入徳之门 - 凝萌小记 - Rimoe's</title>
+    <title>爬虫入门笔记（四） - 凝萌小记 - Rimoe's</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/05/12/post01/">
+    <link rel="canonical" href="http://localhost:4000/2019/03/14/post01/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -190,12 +190,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg/post2017051201.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2019031401.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg/post2017051201.jpg')
+        background-image: url('/img/post-bg/post2019031401.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -205,19 +205,21 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#读书" title="读书">读书</a>
+                        <a class="tag" href="/tags/#爬虫" title="爬虫">爬虫</a>
                         
-                        <a class="tag" href="/tags/#议论" title="议论">议论</a>
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
-                        <a class="tag" href="/tags/#文艺" title="文艺">文艺</a>
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                        <a class="tag" href="/tags/#数据获取" title="数据获取">数据获取</a>
                         
                     </div>
-                    <h1>为政之学与入徳之门</h1>
+                    <h1>爬虫入门笔记（四）</h1>
                     
                     
-                    <h2 class="subheading">从《礼记·大学》到《四书·大学》</h2>
+                    <h2 class="subheading">漫步城市</h2>
                     
-                    <span class="meta">Posted by 柠萌 on May 12, 2017</span>
+                    <span class="meta">Posted by 柠萌 on March 14, 2019</span>
                 </div>
             </div>
         </div>
@@ -235,114 +237,142 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h2 id="本文缘起">本文缘起</h2>
+				<h2 id="今天天气不错">今天天气不错</h2>
 
-<p>本学期选了一门通识课，《礼记》导读，因交作业作了一篇文章，遂记录于此。</p>
+<p>下了好久的雨，这两天终于是晴天了，心情不错。</p>
 
-<p>原文题为《〈四书·大学〉与〈礼记·大学〉之异》，本文在原文上有作修改。</p>
+<p>大四以来也没课了，上学期忙申请，颓了好久的日子。下offer后就想着做毕业论文了，但又想着先把各种积下来的麻烦事和无聊的事情做完（比如把本小站的bug修了一下之类的），拖到最近才真的开始干毕业论文。当然其中也换了下题目，反正最终就做一些和街景有关的东西就是了。</p>
 
-<hr />
+<p>本来有一些数据的，但好像不太够，于是——还是自己爬吧……</p>
 
-<h2 id="两版本大学之异">两版本大学之异</h2>
+<h2 id="place-pulse">Place Pulse</h2>
 
-<p>目前《大学》主要有两个版本，一是<a href="https://zh.wikisource.org/wiki/%E7%A6%AE%E8%A8%98%E6%AD%A3%E7%BE%A9/60">《礼记·大学》</a>，二是<a href="https://zh.wikisource.org/wiki/%E5%9B%9B%E6%9B%B8%E7%AB%A0%E5%8F%A5%E9%9B%86%E8%A8%BB/%E5%A4%A7%E5%AD%B8%E7%AB%A0%E5%8F%A5">《四书·大学》</a>。</p>
+<p>当然之前搞了一个<a href="http://pulse.media.mit.edu/">数据集 - Place Pulse</a>下来，这是mit的数据集提供一些在线问卷的数据，但图片要自己通过Google Map api下载。</p>
 
-<p>此处《礼记·大学》即《礼记·大学第四十二》原文，《四书·大学》是南宋朱熹的《四书章句集注·大学章句集注》。二者有许多不同，如在篇目顺序上，《四书·礼记》经过朱子的移文补传，体系更为严谨。</p>
+<p>然后谷歌api现在还要收费了，嘛后来我在<a href="https://developers.google.com/maps/documentation/streetview/intro">api文档</a>里发现一个示例的key，好像还能无限下载（捂脸）。</p>
 
-<p>《礼记·大学》可以分为“道”、“诚意篇”、“正心篇”、“修身篇”、“治国篇”，《四书·大学》则是“经”一章与“传”十章的结构，又补朱子《格物致知补传》，诚意篇往后编排，形成以“明明德”、“新民”、“止于至善”为<strong>三纲</strong>，以“格物”、“致知”、“诚意”、“正心”、“修身”、“齐家“、“治国“、”平天下”为<strong>八目</strong>的理论体系。</p>
+<p>用api爬数据真的挺爽的，嘛，这里有个下载Place Pulse的脚本，直接能用哦。</p>
 
-<p><img src="/img/in-post/2017051201/pic01.jpg" alt="avatar" /></p>
+<p><a href="https://github.com/wangleye/place_pulse_img_dowloader">Place Pulse Downlaoder</a></p>
 
-<hr />
+<h2 id="腾讯地图">腾讯地图</h2>
 
-<h2 id="大学新义与其在四书中定位">《大学》新义与其在《四书》中定位</h2>
+<p>当然，由于研究区是国内，所以Place Pulse只能用来做training set啦。</p>
 
-<p>朱子移文补传，实是借古文立新学，《大学》原文经朱子一番悉心打扮后，不仅形式变更了，含意也变得有所不同。
-朱子在《大学章句·序》中写道：</p>
+<p>所以呢，我就打算爬一下腾讯地图的街景。</p>
 
-<blockquote>
-  <p>“及周之衰，賢聖之君不作，學校之政不修，教化陵夷，風俗頹敗，時則有若孔子之聖，而不得君師之位以行其政教，於是獨取先王之法，誦而傳之以詔後世。”</p>
-</blockquote>
+<p>申请了腾讯API，能有5个免费的key，试用量还是够的。</p>
 
-<p><img src="/img/in-post/2017051201/pic02.jpg" alt="avatar" /></p>
+<p>但腾讯直截了当地说了他们家地<a href="https://lbs.qq.com/panostatic_v1/index.html">静态街景的API</a>只对企业用户（人民币玩家）开放，于是就开始想别的办法。</p>
 
-<p>可见，朱子对《大学》赞赏有嘉，认为这是教化风俗的学问，因此将此文从礼记中提出来，作为四书之一，定为“为学之纲”。</p>
+<p>然后又在github上找了一个代码<a href="https://github.com/neolinsu/CityWander">City Wander</a>，好像做得不错，但感觉有点复杂。重要的是里面的街景点是似乎预设好的，反正读代码那么累，我还是自己撸一个算了。</p>
 
-<p>《礼记·大学》原为《小戴礼记》中的一篇，阐述的是一种“博学可以为政”的“太学”，讲的是如何以礼治国，而朱子对大学则有新的理解。他认为，《大学》讲的是从格物致知到治国平天下的“修德之学“，是四书里的”<strong>入徳之门</strong>“。朱子在作集注时，提出了许多自己的看法，在有的人看来，这些章句曲解了原文，是伪学。但朱子反本开新，使得《四书·礼记》成为南宋后的“正统之学”，构成了理学发展的重要一环。</p>
+<h4 id="1-抓包">1. 抓包</h4>
 
-<p>朱子章句中，有许多对旧文的新解，援“亲，当作新”一句为例，《大学》中“在亲民”的“亲”字，被解释为新，这一注解，某种程度上是为了与后文“茍日新，日日新，又日新”所照应，但这一全新的诠释，使得《大学》从为政之道转变为入徳之学。</p>
+<p>url api不行，但发现了有js api和h5组件，于是进去看看。</p>
 
-<hr />
+<p>发现js街景竟然要flash？都什么年代了，嘛，flash好像不太好搞，没事，进示例<a href="https://lbs.qq.com/javascript_v2/sample/sample-pano-face.html">JS街景</a>，直接Chrome F12。</p>
 
-<h2 id="补传与格物致知的新诠释">补传与“格物致知”的新诠释</h2>
+<p><img src="/img/in-post/2019031401/img01.PNG" alt="img" /></p>
 
-<p>朱子的移文补传，包括对篇目的重新编排，形成了新的体系结构，还包括了补写了《格物致知补传》，解释“格物”与“致知”。</p>
+<p>这也太好搞了吧，直接发请求就可以了。</p>
 
-<p>朱子移文后，前三传分别解释了三纲，即“明明德”、“亲民”、“止于至善”，第四章解释“本末”，第六至八章解释了八目中的“诚意”、“正心修身”、“修身齐家”、“齐家治国”、“治国平天下”，唯独没解释“格物致知”。朱子认为第五章是“格物致知传”，但丢失了，故补一传。</p>
+<p>https://sv6.map.qq.com/tile?<strong>svid</strong>=10011039131104142016200&amp;<strong>x</strong>=6&amp;<strong>y</strong>=2&amp;from=web&amp;<strong>level</strong>=0&amp;v=2</p>
 
-<blockquote>
-  <p>“右傳之五章，蓋釋格物、致知之義，而今亡矣。閒嘗竊取程子之意以補之。——朱熹《四书·大学》”</p>
-</blockquote>
+<p>明显svid是street view index啦，x、y就是切片位置了，leval就是缩放等级了，试了一下leval=0的时候x取值是[0,7]，y取值是[0,2]。</p>
 
-<p>而朱子补传的这一做法，是否符合《大学》之本意？</p>
+<p>再试试<a href="https://lbs.qq.com/tool/component-streetview.html">h5组件</a>，示例链接竟然是二维码，行吧，也合理，扫一下，搞到链接，再用chrome模拟手机打开看看。</p>
 
-<p>朱子之所谓“格物”、“致知”，讲的是人有“<strong>认知天下之事物，把握事物之理</strong>”的能力，讲人可以通过由认知事物而把握事物的“理”。后来，王阳明又提出了“诚意”、“致良知”为《大学》之本，提倡恢复古本《大学》。王阳明的学说重“诚意”，以孟子“良知”解释“致知”，强调“心即理”。</p>
+<p><img src="/img/in-post/2019031401/img02.PNG" alt="img" /></p>
 
-<blockquote>
-  <p>“物者，事也，凡意之所发必有其事，意所在之事谓之物。格者，正也，正其不正以归于正之谓也。正其不正者，去恶之谓也。归于正者，为善之谓也。夫是之谓格。——王守仁《大学问》”</p>
-</blockquote>
+<p>https://sv0.map.qq.com/tile?<strong>svid</strong>=10131053140812095958800&amp;<strong>x</strong>=0&amp;<strong>y</strong>=0&amp;<strong>level</strong>=0&amp;mtype=mobile-cube&amp;from=web</p>
 
-<p>王阳明认为“格物“、”致知”、“诚意”、“正心”本意都是一样，都是为了“修身”。</p>
+<p>也是一个套路啊，leval=0的时候x取值是[0,10]，y取值是[0,1]。</p>
 
-<blockquote>
-  <p>“「格物」者,格其心之物也,格其意之物也,挌其知之物也:「正心」者,正其物之心也:「誠意」者,誠其物之意也:「致知」者,致其物之知也。此岂有内外彼此之分哉?——王守仁《传习录》”</p>
-</blockquote>
+<p>这些切片包括了一些没啥用的部分，比如头顶天空的图片和街景采集车的图片。</p>
 
-<p>依照此观点，《礼记》不必将四者分开。由此观之，从王阳明的学说来理解“格物致知”，并不一定比朱子学说更加符合《礼记》原意。</p>
+<p>最后我采用sv0（h5组件）的那个接口，x取[0,7]，每两张刚好是转了90度的样子，8张图拼起来大概像这样：</p>
 
-<p><img src="/img/in-post/2017051201/pic03.jpg" alt="avatar" /></p>
+<p><img src="/img/in-post/2019031401/img03.jpg" alt="img" /></p>
 
-<p>钱穆先生在《〈大学〉格物新释》中提出，《大学》中并无对“物”的解释，而《大学》节选自《小戴礼记》，故对“格物”的理解应当在《小戴礼记》的别篇中找寻，并指出《礼记·乐记》中的“物至知知”便是对“格物致知”的解释：</p>
+<h4 id="svid和经纬度获取">svid和经纬度获取</h4>
 
-<blockquote>
-  <p>“人心所动，物使之然也。——《礼记·乐记》”</p>
-</blockquote>
+<p>那么问题来了svid怎么获取呢，街景对应的经纬度呢？</p>
 
-<p>体现了在“物”的经验后才有人的“知”，与朱子的解释相符，由此推断朱子的解释合理。</p>
+<p>没事，腾讯API有<a href="https://lbs.qq.com/webservice_v1/guide-adsorb.html">街景场景信息查询</a>接口，打个grid丢进去就返回最近的街景POI啦。</p>
 
-<p>但朱子的“格物致知”与《礼记·大学》提到的“格物致知”应当是不同的，我们所《礼记·大学》讲的是“为政之道”，为政的“格物“应当是不必”穷极事物之理以推极吾之知识“的，郑玄与孔颖达在《礼记正义》注疏中给出了理解：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 使用api获取街景POI</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s">'K24BZ-OLNRI-ODZGI-5Y7B6-xxxxx-23333'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://apis.map.qq.com/ws/streetview/v1/getpano?location'</span> <span class="o">+</span>\
+      <span class="s">'={},{}&amp;radius=100&amp;key={}'</span>
+<span class="n">web</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]))</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
-<blockquote>
-  <p>“格，來也。物、猶事也。其知於善深，則來善物。其知於惡深，則來惡物。言事緣人所好來也。——郑玄《礼记正义·注》”</p>
-</blockquote>
+</code></pre></div></div>
 
-<p>在郑孔二人的理解中，”格物“是果，”致知“是因，由一个人的格物来事而致其知，由果推因，以人之待物推知其知之善恶，因为只有知善者才能行善事。依照此观点，通过”格善物“，使得他人”致善知“，于是”诚意“、”正心“，”由天子以至庶人，壹是以修身为本“，从而”家齐国治天下平“。</p>
+<h4 id="爬取图片">爬取图片</h4>
 
-<p>因此，朱子的理解是与郑孔所不同的。</p>
+<p>先写一个下载图片的函数。用到了requests这个库，python3的话用urllib。request也行的。</p>
 
-<p>朱子补传，意在重新诠释”格物致知“的本义，从而使《大学》从”为政“之学泛化为”入徳“之学。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># code for python2</span>
+<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">'https://sv6.map.qq.com/tile?svid={}&amp;x={}&amp;y={}&amp;level=0'</span> <span class="o">+</span>\
+      <span class="s">'&amp;mtype=mobile-cube&amp;from=web'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'{}/id{}_x{}_y{}.jpg'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 
-<hr />
+</code></pre></div></div>
 
-<h2 id="小议朱子移文补传">小议朱子移文补传</h2>
+<p>但还要拼接图片，这里用opencv来做，我们要拼出4张图，先将x相同但y不同（y=1，2）的两个图拼起来。这里如果图片不存在就去下载。</p>
 
-<p>朱子移文补传的理由是旧本错简、传文遗失，而其做法在日后亦备受诟病，如国学大师南怀瑾先生在《原本大学微言》中批判道：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">merge_y</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">img1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/id</span><span class="si">%</span><span class="s">s_x</span><span class="si">%</span><span class="s">s_y0.jpg'</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">img2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/id</span><span class="si">%</span><span class="s">s_x</span><span class="si">%</span><span class="s">s_y1.jpg'</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c"># 如果不存在就下载</span>
+    <span class="k">if</span> <span class="n">img1</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">download</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">img2</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">download</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">img1</span><span class="p">,</span> <span class="n">img2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+        <span class="c"># 迭代至下得到图片为止</span>
+        <span class="k">return</span> <span class="n">merge_y</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 
-<blockquote>
-  <p>“其实，孔家老店，倒还货真价实，只是从南宋以后，这一班宋儒学家们，加入了孔家店，喧宾夺主，改变了孔家店原来的产品，掺入的冒牌太多。尤其以程、朱之说，更为明显。“</p>
-</blockquote>
+</code></pre></div></div>
 
-<p><img src="/img/in-post/2017051201/pic04.jpg" alt="avatar" /></p>
+<p>然后将x不同的图拼起来。这里如果图片不存在就去下载。</p>
 
-<p>但朱子的移文补传并不是毫无道理的，这是基于唐中后期经学僵化、儒家心性理论薄弱而提出的对儒学的重建，是对当时被佛学思想深入的儒学进行清理与重整。有学者认为，”阐发经学中的‘义理’符合当时的社会现实向儒家提出的要求，也是儒家解经学依照自身逻辑发展的必然结果“。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">merge_x</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">img1</span> <span class="o">=</span> <span class="n">merge_y</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">img2</span> <span class="o">=</span> <span class="n">merge_y</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">img1</span><span class="p">,</span> <span class="n">img2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<p>《礼记·大学》本来就条理比较清晰，能自成体系。朱子通过移文补传，使得本来就条理清晰的《大学》变得更加严谨，从而形成了较为完整的理论体系。中国古代的学说理论一般是”潜隐型“的体系，如《论语》以孔子言行载道，《庄子》借寓言辨理，而朱子修《大学》补传，在理学发展上可以说是一个创举，奠定了心理学的理论基础。</p>
+</code></pre></div></div>
 
-<p>朱子移文补传赋予了《大学》”修德“的新含义，是思想上的一次再创造。或者说《四书·大学》是《礼记·大学》在新的历史背景下作出的转型与发展。</p>
+<p>然后，调用。</p>
 
-<p>2017.05.11 于珠海</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">path</span> <span class="o">=</span> <span class="s">'.'</span>
+<span class="n">svid</span> <span class="o">=</span> <span class="s">'10061047150610111840800'</span>
+<span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">merge_x</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">svid</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>  <span class="c"># 4个角度</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                 <span class="c"># 合并长图</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s">'sv'</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>                              <span class="c"># 显示图片</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s">'sysu_south_gate.jpg'</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>            <span class="c"># 保存图片</span>
 
-<p>文章同步发于<a href="http://www.jianshu.com/p/701d5cd24d8f">简书 - 为政之学与入徳之门？ - 酸的柠萌</a></p>
+</code></pre></div></div>
+
+<h2 id="循环">循环</h2>
+
+<p>这就是写一个for的事情了，还不会的话，就去star我的github吧，欸嘿嘿。</p>
+
+<p>代码已发到<a href="https://github.com/codeRimoe/Spider/tree/master/demo/Level_4">Github - Spider</a>。</p>
+
+<p>2019.03.14 凌晨 于广州</p>
 
 
                 <hr>
@@ -350,13 +380,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/05/01/post02/" data-toggle="tooltip" data-placement="top" title="用数学画地图">&larr; Previous Post</a>
+                        <a href="/2018/12/31/post01/" data-toggle="tooltip" data-placement="top" title="我想成为你的光">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/06/09/post01/" data-toggle="tooltip" data-placement="top" title="胡乱写了个小游戏">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 

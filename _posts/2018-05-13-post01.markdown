@@ -34,7 +34,7 @@ tags:
 ###### [1] Hypothesis
 
 对于一个n维向量![x]({{ site.baseurl }}/img/in-post/2018051301/math01.png)定义函数![htx]({{ site.baseurl }}/img/in-post/2018051301/math02.png)该函数称为Hypothesis，我们假设通过该函数可以算出预测值。值得一提的是，这里的m维向量![htx]({{ site.baseurl }}/img/in-post/2018051301/math03.png)
-是参数，θ只要确定了，函数就能确定，但因为有很多个θ，所以Hypothesis可以看成是一个函数集合，我们要做的就是从所有thata的组合中找出最优秀的θ，确定h(x)。
+是参数，θ只要确定了，函数就能确定，但因为有很多个θ，所以Hypothesis可以看成是一个函数集合，我们要做的就是从所有θ的组合中找出最优秀的θ，确定h(x)。
 
 ###### [2] Loss
 

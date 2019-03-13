@@ -1,0 +1,155 @@
+---
+layout:     post
+title:      "爬虫入门笔记（四）"
+subtitle:   "漫步城市"
+date:       2019-03-14
+author:     "柠萌"
+header-img: "img/post-bg/post2019031401.jpg"
+tags:
+    - 爬虫
+    - 技术
+    - Python
+    - 数据获取
+---
+
+## 今天天气不错
+
+下了好久的雨，这两天终于是晴天了，心情不错。
+
+大四以来也没课了，上学期忙申请，颓了好久的日子。下offer后就想着做毕业论文了，但又想着先把各种积下来的麻烦事和无聊的事情做完（比如把本小站的bug修了一下之类的），拖到最近才真的开始干毕业论文。当然其中也换了下题目，反正最终就做一些和街景有关的东西就是了。
+
+本来有一些数据的，但好像不太够，于是——还是自己爬吧……
+
+## Place Pulse
+
+当然之前搞了一个[数据集 - Place Pulse](http://pulse.media.mit.edu/)下来，这是mit的数据集提供一些在线问卷的数据，但图片要自己通过Google Map api下载。
+
+然后谷歌api现在还要收费了，嘛后来我在[api文档](https://developers.google.com/maps/documentation/streetview/intro)里发现一个示例的key，好像还能无限下载（捂脸）。
+
+用api爬数据真的挺爽的，嘛，这里有个下载Place Pulse的脚本，直接能用哦。
+
+[Place Pulse Downlaoder](https://github.com/wangleye/place_pulse_img_dowloader)
+
+## 腾讯地图
+
+当然，由于研究区是国内，所以Place Pulse只能用来做training set啦。
+
+所以呢，我就打算爬一下腾讯地图的街景。
+
+申请了腾讯API，能有5个免费的key，试用量还是够的。
+
+但腾讯直截了当地说了他们家地[静态街景的API](https://lbs.qq.com/panostatic_v1/index.html)只对企业用户（人民币玩家）开放，于是就开始想别的办法。
+
+然后又在github上找了一个代码[City Wander](https://github.com/neolinsu/CityWander)，好像做得不错，但感觉有点复杂。重要的是里面的街景点是似乎预设好的，反正读代码那么累，我还是自己撸一个算了。
+
+#### 1. 抓包
+
+url api不行，但发现了有js api和h5组件，于是进去看看。
+
+发现js街景竟然要flash？都什么年代了，嘛，flash好像不太好搞，没事，进示例[JS街景](https://lbs.qq.com/javascript_v2/sample/sample-pano-face.html)，直接Chrome F12。
+
+![img]({{ site.baseurl }}/img/in-post/2019031401/img01.PNG)
+
+这也太好搞了吧，直接发请求就可以了。
+
+https://sv6.map.qq.com/tile?**svid**=10011039131104142016200&**x**=6&**y**=2&from=web&**level**=0&v=2
+
+明显svid是street view index啦，x、y就是切片位置了，leval就是缩放等级了，试了一下leval=0的时候x取值是[0,7]，y取值是[0,2]。
+
+再试试[h5组件](https://lbs.qq.com/tool/component-streetview.html)，示例链接竟然是二维码，行吧，也合理，扫一下，搞到链接，再用chrome模拟手机打开看看。
+
+![img]({{ site.baseurl }}/img/in-post/2019031401/img02.PNG)
+
+https://sv0.map.qq.com/tile?**svid**=10131053140812095958800&**x**=0&**y**=0&**level**=0&mtype=mobile-cube&from=web
+
+也是一个套路啊，leval=0的时候x取值是[0,10]，y取值是[0,1]。
+
+这些切片包括了一些没啥用的部分，比如头顶天空的图片和街景采集车的图片。
+
+最后我采用sv0（h5组件）的那个接口，x取[0,7]，每两张刚好是转了90度的样子，8张图拼起来大概像这样：
+
+![img]({{ site.baseurl }}/img/in-post/2019031401/img03.jpg)
+
+#### svid和经纬度获取
+
+那么问题来了svid怎么获取呢，街景对应的经纬度呢？
+
+没事，腾讯API有[街景场景信息查询](https://lbs.qq.com/webservice_v1/guide-adsorb.html)接口，打个grid丢进去就返回最近的街景POI啦。
+
+``` python
+# 使用api获取街景POI
+import json
+import urllib2
+key = 'K24BZ-OLNRI-ODZGI-5Y7B6-xxxxx-23333'
+url = 'https://apis.map.qq.com/ws/streetview/v1/getpano?location' +\
+      '={},{}&radius=100&key={}'
+web = urllib2.urlopen(url.format(row[3], row[2], keys[i % 5]))
+data = json.loads(web.read())
+
+```
+
+#### 爬取图片
+
+先写一个下载图片的函数。用到了requests这个库，python3的话用urllib。request也行的。
+
+``` python
+# code for python2
+def download(path, svid, x, y):
+    url = 'https://sv6.map.qq.com/tile?svid={}&x={}&y={}&level=0' +\
+      '&mtype=mobile-cube&from=web'
+    path = '{}/id{}_x{}_y{}.jpg'.format(path, svid, x, y)
+    r = requests.get(url.format(svid, x, y))
+    with open(path, 'wb') as fd:
+        fd.write(r.content)
+
+```
+
+但还要拼接图片，这里用opencv来做，我们要拼出4张图，先将x相同但y不同（y=1，2）的两个图拼起来。这里如果图片不存在就去下载。
+
+``` python
+def merge_y(path, svid, x):
+    img1 = cv2.imread('%s/id%s_x%s_y0.jpg' % (path, svid, x), 1)
+    img2 = cv2.imread('%s/id%s_x%s_y1.jpg' % (path, svid, x), 1)
+    # 如果不存在就下载
+    if img1 is None:
+        download(path, svid, x, 0)
+    if img2 is None:
+        download(path, svid, x, 1)
+    try:
+        return np.concatenate([img1, img2], axis=0)
+    except ValueError:
+        # 迭代至下得到图片为止
+        return merge_y(path, svid, x)
+
+```
+
+然后将x不同的图拼起来。这里如果图片不存在就去下载。
+
+``` python
+def merge_x(path, svid, n):
+    x = 2 * n
+    img1 = merge_y(path, svid, x)
+    img2 = merge_y(path, svid, x + 1)
+    return np.concatenate([img1, img2], axis=1)
+
+```
+
+然后，调用。
+
+``` python
+path = '.'
+svid = '10061047150610111840800'
+imgs = [merge_x(path, svid, _) for _ in range(4)]  # 4个角度
+img = np.concatenate(imgs, axis=1)                 # 合并长图
+cv2.imshow('sv', img)                              # 显示图片
+cv2.imwrite('sysu_south_gate.jpg', img)            # 保存图片
+
+```
+
+## 循环
+
+这就是写一个for的事情了，还不会的话，就去star我的github吧，欸嘿嘿。
+
+代码已发到[Github - Spider](https://github.com/codeRimoe/Spider/tree/master/demo/Level_4)。
+
+2019.03.14 凌晨 于广州
