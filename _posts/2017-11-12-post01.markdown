@@ -20,7 +20,7 @@ tags:
 
 ## 如果坐上来自己动就好了
 
-最近尝试爬知网上的一些数据([专利数据库](http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd))，他的界面是这个样子的。
+最近尝试爬知网上的一些数据([专利数据库](https://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd))，他的界面是这个样子的。
 
 ![图 - 1]({{ site.baseurl }}/img/in-post/2017111201/pic01.png)
 
@@ -59,7 +59,7 @@ pip install selenium
 
 各种浏览器有各自的driver，这里推荐使用chrome的driver。
 
-首先要下载([地址](http://chromedriver.storage.googleapis.com/index.html))对应Chrome版本的chromedriver，版本映射表如下：
+首先要下载([地址](https://chromedriver.storage.googleapis.com/index.html))对应Chrome版本的chromedriver，版本映射表如下：
 
 v2.33 | v2.32 | v2.31 | v2.30 | v2.29 | v2.28
 v60-62 | v59-61 | v58-60 | v58-60 | v56-58 | v55-57
@@ -76,7 +76,7 @@ v40-43 | v39-42 | v38-41 | v36-40 | v36-40 | v33-36
 v2.9 | v2.8 | v2.7 | v2.6 | v2.5 | v2.4
 v31-34 | v30-33 | v30-33 | v29-32 | v29-32 | v29-32
 
-参考自[selenium之 chromedriver与chrome版本映射表（更新至v2.33）](http://blog.csdn.net/huilan_same/article/details/51896672)
+参考自[selenium之 chromedriver与chrome版本映射表（更新至v2.33）](https://blog.csdn.net/huilan_same/article/details/51896672)
 
 这里一定要注意安装与你的Chrome版本对应的driver，不然会报错（这是个大坑）。
 
@@ -89,7 +89,7 @@ v31-34 | v30-33 | v30-33 | v29-32 | v29-32 | v29-32
 ``` python
 from selenium import webdriver
 driver = webdriver.Chrome()           # 若配置成功，将会弹出Chrome浏览器界面
-driver.get('http://www.sysu.edu.cn')  # 浏览中大的网站
+driver.get('https//www.sysu.edu.cn')  # 浏览中大的网站
 driver.close()                        # 关闭webdriver
 
 ```
@@ -100,7 +100,7 @@ driver.close()                        # 关闭webdriver
 
 我们思考一下我们搜索的流程。
 
-1. 打开[专利数据库](http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd).
+1. 打开[专利数据库](https//dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd).
 2. 输入条件，搜索。
 3. 点击专利链接进入专利页面。
 4. 获取专利表格数据。
@@ -122,7 +122,7 @@ from selenium import webdriver
 search_whe = u'地址'
 search_key = u'东莞'
 search_type = 0
-url = 'http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'
+url = 'https//dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'
 
 driver = webdriver.Chrome()   # 创建一个webdriver，接下来的操作都基于此
 driver.get(url)               # 用get的方法打开网站
@@ -138,7 +138,7 @@ driver.get(url)               # 用get的方法打开网站
 
 这里提到Xpath，那到底什么是Xpath呢？
 
-这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：[静觅 - Python爬虫利器三之Xpath语法与lxml库的用法](http://cuiqingcai.com/2621.html)），在这里介绍一个获取Xpath的快捷方法。
+这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：[静觅 - Python爬虫利器三之Xpath语法与lxml库的用法](https//cuiqingcai.com/2621.html)），在这里介绍一个获取Xpath的快捷方法。
 
 在Chrome里，对要获取的元素右键-检查元素，弹出开发者工具，对元素的html标签右键，复制Xpath即可得到对应的Xpath，如图的文本框元素Xpath为`//*[@id="Text1"]`。
 
@@ -155,7 +155,7 @@ inbox.send_keys(u"东莞")                                  # 在已有内容后
 
 其他操作类似，具体方法可以参考：
 
-[静觅 - Python爬虫利器五之Selenium的用法](http://cuiqingcai.com/2599.html)
+[静觅 - Python爬虫利器五之Selenium的用法](https//cuiqingcai.com/2599.html)
 
 ``` python
 # 此处接上，driver已经打开知网数据库网页。

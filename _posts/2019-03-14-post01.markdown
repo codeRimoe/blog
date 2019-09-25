@@ -22,7 +22,7 @@ tags:
 
 ## Place Pulse
 
-当然之前搞了一个[数据集 - Place Pulse](http://pulse.media.mit.edu/)下来，这是mit的数据集提供一些在线问卷的数据，但图片要自己通过Google Map api下载。
+当然之前搞了一个[数据集 - Place Pulse](https//pulse.media.mit.edu/)下来，这是mit的数据集提供一些在线问卷的数据，但图片要自己通过Google Map api下载。
 
 然后谷歌api现在还要收费了，嘛后来我在[api文档](https://developers.google.com/maps/documentation/streetview/intro)里发现一个示例的key，好像还能无限下载（捂脸）。
 

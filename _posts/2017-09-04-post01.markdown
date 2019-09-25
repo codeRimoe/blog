@@ -24,7 +24,7 @@ tags:
 
 那不如用爬虫爬一份相亲列表出来吧，嘿嘿嘿。
 
-我们尝试用[上一篇文章](http://blog.rimoe.xyz/2017/08/24/post01/)的方法获取[二次元交往平台](http://weibo.com/u/3803639941?refer_flag=1001030001_&nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0)的主页。
+我们尝试用[上一篇文章](https://blog.rimoe.xyz/2017/08/24/post01/)的方法获取[二次元交往平台](https://weibo.com/u/3803639941?refer_flag=1001030001_&nick=%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BA%A4%E5%BE%80%E5%B9%B3%E5%8F%B0&is_hot=1&noscale_head=1#_0)的主页。
 
 ```python
 import urllib2
@@ -79,9 +79,9 @@ print site.read().decode('gbk')  # 以gbk方式解码
 
 ## 配置请求头
 
-之前写[API调研究](http://blog.rimoe.xyz/2017/07/29/post01/)的时候也提到了HTML请求方式和Header。
+之前写[API调研究](https://blog.rimoe.xyz/2017/07/29/post01/)的时候也提到了HTML请求方式和Header。
 
-具体可以查阅[HTTP教程](http://www.runoob.com/http/http-tutorial.html)
+具体可以查阅[HTTP教程](https://www.runoob.com/http/http-tutorial.html)
 
 我们在这里尝试使用urllib2提交请求头。
 
@@ -214,7 +214,7 @@ for info in infos:
 
 ![图 - 7]({{ site.baseurl }}/img/in-post/2017090401/pic07.png)
 
-关于BeautifulSoup的用法，可以参考[静觅 - Python爬虫利器二之Beautiful Soup的用法](http://cuiqingcai.com/1319.html)，此外个人觉得XPath更好用，具体可以参考[Python爬虫利器三之Xpath语法与lxml库的用法](http://cuiqingcai.com/2621.html)。
+关于BeautifulSoup的用法，可以参考[静觅 - Python爬虫利器二之Beautiful Soup的用法](https://cuiqingcai.com/1319.html)，此外个人觉得XPath更好用，具体可以参考[Python爬虫利器三之Xpath语法与lxml库的用法](https://cuiqingcai.com/2621.html)。
 
 ---
 

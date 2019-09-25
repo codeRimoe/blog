@@ -113,7 +113,7 @@ Kanna.prototype.move = function (ctx) {
 
 ![avatar]({{ site.baseurl }}/img/in-post/2017060901/pic03.jpg)
 
-首先我去找了些文章，比较有参考价值的是[iOS Safari/WebKit对DeviceOrientationEvent的实现](http://blog.csdn.net/hursing/article/details/9046837)。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自[html5重力感应事件之DeviceMotionEvent](http://www.haorooms.com/post/html5_DeviceMotionEvent)。
+首先我去找了些文章，比较有参考价值的是[iOS Safari/WebKit对DeviceOrientationEvent的实现](https://blog.csdn.net/hursing/article/details/9046837)。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自[html5重力感应事件之DeviceMotionEvent](https//www.haorooms.com/post/html5_DeviceMotionEvent)。
 
 陀螺仪的监听器是"deviceorientation"，监听手机的转动，即手机一转动就触发监听。返回5个值：webkitCompassHeading，webkitCompassAccuracy，alpha，beta，gamma。
 
