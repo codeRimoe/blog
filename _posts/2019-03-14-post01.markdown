@@ -48,7 +48,7 @@ url api不行，但发现了有js api和h5组件，于是进去看看。
 
 发现js街景竟然要flash？都什么年代了，嘛，flash好像不太好搞，没事，进示例[JS街景](https://lbs.qq.com/javascript_v2/sample/sample-pano-face.html)，直接Chrome F12。
 
-![img]({{ site.baseurl }}/img/in-post/2019031401/img01.PNG)
+![img]({{ site.baseurl }}/img/in-post/2019031401/img01.png)
 
 这也太好搞了吧，直接发请求就可以了。
 
@@ -58,7 +58,7 @@ https://sv6.map.qq.com/tile?**svid**=10011039131104142016200&**x**=6&**y**=2&fro
 
 再试试[h5组件](https://lbs.qq.com/tool/component-streetview.html)，示例链接竟然是二维码，行吧，也合理，扫一下，搞到链接，再用chrome模拟手机打开看看。
 
-![img]({{ site.baseurl }}/img/in-post/2019031401/img02.PNG)
+![img]({{ site.baseurl }}/img/in-post/2019031401/img02.png)
 
 https://sv0.map.qq.com/tile?**svid**=10131053140812095958800&**x**=0&**y**=0&**level**=0&mtype=mobile-cube&from=web
 
