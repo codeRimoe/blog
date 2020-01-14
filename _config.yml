@@ -82,13 +82,19 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends: [
     {
         title: "Hux Blog",
-        href: "http://huangxuan.me"
+        href: "https://huangxuan.me"
     },{
         title: "Jekyll",
-        href: "http://jekyllcn.com/"
+        href: "https://jekyllcn.com/"
     },{
-        title: "GP,SYSU",
-        href: "http://gp.sysu.edu.cn/"
+        title: "GRM-CUHK",
+        href: "https://www.grm.cuhk.edu.hk/"
+    },{
+        title: "CUHK",
+        href: "https://www.cuhk.edu.hk/"
+    },{
+        title: "GP-SYSU",
+        href: "https://gp.sysu.edu.cn/"
     },{
         title: "SYSU",
         href: "http://www.sysu.edu.cn/"
