@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>胡乱写了个小游戏 - 凝萌小记 - Rimoe's</title>
+    <title>THE KEY - 凝萌小记 - Rimoe's</title>
 
-    <link rel="canonical" href="http://localhost:4000/2017/06/09/post01/">
+    <link rel="canonical" href="http://localhost:4000/2020/01/14/post02/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -190,12 +190,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg/post2017060901.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg/post2020011402.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg/post2017060901.jpg')
+        background-image: url('/img/post-bg/post2020011402.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -205,19 +205,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#H5/JS" title="H5/JS">H5/JS</a>
+                        <a class="tag" href="/tags/#Proxy" title="Proxy">Proxy</a>
                         
-                        <a class="tag" href="/tags/#游戏" title="游戏">游戏</a>
+                        <a class="tag" href="/tags/#服务器" title="服务器">服务器</a>
                         
                         <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
                     </div>
-                    <h1>胡乱写了个小游戏</h1>
+                    <h1>THE KEY</h1>
                     
                     
-                    <h2 class="subheading">造《坎娜与托尔》过程中学到的</h2>
+                    <h2 class="subheading">突破地区限制的解决方案</h2>
                     
-                    <span class="meta">Posted by 柠萌 on June 9, 2017</span>
+                    <span class="meta">Posted by 柠萌 on January 14, 2020</span>
                 </div>
             </div>
         </div>
@@ -237,178 +237,169 @@
 
 				<h2 id="缘起">缘起</h2>
 
-<p>H5通识课作业要求写一个小游戏，那就写吧，5月30日晚从香港回到学校，就开始着手撸起来。</p>
+<p>近来开学伊始，无事，听歌而不得，于同舍合计说要一起买个vpn，想了一想，倒不如组个云服务器自己打一个代理。</p>
 
-<p>本来想做一个像机械迷城一样的H5游戏，但想想工程量太大赶不及交作业，而且最近事还不少，于是就想着做一个简单一点的。</p>
+<p>毕竟买了b站大会员看不了真的很不爽欸。</p>
 
-<hr />
+<h2 id="服务器">服务器</h2>
 
-<h2 id="游戏设计">游戏设计</h2>
+<p>听说阿里云主机也只要24元/月，看了一下<a href="https://cn.aliyun.com/product/swas">阿里云轻量应用服务器</a>报价，发现24元的主机是在香港的服务器，在内地的服务器要60元。</p>
 
-<p>因为没有想法，所以上网找了一下别人blog的文章，于是发现了一篇2011年的文章<a href="http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/">《How to make a simple HTML5 Canvas game》</a>，这也是有够古老的，但足够简单。</p>
+<p>感觉好像是有点贵。</p>
 
-<p>但是只是上下左右吃小妖怪这样的设定既不有趣也不可爱，而且也不可能直接copy别人的代码交作业。</p>
+<p>然后看了一下，发现有学生优惠，<a href="https://promotion.aliyun.com/ntms/act/campus2018.html?utm_content=se_1003914638&amp;gclid=CjwKCAiAx_DwBRAfEiwA3vwZYiKB5A5hF97p-yrIJgcsX6I4UgI3UpY4x8MovvFhFExb4ZKWywP1bxoCZgMQAvD_BwE">云翼计划</a>每月只要9.5元，于是买了一个，预装Cent OS 7.6。</p>
 
-<p>所以结合以前玩过的一个叫泡泡堂的游戏来了灵感，设计了一个小游戏。</p>
+<p>另外腾讯云也有学生机，大概10元一个月。</p>
 
-<p>·玩家通过控制一个角色单位的【移动】和【放炸弹】来躲避并消灭怪物。</p>
+<p>有趣的是这“学生”的界定是24/25岁以下都算学生。</p>
 
-<p>·怪物定时产生，跟随玩家角色移动，碰到玩家角色即消失，玩家扣血。</p>
+<h2 id="shadowsocksss服务端搭建">Shadowsocks（SS）服务端搭建</h2>
 
-<p>·胜利条件是杀敌数一定或一定时间内不死。</p>
+<p>然后在服务器装个SS配置以下就好了，具体参见：
+<a href="https://www.linuxrumen.com/fwqdj/875.html">CentOS 7怎么搭建ssr(shadowsocks)</a>。</p>
 
-<p>·当然怪物、炸弹可以有不同类型和效果。</p>
+<p>基本上分几步：</p>
 
-<p>然后为了变得萌萌哒就把游戏做成《小林家的龙女仆》的同人啦。</p>
-
-<p>设定是托尔追坎娜，后来又加上一个不动的小林在中间，游戏中不能碰到。</p>
-
-<p>（有人问我为什么是坎娜不是康娜，其实就是单纯喜欢这个小众的译名（误）。）</p>
-
-<p><img src="/img/in-post/2017060901/pic01.jpg" alt="avatar" /></p>
-
-<hr />
-
-<h2 id="构建对象与移动">构建对象与移动</h2>
-
-<p>说干就干，首先要构建对象，先构建了三个对象，一是坎娜，二是托尔，三是炸弹。后来又加了个小林类。</p>
-
-<p>基本上都有img、x、y、hp这三个数据成员，其实可以搞个基类的，不过当时有点赶着写完于是就直接撸没有设计类。</p>
-
-<p>类图大概是下面这样的。</p>
-
-<p><img src="/img/in-post/2017060901/pic02.png" alt="avatar" /></p>
-
-<p>画图、移动、设置炸弹，另外写了几个检查状态的函数。</p>
-
-<p>键盘输入控制的话，当然是用键盘的上下左右啦，其实这个也只是设置一个监听。</p>
-
-<p>代码如下</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="c1">//监听键盘事件</span>
-<span class="kd">var</span> <span class="nx">keysDown</span> <span class="o">=</span> <span class="p">{};</span>                                     <span class="c1">//记录当前按着的键</span>
-<span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"keydown"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">keysDown</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
-
-<span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"keyup"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">delete</span> <span class="nx">keysDown</span><span class="p">[</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">];</span>
-    <span class="k">switch</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">){</span>
-        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="p">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>   <span class="c1">//松开某键盘执行代码</span>
-        <span class="k">case</span> <span class="cm">/*add key value*/</span> <span class="p">:</span> <span class="cm">/*add code*/</span><span class="p">;</span><span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
-
-<span class="c1">//检测长按对应事件</span>
-<span class="nx">Kanna</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">move</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//使用（value in dictionary）判断</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">38</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">40</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">37</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">39</span> <span class="k">in</span> <span class="nx">keysDown</span><span class="p">)</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">spd</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">&lt;=</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">=</span><span class="mi">48</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">&gt;=</span><span class="nx">CBH</span><span class="o">-</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">y</span><span class="o">=</span><span class="nx">CBH</span><span class="o">-</span><span class="mi">48</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">&lt;=</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">=</span><span class="mi">48</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">&gt;=</span><span class="nx">CBW</span><span class="o">-</span><span class="mi">48</span><span class="p">)</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="o">=</span><span class="nx">CBW</span><span class="o">-</span><span class="mi">48</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">kanna</span><span class="p">.</span><span class="nx">sum</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="nx">kanna</span><span class="p">.</span><span class="nx">img</span><span class="o">=</span><span class="nx">kimg</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-    <span class="k">else</span> <span class="nx">kanna</span><span class="p">.</span><span class="nx">img</span><span class="o">=</span><span class="nx">kimg</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="nx">ctx</span><span class="p">);</span>
-<span class="p">};</span>
-
+<h4 id="1-安装bbr">1. 安装bbr</h4>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update <span class="nt">-y</span>
+rpm <span class="nt">--import</span> https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm <span class="nt">-Uvh</span> http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+yum <span class="nt">--enablerepo</span><span class="o">=</span>elrepo-kernel install kernel-ml
+awk <span class="nt">-F</span><span class="se">\'</span> <span class="s1">'$1=="menuentry " {print i++ " : " $2}'</span> /etc/grub2.cfg
+grub2-set-default 0
 </code></pre></div></div>
 
-<p>其他的话就是托尔跟踪的函数了，算法大概就是每次算出xy差值，然后得到连线斜率，然后用速度算一下移动的xy值。</p>
+<p>最后一行的0为将倒数第二行查询的到的最大版本号内核对应的序号。然后重启看看版本号是不是最大版本号，然后编辑配置文件：</p>
 
-<p>游戏实现方面还是比较简单的。</p>
-
-<hr />
-
-<h2 id="手机端支持g感应">手机端支持（G感应）</h2>
-
-<p>本来只做PC端就能交作业了，但我突然觉得h5不做手机端这游戏发在票圈里肯定没人玩了，于是我就开始研究手机端了。</p>
-
-<p>第一个问题首先是如何检测网页在手机端打开，为了图方便就直接用了别人的库<a href="https://github.com/matthewhudson/device.js/blob/master/lib/device.js">Device.js</a>,然后就直接用device.mobile()判断就OK了。</p>
-
-<p>然后控制的话当然是触摸画板放炸弹了，很简单就直接加一个object.onclick()就可以了，不过这里mark一下，canvas是不能直接onclick的，我们要造一个div然后get这个div再div.onclick()。</p>
-
-<p>至于移动的话，我先是想用触摸canvas外的空白处，但一是不好实现，二是用户不好操作，三是竖屏状态下自适应后没有空白了，后来我就想到G感应。</p>
-
-<p><img src="/img/in-post/2017060901/pic03.jpg" alt="avatar" /></p>
-
-<p>首先我去找了些文章，比较有参考价值的是<a href="https://blog.csdn.net/hursing/article/details/9046837">iOS Safari/WebKit对DeviceOrientationEvent的实现</a>。其实准确来说，用的应该是陀螺仪。手机有加速度感应和陀螺仪两个传感器，前者感应手机的加速度，后者感应手机旋转角度，参考自<a href="https//www.haorooms.com/post/html5_DeviceMotionEvent">html5重力感应事件之DeviceMotionEvent</a>。</p>
-
-<p>陀螺仪的监听器是”deviceorientation”，监听手机的转动，即手机一转动就触发监听。返回5个值：webkitCompassHeading，webkitCompassAccuracy，alpha，beta，gamma。</p>
-
-<p>webkitCompassHeading：与正北方向的角度差值。正北为0度，正东为90度，正南为180度，正西为270度。</p>
-
-<p>webkitCompassAccuracy：指北针的精确度，表示偏差为正负多少度。一般是10。</p>
-
-<p>alpha: 在围绕 z 轴旋转时，手机屏幕面转过的度数，设备顶部指向地球正北方向时为0，取值[0,360]。</p>
-
-<p>beta: 在围绕 x 轴旋转时，手机屏幕面转过的度数，设备水平放置时为0，取值[-180,180]。</p>
-
-<p>gamma: 在围绕 y 轴旋转时），手机屏幕面转过的度数，设备水平放置时为0，取值[-90,90]。</p>
-
-<p>具体的直观感受请就看下图：</p>
-
-<p><img src="/img/in-post/2017060901/pic04.png" alt="avatar" />
-<img src="/img/in-post/2017060901/pic05.png" alt="avatar" />
-<img src="/img/in-post/2017060901/pic06.png" alt="avatar" /></p>
-
-<p>我们可以发现这里的原理很简单，大概是：通过正北（地磁场感应）判断alpha，通过重力加速度方向（重力感应）确定beta和gamma。</p>
-
-<p>我们这里只用到beta和gamma，也就是说所谓的G感应其实是陀螺仪的两个返回值。</p>
-
-<p>所以每当监听到转动时就往keysdown字典里添加对应方向的keycode，检测到轴线水平时删除该轴线上两个方向的keycode。当然，我设置了允许5度以内的偏差，就是返回正负5度都认为是水平。</p>
-
-<p>此外要注意横屏时的方向和竖屏的不一样，利用window.orientation可以返回-90、0、90、180分别代表屏幕四个方向。</p>
-
-<p>手机端测试时比较麻烦的是要先推到网站上再用手机打开，开始以为chrome的设备模拟不支持GSencor，后来发现是有Sencor模拟的。
-<img src="/img/in-post/2017060901/pic07.png" alt="avatar" /></p>
-
-<p>另外我还发现chrome有remote devices功能，可以用USB连上手机，这次没用上，下次可以探索一下。
-<img src="/img/in-post/2017060901/pic08.png" alt="avatar" /></p>
-
-<hr />
-
-<h2 id="网页自适应">网页自适应</h2>
-
-<p>网页自适应对我来说一直挺麻烦的，可能是因为CSS和Style没学好，其实个人觉得吧，CSS写错了都不知道哪出问题，颇为心累。</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;title&gt;</span>坎娜与托尔 - Rimoe Game<span class="nt">&lt;/title&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">"user-scalable=0"</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;style&gt;</span>
-    <span class="nt">html</span><span class="o">,</span><span class="nt">body</span><span class="p">{</span>
-        <span class="nl">width</span><span class="p">:</span><span class="m">98%</span><span class="p">;</span>
-        <span class="nl">height</span><span class="p">:</span><span class="m">98%</span><span class="p">;</span>
-        <span class="nl">display</span><span class="p">:</span><span class="n">flex</span><span class="p">;</span>
-        <span class="nl">justify-content</span><span class="p">:</span><span class="nb">center</span><span class="p">;</span>
-        <span class="nl">align-items</span><span class="p">:</span><span class="nb">center</span><span class="p">;</span>
-    <span class="p">}</span>   
-<span class="nt">&lt;/style&gt;</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uname <span class="nt">-r</span>
+vi /etc/sysctl.conf
 </code></pre></div></div>
 
-<p>这里mark一下meta里面的user-scalable=0，这样的话可以避免双击放大，在游戏中就很好地避免狂点屏幕放大网页的问题。</p>
+<p>文件最后添加两行：</p>
 
-<p>限时设置html和body的宽高98%，避免100%时出现滚动条，然后我用js控制缩放，直接修改div.style.zoom（缩放）。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+</code></pre></div></div>
 
-<p>因为canvas一开始就设置好宽高多少px，如果后面改的话其他图片大小什么的也要改，所以直接采用缩放的办法。用document.body.clientWidth和Height获取宽高，求其与画板的比值作为缩放尺度。</p>
+<p>查看bbr是否运行，显示tcp_bbr说明正常启动。</p>
 
-<hr />
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sysctl <span class="nt">-p</span>
+lsmod | <span class="nb">grep </span>bbr
+</code></pre></div></div>
 
-<h2 id="后记">后记</h2>
+<h4 id="2-安装ss">2. 安装SS</h4>
 
-<p>随便撸了个小游戏成就感还是很足的，H5和JS开发还是挺有趣的，最重要的是网页作为现在最重要的信息载体，是最值的关注的内容，个人觉得JS是挺有学习的意义的，易上手还好看，与C、Jave那些不一样，容易装逼。</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> install epel-release
+yum install python-setuptools <span class="nt">-y</span>
+easy_install pip
+pip install <span class="nt">--upgrade</span> pip
+yum install <span class="nt">-y</span> git
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+pip install <span class="nt">--upgrade</span> git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre></div></div>
 
-<p>不过这次的代码写的并不完美，挺混乱的。</p>
+<h4 id="3-配置ss">3. 配置SS</h4>
 
-<p>嗯，本人的H5学习之路还要任重道远呢。</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir /etc/shadowsocks
+vi /etc/shadowsocks/ssserver.json
+</code></pre></div></div>
 
-<p>代码已发到<a href="https://github.com/codeRimoe/h5_game_kanna">Github - h5_game_kanna</a>。</p>
+<p>输入：</p>
 
-<p>2017.06.09 于珠海</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "server": "0.0.0.0",
+  "local_address": "127.0.0.1",
+  "local_port": 1080,
+  "fast_open": false,
+  "port_password":{
+    "9001": "rimoe1",
+    "9002": "rimoe2",
+    "9003": "rimoe3"
+  },
+  "timeout": 300,
+  "method": "chacha20-ietf"
+}
+</code></pre></div></div>
+
+<p>port_password就是用户端口和密码，比如3个人用就搞3个这样,其他默认就好了。</p>
+
+<h4 id="4-创建ss服务">4. 创建SS服务</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /usr/lib/systemd/system/shadowsocks.service
+</code></pre></div></div>
+
+<p>输入：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Shadowsocks Server
+Documentation=https://github.com/shadowsocks/shadowsocks
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks/ssserver.json --user nobody -d start
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/usr/bin/ssserver -d stop
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div></div>
+
+<p>安装依赖关系并设置开机启动：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> install libsodium
+systemctl <span class="nb">enable </span>shadowsocks
+systemctl start shadowsocks
+</code></pre></div></div>
+
+<h4 id="5-设置防火墙">5. 设置防火墙</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--add-port</span><span class="o">=</span>9001-9014/tcp
+firewall-cmd <span class="nt">--add-port</span><span class="o">=</span>9001-9014/tcp <span class="nt">--permanent</span> 
+</code></pre></div></div>
+
+<p>9001至9014是Step3中的用户端口，另外注意要在阿里云控制台的“安全”-“防火墙”中添加对应端口，使用“自定义”类型和TCP协议。</p>
+
+<p>不过，作为一场或几场事件的见证者，我的世界观或多或少是有被改变的。</p>
+
+<p>即使我以为的所谓“改变”并不存在，以我为主人公的连环画里或许也能添上一些特别的故事。</p>
+
+<h4 id="6-完成">6. 完成</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ps <span class="nt">-ef</span> |grep ssserver
+</code></pre></div></div>
+
+<p>显示两个进程一个是python，另一个是ssserver，就ok。</p>
+
+<h2 id="shadowsocksss客户端配置">Shadowsocks（SS）客户端配置</h2>
+<p>具体就是下一个应用添加对应设置就好，具体参见<a href="https://garygeng.com/others/ssr-windows/">SSR Windows电脑客户端下载和使用教程</a>。</p>
+
+<p>因为服务端是SS搭的，下的是SS或SSR客户端都可。</p>
+
+<ul>
+  <li><a href="https://shadowsocks.org/en/download/clients.html">shadowsocks（SS）</a></li>
+  <li><a href="https://github.com/shadowsocksrr">shadowsocksr（SSR）</a></li>
+</ul>
+
+<p>基本上要设置的就几样东西，和服务端架设时的第三步对应。</p>
+
+<blockquote>
+  <p>服务器ip：阿里云控制台看公网IP</p>
+
+  <p>端口：之前配置的用户端口</p>
+
+  <p>密码：对应密码</p>
+
+  <p>加密：chacha20-ietf（和之前配置对应就好）</p>
+
+  <p>用SSR客户端的话，协议混淆应该默认就好，亲测设置origin和plain没问题。</p>
+</blockquote>
+
+<h2 id="结语">结语</h2>
+<p>理论和技术是可逆的，能进去就能出来。
+但政策和法律就不一定了。</p>
+
+<p>2020.01.14 午后 于香港</p>
 
 
                 <hr>
@@ -416,13 +407,9 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/05/12/post01/" data-toggle="tooltip" data-placement="top" title="为政之学与入徳之门">&larr; Previous Post</a>
+                        <a href="/2020/01/14/post01/" data-toggle="tooltip" data-placement="top" title="最后一颗糖果">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/07/29/post01/" data-toggle="tooltip" data-placement="top" title="API调用研究">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 

@@ -96,7 +96,7 @@
                     
 
                     <li>
-                        <a href="http://rimoe.xyz">Home - 柠萌</a>
+                        <a href="https://rimoe.xyz">Home - 柠萌</a>
                     </li>
                     
                     <li>
@@ -245,7 +245,7 @@
 
 <h2 id="如果坐上来自己动就好了">如果坐上来自己动就好了</h2>
 
-<p>最近尝试爬知网上的一些数据(<a href="http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd">专利数据库</a>)，他的界面是这个样子的。</p>
+<p>最近尝试爬知网上的一些数据(<a href="https://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd">专利数据库</a>)，他的界面是这个样子的。</p>
 
 <p><img src="/img/in-post/2017111201/pic01.png" alt="图 - 1" /></p>
 
@@ -285,7 +285,7 @@
 
 <p>各种浏览器有各自的driver，这里推荐使用chrome的driver。</p>
 
-<p>首先要下载(<a href="http://chromedriver.storage.googleapis.com/index.html">地址</a>)对应Chrome版本的chromedriver，版本映射表如下：</p>
+<p>首先要下载(<a href="https://chromedriver.storage.googleapis.com/index.html">地址</a>)对应Chrome版本的chromedriver，版本映射表如下：</p>
 
 <table>
   <tbody>
@@ -392,7 +392,7 @@
   </tbody>
 </table>
 
-<p>参考自<a href="http://blog.csdn.net/huilan_same/article/details/51896672">selenium之 chromedriver与chrome版本映射表（更新至v2.33）</a></p>
+<p>参考自<a href="https://blog.csdn.net/huilan_same/article/details/51896672">selenium之 chromedriver与chrome版本映射表（更新至v2.33）</a></p>
 
 <p>这里一定要注意安装与你的Chrome版本对应的driver，不然会报错（这是个大坑）。</p>
 
@@ -404,7 +404,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
 <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>           <span class="c"># 若配置成功，将会弹出Chrome浏览器界面</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.sysu.edu.cn'</span><span class="p">)</span>  <span class="c"># 浏览中大的网站</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https//www.sysu.edu.cn'</span><span class="p">)</span>  <span class="c"># 浏览中大的网站</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                        <span class="c"># 关闭webdriver</span>
 
 </code></pre></div></div>
@@ -416,7 +416,7 @@
 <p>我们思考一下我们搜索的流程。</p>
 
 <ol>
-  <li>打开<a href="http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd">专利数据库</a>.</li>
+  <li>打开<a href="https//dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd">专利数据库</a>.</li>
   <li>输入条件，搜索。</li>
   <li>点击专利链接进入专利页面。</li>
   <li>获取专利表格数据。</li>
@@ -440,7 +440,7 @@
 <span class="n">search_whe</span> <span class="o">=</span> <span class="s">u'地址'</span>
 <span class="n">search_key</span> <span class="o">=</span> <span class="s">u'东莞'</span>
 <span class="n">search_type</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">'http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https//dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'</span>
 
 <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">()</span>   <span class="c"># 创建一个webdriver，接下来的操作都基于此</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>               <span class="c"># 用get的方法打开网站</span>
@@ -458,7 +458,7 @@
 
 <p>这里提到Xpath，那到底什么是Xpath呢？</p>
 
-<p>这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：<a href="http://cuiqingcai.com/2621.html">静觅 - Python爬虫利器三之Xpath语法与lxml库的用法</a>），在这里介绍一个获取Xpath的快捷方法。</p>
+<p>这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：<a href="https//cuiqingcai.com/2621.html">静觅 - Python爬虫利器三之Xpath语法与lxml库的用法</a>），在这里介绍一个获取Xpath的快捷方法。</p>
 
 <p>在Chrome里，对要获取的元素右键-检查元素，弹出开发者工具，对元素的html标签右键，复制Xpath即可得到对应的Xpath，如图的文本框元素Xpath为<code class="highlighter-rouge">//*[@id="Text1"]</code>。</p>
 
@@ -474,7 +474,7 @@
 
 <p>其他操作类似，具体方法可以参考：</p>
 
-<p><a href="http://cuiqingcai.com/2599.html">静觅 - Python爬虫利器五之Selenium的用法</a></p>
+<p><a href="https//cuiqingcai.com/2599.html">静觅 - Python爬虫利器五之Selenium的用法</a></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 此处接上，driver已经打开知网数据库网页。</span>
 <span class="c"># 获取元素</span>
@@ -564,13 +564,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="7">
+                				<a href="/tags/#生活" title="生活" rel="8">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="8">
+                				<a href="/tags/#文艺" title="文艺" rel="9">
                                     文艺
                                 </a>
                             
@@ -590,7 +590,7 @@
                             
         				
                             
-                				<a href="/tags/#技术" title="技术" rel="6">
+                				<a href="/tags/#技术" title="技术" rel="7">
                                     技术
                                 </a>
                             
@@ -645,6 +645,10 @@
         				
                             
         				
+                            
+        				
+                            
+        				
         			</div>
                 </section>
                 
@@ -685,9 +689,9 @@
       s.parentNode.insertBefore(o, s);
     }
 </script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<!-- anchor-js, Doc:https://bryanbraun.github.io/anchorjs/ -->
 <script>
-    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
         anchors.options = {
           visible: 'always',
           placement: 'right',
@@ -725,11 +729,11 @@
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
                     <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
-                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="https://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 <p style="font-size:13px;">
-                All right reserved. &copy; 凝萌小记-2019</br>忘名社 <span class="love">❤</span> Una.
-                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                All right reserved. &copy; 凝萌小记-2020</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="https://huangxuan.me">Hux</a> |
                 <iframe
                     style="margin-left: 2px; margin-bottom:-5px;"
                     frameborder="0" scrolling="0" width="100px" height="20px"
@@ -791,7 +795,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })

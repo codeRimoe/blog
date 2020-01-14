@@ -1,13 +1,259 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="https://www.w3.org/2005/Atom">
   <channel>
     <title>凝萌小记</title>
     <description>作家是杂家</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 14 Mar 2019 02:06:49 +0800</pubDate>
-    <lastBuildDate>Thu, 14 Mar 2019 02:06:49 +0800</lastBuildDate>
+    <pubDate>Tue, 14 Jan 2020 15:17:21 +0800</pubDate>
+    <lastBuildDate>Tue, 14 Jan 2020 15:17:21 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>THE KEY</title>
+        <description>&lt;h2 id=&quot;缘起&quot;&gt;缘起&lt;/h2&gt;
+
+&lt;p&gt;近来开学伊始，无事，听歌而不得，于同舍合计说要一起买个vpn，想了一想，倒不如组个云服务器自己打一个代理。&lt;/p&gt;
+
+&lt;p&gt;毕竟买了b站大会员看不了真的很不爽欸。&lt;/p&gt;
+
+&lt;h2 id=&quot;服务器&quot;&gt;服务器&lt;/h2&gt;
+
+&lt;p&gt;听说阿里云主机也只要24元/月，看了一下&lt;a href=&quot;https://cn.aliyun.com/product/swas&quot;&gt;阿里云轻量应用服务器&lt;/a&gt;报价，发现24元的主机是在香港的服务器，在内地的服务器要60元。&lt;/p&gt;
+
+&lt;p&gt;感觉好像是有点贵。&lt;/p&gt;
+
+&lt;p&gt;然后看了一下，发现有学生优惠，&lt;a href=&quot;https://promotion.aliyun.com/ntms/act/campus2018.html?utm_content=se_1003914638&amp;amp;gclid=CjwKCAiAx_DwBRAfEiwA3vwZYiKB5A5hF97p-yrIJgcsX6I4UgI3UpY4x8MovvFhFExb4ZKWywP1bxoCZgMQAvD_BwE&quot;&gt;云翼计划&lt;/a&gt;每月只要9.5元，于是买了一个，预装Cent OS 7.6。&lt;/p&gt;
+
+&lt;p&gt;另外腾讯云也有学生机，大概10元一个月。&lt;/p&gt;
+
+&lt;p&gt;有趣的是这“学生”的界定是24/25岁以下都算学生。&lt;/p&gt;
+
+&lt;h2 id=&quot;shadowsocksss服务端搭建&quot;&gt;Shadowsocks（SS）服务端搭建&lt;/h2&gt;
+
+&lt;p&gt;然后在服务器装个SS配置以下就好了，具体参见：
+&lt;a href=&quot;https://www.linuxrumen.com/fwqdj/875.html&quot;&gt;CentOS 7怎么搭建ssr(shadowsocks)&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;基本上分几步：&lt;/p&gt;
+
+&lt;h4 id=&quot;1-安装bbr&quot;&gt;1. 安装bbr&lt;/h4&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum update &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+rpm &lt;span class=&quot;nt&quot;&gt;--import&lt;/span&gt; https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm &lt;span class=&quot;nt&quot;&gt;-Uvh&lt;/span&gt; http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+yum &lt;span class=&quot;nt&quot;&gt;--enablerepo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;elrepo-kernel install kernel-ml
+awk &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'$1==&quot;menuentry &quot; {print i++ &quot; : &quot; $2}'&lt;/span&gt; /etc/grub2.cfg
+grub2-set-default 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;最后一行的0为将倒数第二行查询的到的最大版本号内核对应的序号。然后重启看看版本号是不是最大版本号，然后编辑配置文件：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;uname &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
+vi /etc/sysctl.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;文件最后添加两行：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;查看bbr是否运行，显示tcp_bbr说明正常启动。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sysctl &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt;
+lsmod | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;bbr
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-安装ss&quot;&gt;2. 安装SS&lt;/h4&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; install epel-release
+yum install python-setuptools &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt;
+easy_install pip
+pip install &lt;span class=&quot;nt&quot;&gt;--upgrade&lt;/span&gt; pip
+yum install &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; git
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+pip install &lt;span class=&quot;nt&quot;&gt;--upgrade&lt;/span&gt; git+https://github.com/shadowsocks/shadowsocks.git@master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;3-配置ss&quot;&gt;3. 配置SS&lt;/h4&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir /etc/shadowsocks
+vi /etc/shadowsocks/ssserver.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;输入：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+  &quot;server&quot;: &quot;0.0.0.0&quot;,
+  &quot;local_address&quot;: &quot;127.0.0.1&quot;,
+  &quot;local_port&quot;: 1080,
+  &quot;fast_open&quot;: false,
+  &quot;port_password&quot;:{
+    &quot;9001&quot;: &quot;rimoe1&quot;,
+    &quot;9002&quot;: &quot;rimoe2&quot;,
+    &quot;9003&quot;: &quot;rimoe3&quot;
+  },
+  &quot;timeout&quot;: 300,
+  &quot;method&quot;: &quot;chacha20-ietf&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;port_password就是用户端口和密码，比如3个人用就搞3个这样,其他默认就好了。&lt;/p&gt;
+
+&lt;h4 id=&quot;4-创建ss服务&quot;&gt;4. 创建SS服务&lt;/h4&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi /usr/lib/systemd/system/shadowsocks.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;输入：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Unit]
+Description=Shadowsocks Server
+Documentation=https://github.com/shadowsocks/shadowsocks
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks/ssserver.json --user nobody -d start
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/usr/bin/ssserver -d stop
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;安装依赖关系并设置开机启动：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; install libsodium
+systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;shadowsocks
+systemctl start shadowsocks
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;5-设置防火墙&quot;&gt;5. 设置防火墙&lt;/h4&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;firewall-cmd &lt;span class=&quot;nt&quot;&gt;--add-port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;9001-9014/tcp
+firewall-cmd &lt;span class=&quot;nt&quot;&gt;--add-port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;9001-9014/tcp &lt;span class=&quot;nt&quot;&gt;--permanent&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;9001至9014是Step3中的用户端口，另外注意要在阿里云控制台的“安全”-“防火墙”中添加对应端口，使用“自定义”类型和TCP协议。&lt;/p&gt;
+
+&lt;p&gt;不过，作为一场或几场事件的见证者，我的世界观或多或少是有被改变的。&lt;/p&gt;
+
+&lt;p&gt;即使我以为的所谓“改变”并不存在，以我为主人公的连环画里或许也能添上一些特别的故事。&lt;/p&gt;
+
+&lt;h4 id=&quot;6-完成&quot;&gt;6. 完成&lt;/h4&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ps &lt;span class=&quot;nt&quot;&gt;-ef&lt;/span&gt; |grep ssserver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;显示两个进程一个是python，另一个是ssserver，就ok。&lt;/p&gt;
+
+&lt;h2 id=&quot;shadowsocksss客户端配置&quot;&gt;Shadowsocks（SS）客户端配置&lt;/h2&gt;
+&lt;p&gt;具体就是下一个应用添加对应设置就好，具体参见&lt;a href=&quot;https://garygeng.com/others/ssr-windows/&quot;&gt;SSR Windows电脑客户端下载和使用教程&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;因为服务端是SS搭的，下的是SS或SSR客户端都可。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://shadowsocks.org/en/download/clients.html&quot;&gt;shadowsocks（SS）&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/shadowsocksrr&quot;&gt;shadowsocksr（SSR）&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基本上要设置的就几样东西，和服务端架设时的第三步对应。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;服务器ip：阿里云控制台看公网IP&lt;/p&gt;
+
+  &lt;p&gt;端口：之前配置的用户端口&lt;/p&gt;
+
+  &lt;p&gt;密码：对应密码&lt;/p&gt;
+
+  &lt;p&gt;加密：chacha20-ietf（和之前配置对应就好）&lt;/p&gt;
+
+  &lt;p&gt;用SSR客户端的话，协议混淆应该默认就好，亲测设置origin和plain没问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;结语&quot;&gt;结语&lt;/h2&gt;
+&lt;p&gt;理论和技术是可逆的，能进去就能出来。
+但政策和法律就不一定了。&lt;/p&gt;
+
+&lt;p&gt;2020.01.14 午后 于香港&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Jan 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/01/14/post02/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/01/14/post02/</guid>
+        
+        <category>Proxy</category>
+        
+        <category>服务器</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>最后一颗糖果</title>
+        <description>&lt;h2 id=&quot;好久没写东西啦&quot;&gt;好久没写东西啦&lt;/h2&gt;
+
+&lt;p&gt;因为各种事情，一直没有更新blog，仔细一看上一篇blog已经是去年4月写的了。&lt;/p&gt;
+
+&lt;p&gt;以下，尽是一些，在去年最后的几十分钟和今年伊始的十几分钟时，于家中的我的所想。&lt;/p&gt;
+
+&lt;p&gt;记录于此。&lt;/p&gt;
+
+&lt;h2 id=&quot;最后一颗糖果&quot;&gt;最后一颗糖果&lt;/h2&gt;
+
+&lt;p&gt;若非天地无良，人又何须向善。&lt;/p&gt;
+
+&lt;p&gt;今年的跨年平淡而无奇，我早早就洗完澡，坐在安静的房间里。&lt;/p&gt;
+
+&lt;p&gt;世界似乎比平日还少些喧闹。&lt;/p&gt;
+
+&lt;p&gt;眼前是一个贴着“10s”商标的罐子，我把手伸进去，发现只剩最后一颗糖果了。&lt;/p&gt;
+
+&lt;h2 id=&quot;马克思的信众&quot;&gt;马克思的信众&lt;/h2&gt;
+
+&lt;p&gt;现在回想起来，今年的跨年哪里是平淡，无奇的只是我本人而已&lt;/p&gt;
+
+&lt;p&gt;过去了的魔幻的一年了，我似乎见识了浩浩荡荡的世界潮流，而我自身的学识又似乎未曾增长。&lt;/p&gt;
+
+&lt;p&gt;不过，作为一场或几场事件的见证者，我的世界观或多或少是有被改变的。&lt;/p&gt;
+
+&lt;p&gt;即使我以为的所谓“改变”并不存在，以我为主人公的连环画里或许也能添上一些特别的故事。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/question/355015346/answer/895170945&quot;&gt;hk事件后，香港地区大学的文凭，是否会越来越没有含金量？招聘市场（尤其中资企业）是否会有抵制反映？ - 罗玥的回答 - 知乎&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;去年12月初，去黄大仙庙吸了不少乌烟，自己花了20蚊也贡献了一些瘴气，求得一签，签序二十有四，名为“刘基归隐”，解诗曰：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;诗酒琴棋可解愁，
+座中无客乐难休。
+或弹或唱谁知美，
+吟饮虽多亦是忧。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;又花了30蚊听解，解签人说这是一枝下签，看来我的成绩不怎么样啊，又劝我多与人交，回家后烧掉签纸，化解厄运。
+我笑一笑，把30块买回来的签纸揣进口袋。&lt;/p&gt;
+
+&lt;p&gt;至今那粉色的签纸仍放在我案前，而我的成绩也似乎没有那么不堪。&lt;/p&gt;
+
+&lt;p&gt;这不是“神秘力量”的失败，只是“神”缺席了罢了。&lt;/p&gt;
+
+&lt;p&gt;曾经的我还会自称为主观唯心主义者，但今天看来，我是彻彻底底地成为了马克思的信众。&lt;/p&gt;
+
+&lt;p&gt;人们之所以立起道德的标杆，不是因为举头三尺有哪位，而仅仅是因为，天地无情。&lt;/p&gt;
+
+&lt;p&gt;2020.01.14 午后 于香港&lt;/p&gt;
+</description>
+        <pubDate>Tue, 14 Jan 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/01/14/post01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/01/14/post01/</guid>
+        
+        <category>生活</category>
+        
+        <category>文艺</category>
+        
+        
+      </item>
     
       <item>
         <title>爬虫入门笔记（四）</title>
@@ -21,7 +267,7 @@
 
 &lt;h2 id=&quot;place-pulse&quot;&gt;Place Pulse&lt;/h2&gt;
 
-&lt;p&gt;当然之前搞了一个&lt;a href=&quot;http://pulse.media.mit.edu/&quot;&gt;数据集 - Place Pulse&lt;/a&gt;下来，这是mit的数据集提供一些在线问卷的数据，但图片要自己通过Google Map api下载。&lt;/p&gt;
+&lt;p&gt;当然之前搞了一个&lt;a href=&quot;https//pulse.media.mit.edu/&quot;&gt;数据集 - Place Pulse&lt;/a&gt;下来，这是mit的数据集提供一些在线问卷的数据，但图片要自己通过Google Map api下载。&lt;/p&gt;
 
 &lt;p&gt;然后谷歌api现在还要收费了，嘛后来我在&lt;a href=&quot;https://developers.google.com/maps/documentation/streetview/intro&quot;&gt;api文档&lt;/a&gt;里发现一个示例的key，好像还能无限下载（捂脸）。&lt;/p&gt;
 
@@ -47,7 +293,7 @@
 
 &lt;p&gt;发现js街景竟然要flash？都什么年代了，嘛，flash好像不太好搞，没事，进示例&lt;a href=&quot;https://lbs.qq.com/javascript_v2/sample/sample-pano-face.html&quot;&gt;JS街景&lt;/a&gt;，直接Chrome F12。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2019031401/img01.PNG&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2019031401/img01.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;这也太好搞了吧，直接发请求就可以了。&lt;/p&gt;
 
@@ -57,7 +303,7 @@
 
 &lt;p&gt;再试试&lt;a href=&quot;https://lbs.qq.com/tool/component-streetview.html&quot;&gt;h5组件&lt;/a&gt;，示例链接竟然是二维码，行吧，也合理，扫一下，搞到链接，再用chrome模拟手机打开看看。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/2019031401/img02.PNG&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/2019031401/img02.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;https://sv0.map.qq.com/tile?&lt;strong&gt;svid&lt;/strong&gt;=10131053140812095958800&amp;amp;&lt;strong&gt;x&lt;/strong&gt;=0&amp;amp;&lt;strong&gt;y&lt;/strong&gt;=0&amp;amp;&lt;strong&gt;level&lt;/strong&gt;=0&amp;amp;mtype=mobile-cube&amp;amp;from=web&lt;/p&gt;
 
@@ -817,7 +1063,7 @@ Y_hat, Y, dY
         <title>随笔偶成</title>
         <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
-&lt;p&gt;知乎上，看到了一个问题，如何评价&lt;a href=&quot;http://mp.weixin.qq.com/s/nZulTHBPbd9Panc7XSciyQ&quot;&gt;《可怕的是，我们的孩子一直在通过动漫认识世界》&lt;/a&gt;一文。于是我便写了本文，原回答为&lt;a href=&quot;https://www.zhihu.com/question/265391277/answer/293707377&quot;&gt;如何评价《可怕的是，我们的孩子一直在通过动漫认识世界》一文？ - 罗玥的回答 - 知乎&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;知乎上，看到了一个问题，如何评价&lt;a href=&quot;https//mp.weixin.qq.com/s/nZulTHBPbd9Panc7XSciyQ&quot;&gt;《可怕的是，我们的孩子一直在通过动漫认识世界》&lt;/a&gt;一文。于是我便写了本文，原回答为&lt;a href=&quot;https://www.zhihu.com/question/265391277/answer/293707377&quot;&gt;如何评价《可怕的是，我们的孩子一直在通过动漫认识世界》一文？ - 罗玥的回答 - 知乎&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;总的来说，&lt;strong&gt;原文借“动漫”这一个热点，以一个不当的点切题，举一系列不正确的例证，来说明一个正常人都应该知道的常识&lt;/strong&gt;。&lt;/p&gt;
 
@@ -977,7 +1223,7 @@ Y_hat, Y, dY
 
 &lt;h2 id=&quot;如果坐上来自己动就好了&quot;&gt;如果坐上来自己动就好了&lt;/h2&gt;
 
-&lt;p&gt;最近尝试爬知网上的一些数据(&lt;a href=&quot;http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd&quot;&gt;专利数据库&lt;/a&gt;)，他的界面是这个样子的。&lt;/p&gt;
+&lt;p&gt;最近尝试爬知网上的一些数据(&lt;a href=&quot;https://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd&quot;&gt;专利数据库&lt;/a&gt;)，他的界面是这个样子的。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/2017111201/pic01.png&quot; alt=&quot;图 - 1&quot; /&gt;&lt;/p&gt;
 
@@ -1017,7 +1263,7 @@ Y_hat, Y, dY
 
 &lt;p&gt;各种浏览器有各自的driver，这里推荐使用chrome的driver。&lt;/p&gt;
 
-&lt;p&gt;首先要下载(&lt;a href=&quot;http://chromedriver.storage.googleapis.com/index.html&quot;&gt;地址&lt;/a&gt;)对应Chrome版本的chromedriver，版本映射表如下：&lt;/p&gt;
+&lt;p&gt;首先要下载(&lt;a href=&quot;https://chromedriver.storage.googleapis.com/index.html&quot;&gt;地址&lt;/a&gt;)对应Chrome版本的chromedriver，版本映射表如下：&lt;/p&gt;
 
 &lt;table&gt;
   &lt;tbody&gt;
@@ -1124,7 +1370,7 @@ Y_hat, Y, dY
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;参考自&lt;a href=&quot;http://blog.csdn.net/huilan_same/article/details/51896672&quot;&gt;selenium之 chromedriver与chrome版本映射表（更新至v2.33）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考自&lt;a href=&quot;https://blog.csdn.net/huilan_same/article/details/51896672&quot;&gt;selenium之 chromedriver与chrome版本映射表（更新至v2.33）&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;这里一定要注意安装与你的Chrome版本对应的driver，不然会报错（这是个大坑）。&lt;/p&gt;
 
@@ -1136,7 +1382,7 @@ Y_hat, Y, dY
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;           &lt;span class=&quot;c&quot;&gt;# 若配置成功，将会弹出Chrome浏览器界面&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://www.sysu.edu.cn'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 浏览中大的网站&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'https//www.sysu.edu.cn'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 浏览中大的网站&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;                        &lt;span class=&quot;c&quot;&gt;# 关闭webdriver&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1148,7 +1394,7 @@ Y_hat, Y, dY
 &lt;p&gt;我们思考一下我们搜索的流程。&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;打开&lt;a href=&quot;http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd&quot;&gt;专利数据库&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;打开&lt;a href=&quot;https//dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd&quot;&gt;专利数据库&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;输入条件，搜索。&lt;/li&gt;
   &lt;li&gt;点击专利链接进入专利页面。&lt;/li&gt;
   &lt;li&gt;获取专利表格数据。&lt;/li&gt;
@@ -1172,7 +1418,7 @@ Y_hat, Y, dY
 &lt;span class=&quot;n&quot;&gt;search_whe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;u'地址'&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;search_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;u'东莞'&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;search_type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'http://dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'https//dbpub.cnki.net/grid2008/dbpub/brief.aspx?id=scpd'&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# 创建一个webdriver，接下来的操作都基于此&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;               &lt;span class=&quot;c&quot;&gt;# 用get的方法打开网站&lt;/span&gt;
@@ -1190,7 +1436,7 @@ Y_hat, Y, dY
 
 &lt;p&gt;这里提到Xpath，那到底什么是Xpath呢？&lt;/p&gt;
 
-&lt;p&gt;这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：&lt;a href=&quot;http://cuiqingcai.com/2621.html&quot;&gt;静觅 - Python爬虫利器三之Xpath语法与lxml库的用法&lt;/a&gt;），在这里介绍一个获取Xpath的快捷方法。&lt;/p&gt;
+&lt;p&gt;这个就和我们上次提到BeautifulSoup很想，其实就是网页元素在网页的路径，我们通过Xpath可以准确定位一个元素在网页的位置（有点像我们OS的文件路径），当然其中还可以用一些匹配符号什么的，也能获取元素列表，至于Xpath的具体含义我们先不细说，以后有机会也可以写一篇文章（或者可以参考：&lt;a href=&quot;https//cuiqingcai.com/2621.html&quot;&gt;静觅 - Python爬虫利器三之Xpath语法与lxml库的用法&lt;/a&gt;），在这里介绍一个获取Xpath的快捷方法。&lt;/p&gt;
 
 &lt;p&gt;在Chrome里，对要获取的元素右键-检查元素，弹出开发者工具，对元素的html标签右键，复制Xpath即可得到对应的Xpath，如图的文本框元素Xpath为&lt;code class=&quot;highlighter-rouge&quot;&gt;//*[@id=&quot;Text1&quot;]&lt;/code&gt;。&lt;/p&gt;
 
@@ -1206,7 +1452,7 @@ Y_hat, Y, dY
 
 &lt;p&gt;其他操作类似，具体方法可以参考：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://cuiqingcai.com/2599.html&quot;&gt;静觅 - Python爬虫利器五之Selenium的用法&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https//cuiqingcai.com/2599.html&quot;&gt;静觅 - Python爬虫利器五之Selenium的用法&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 此处接上，driver已经打开知网数据库网页。&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# 获取元素&lt;/span&gt;
@@ -1272,116 +1518,6 @@ Y_hat, Y, dY
         <category>Python</category>
         
         <category>数据获取</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>一些收获</title>
-        <description>&lt;h2 id=&quot;从p值开始&quot;&gt;从p值开始&lt;/h2&gt;
-
-&lt;p&gt;对于空间自相关，之前一直没看明白，只是大概知其所以，但也就这样不知其所以然。&lt;/p&gt;
-
-&lt;p&gt;其中原因，也许是统计没学好。但这不能怪我，毕竟我们概率统计都没讲到假设检验。&lt;/p&gt;
-
-&lt;p&gt;今天上课讲地理统计，提到空间自相关，老师解释了一通p值，但似乎没戳到p值本质，于是我在网上找了一下，很糙地理解了何为p值。&lt;/p&gt;
-
-&lt;h2 id=&quot;假设-检验&quot;&gt;假设-检验&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.360doc.com/content/15/0704/22/22175932_482657194.shtml&quot;&gt;你真的懂p值吗? - 说人话的统计学&lt;/a&gt;里面把p值讲得十分通俗易懂，是一篇难得的好文章。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;原文对p值定义是：“在假定原假设为真时，得到与样本相同或者更极端的结果的概率。”
-这和Wikipedia中引的定义差不多。
-the probability for a given statistical model that, when the null hypothesis is true, the statistical summary (such as the sample mean difference between two compared groups) would be the same as or of greater magnitude than the actual observed results.
-refer - Wasserstein, Ronald L.; Lazar, Nicole A. (7 March 2016). “The ASA’s Statement on p-Values: Context, Process, and Purpose”. The American Statistician. 70 (2): 129–133. doi:10.1080/00031305.2016.1154108. Retrieved 30 October 2016.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;文中，还举了一个很好的例子：&lt;/p&gt;
-
-&lt;p&gt;statistical model：AB两人掷硬币，硬币由A提供。&lt;/p&gt;
-
-&lt;p&gt;null hypothesis：B首先假设硬币是均质的。&lt;/p&gt;
-
-&lt;p&gt;observed results：B检查硬币，掷五次，出现五次正面。&lt;/p&gt;
-
-&lt;p&gt;在这个例子中p值：p=Pr(A)+Pr(B),
-其中:
-A=the same asthe actual observed results（出现五次正面）,
-B=greater magnitude than the actual observed results（更小概率的情况）.&lt;/p&gt;
-
-&lt;p&gt;显然p值很小的时候我们的零假设就可以被拒绝了。&lt;/p&gt;
-
-&lt;h2 id=&quot;空间自相关&quot;&gt;空间自相关&lt;/h2&gt;
-
-&lt;p&gt;空间自相关的零假设是“空间分布是均匀的”，然后在这个条件下算出当前分布出现的概率和跟不均匀的概率的和，这个结果就是p值。&lt;/p&gt;
-
-&lt;p&gt;至于p值小于多少（显著性水平α），就是人为指定的了。&lt;/p&gt;
-
-&lt;p&gt;因此空间自相关的p值说明的是“在显著性水平α下没有发现足够的证据反对原假设”。&lt;/p&gt;
-
-&lt;p&gt;知乎上还提到，p值其实是拒绝真的概率，也就是说，如果我们拒绝假设，有p的概率是该假设为真。从而又引申出第一类错误、第二类错误的概念。&lt;/p&gt;
-
-&lt;h2 id=&quot;关于统计学&quot;&gt;关于统计学&lt;/h2&gt;
-
-&lt;p&gt;统计是一个很有趣而且实用的东西，在地理学的研究中其实十分重要，或者说，有时候我们对一些概念的不理解其实是因为统计没学好。&lt;/p&gt;
-
-&lt;p&gt;2017.10.23 晚 于广州&lt;/p&gt;
-</description>
-        <pubDate>Mon, 23 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/23/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/23/post01/</guid>
-        
-        <category>统计</category>
-        
-        <category>空间分析</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>我想写一篇文章</title>
-        <description>&lt;h2 id=&quot;关于苦闷&quot;&gt;关于苦闷&lt;/h2&gt;
-
-&lt;p&gt;我想写一篇文章来表达我内心的苦闷，但是我连我内心的情感都无法好好地说出来，那就像是一个未懂言语的孩子咿咿呀呀地哭着叫着，让别人看着好笑。&lt;/p&gt;
-
-&lt;p&gt;说一个故事容易，写成一篇文章却颇难。&lt;/p&gt;
-
-&lt;p&gt;六年前的我，还是一个喜欢文艺却不愿读书的青年，那时正是爱好谈情的年纪–总歆羡着怎样风花之前，憧憬着如何雪月之下。以为这世间惟有妹子与爱不可辜负。现今看来似乎也并不如此，只不过那时用来把自己灌醉的梅子酒瓶，还散发出淡淡的青涩的馨香。&lt;/p&gt;
-
-&lt;p&gt;那时的笑靥与心跳，我大概是早已忘记了。我只记得那个映着彩霞的傍晚，我逃离了教室，逃离了宿舍，逃离了饭堂，逃去了一个见不着人只见得着天空的地方，在那里即便我不用双手捂着脸也不会感到羞耻。我对着抹着浓浓胭脂的天空说了好多情话，即便他倦了也不肯停下来。后来，他亮起了点点星灯一直为我倾听。我也一直对着它倾诉，直到今天仍未回来。&lt;/p&gt;
-
-&lt;p&gt;再往前的三年，也是有那么一个晚上，月光躲在淡淡的云里，只羞涩地透出微微光晕。而我也同样地掩着自己的心扉。那时也还能面不改色地背诵“身无彩凤双飞翼，心有灵犀一点通”。尔今细思，我与那女子或是那女子约莫凿实是心有灵犀的，也许就少了那么一点。再后来，就再无能够“一点通”的事物了，若是非要说有，那便是某本作业用的练习册了。&lt;/p&gt;
-
-&lt;p&gt;人们常说，“酒逢知己千杯少”，但于我而言，千杯怕是喝不下的，但知己倒是逢着了几位。&lt;/p&gt;
-
-&lt;p&gt;年青人好议论，如今的我也如此，只是到现在，再没有能找到几个能称知己的–曾经的知己，不是忙碌了，便是四散了。现在要是有话要说，也只能倒两壶小酒，自己说自己听罢了。&lt;/p&gt;
-
-&lt;p&gt;今年入五月后不久，某君误会我意，但这一记歪打却正着我本心，然其后无果，只得出个“话不投机半句多”的结论。自那起，我便开始谋划着，总有一天要抱一只小猫过活。自诩为“生活家”的我，计划着要独享世间一切美好的事物，诸如诗，画，故事，音乐，远方，当然还有静谧的午后和慵懒的阳光–这或许是可以和小猫同享的。&lt;/p&gt;
-
-&lt;p&gt;谁也愿意虚度时光，谁又愿意浪费时光？我以为世上的好与坏，都是值得去经验的，我们谈美，谈快乐，同我们谈丑，谈悲伤同义。须知闪光的钻石与乌黑的煤泥乃是同素的。&lt;/p&gt;
-
-&lt;p&gt;佛曰七苦：生，老，病，死，爱别离，怨憎会，求不得。期间种种悲苦，其实都是值得庆祝的事情。&lt;/p&gt;
-
-&lt;p&gt;生是幸运的，但以生为苦，皆因一切苦的根源都是生。每日我睁开眼由梦中醒来，感到的是对新一日的期待，同时也伴随着对现实对生的疲倦。反过来，死，作为生的对立面是可怕的，但又因向死而有生，若无死则无所谓生。&lt;/p&gt;
-
-&lt;p&gt;至于老、病，会带来悲苦，其中又渗着年轻的活力与生命的希望。我们贪恋青春的容颜与美好的肉体，但又渴望长进与经验，这便是老、病的矛盾。&lt;/p&gt;
-
-&lt;p&gt;如果说“生，老，病，死”是人对时间的流逝和生命的脆弱而感到的无助之苦，那么“爱别离，怨憎会，求不得”便是对命运无常的无奈之苦。人生中最壮美的故事，不过此三。&lt;/p&gt;
-
-&lt;p&gt;所爱者终究是要别离的，令人憎恶的事物总是会遇上的，至于人生之不如意者，十常八九。如此看来，我等人生，岂不图有苦闷？是的吧，人生之苦闷久矣，若不，佛家何以称死后登极乐，基督何以称得道入天堂？&lt;/p&gt;
-
-&lt;p&gt;我要写一篇文章来表达我内心的苦闷，但一提起笔来，写的都是些值得庆祝的事情。&lt;/p&gt;
-
-&lt;p&gt;2017.10.05 凌晨 于佛山&lt;/p&gt;
-</description>
-        <pubDate>Thu, 05 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/05/post01/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/05/post01/</guid>
-        
-        <category>生活</category>
-        
-        <category>文艺</category>
         
         
       </item>

@@ -1,0 +1,187 @@
+---
+layout:     post
+title:      "THE KEY"
+subtitle:   "突破地区限制的解决方案"
+date:       2020-01-14
+author:     "柠萌"
+header-img: "img/post-bg/post2020011402.jpg"
+tags:
+    - Proxy
+    - 服务器
+    - 技术
+---
+
+## 缘起
+
+近来开学伊始，无事，听歌而不得，于同舍合计说要一起买个vpn，想了一想，倒不如组个云服务器自己打一个代理。
+
+毕竟买了b站大会员看不了真的很不爽欸。
+
+## 服务器
+
+听说阿里云主机也只要24元/月，看了一下[阿里云轻量应用服务器](https://cn.aliyun.com/product/swas)报价，发现24元的主机是在香港的服务器，在内地的服务器要60元。
+
+感觉好像是有点贵。
+
+然后看了一下，发现有学生优惠，[云翼计划](https://promotion.aliyun.com/ntms/act/campus2018.html?utm_content=se_1003914638&gclid=CjwKCAiAx_DwBRAfEiwA3vwZYiKB5A5hF97p-yrIJgcsX6I4UgI3UpY4x8MovvFhFExb4ZKWywP1bxoCZgMQAvD_BwE)每月只要9.5元，于是买了一个，预装Cent OS 7.6。
+
+另外腾讯云也有学生机，大概10元一个月。
+
+有趣的是这“学生”的界定是24/25岁以下都算学生。
+
+## Shadowsocks（SS）服务端搭建
+
+然后在服务器装个SS配置以下就好了，具体参见：
+[CentOS 7怎么搭建ssr(shadowsocks)](https://www.linuxrumen.com/fwqdj/875.html)。
+
+基本上分几步：
+
+#### 1. 安装bbr
+``` shell
+yum update -y
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+yum --enablerepo=elrepo-kernel install kernel-ml
+awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+grub2-set-default 0
+```
+
+最后一行的0为将倒数第二行查询的到的最大版本号内核对应的序号。然后重启看看版本号是不是最大版本号，然后编辑配置文件：
+
+``` shell
+uname -r
+vi /etc/sysctl.conf
+```
+
+文件最后添加两行：
+
+```
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+```
+
+查看bbr是否运行，显示tcp_bbr说明正常启动。
+
+``` shell
+sysctl -p
+lsmod | grep bbr
+```
+
+#### 2. 安装SS
+
+``` shell
+yum -y install epel-release
+yum install python-setuptools -y
+easy_install pip
+pip install --upgrade pip
+yum install -y git
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+pip install --upgrade git+https://github.com/shadowsocks/shadowsocks.git@master
+```
+
+#### 3. 配置SS
+
+``` shell
+mkdir /etc/shadowsocks
+vi /etc/shadowsocks/ssserver.json
+```
+
+输入：
+
+```
+{
+  "server": "0.0.0.0",
+  "local_address": "127.0.0.1",
+  "local_port": 1080,
+  "fast_open": false,
+  "port_password":{
+    "9001": "rimoe1",
+    "9002": "rimoe2",
+    "9003": "rimoe3"
+  },
+  "timeout": 300,
+  "method": "chacha20-ietf"
+}
+```
+
+port_password就是用户端口和密码，比如3个人用就搞3个这样,其他默认就好了。
+
+#### 4. 创建SS服务
+
+``` shell
+vi /usr/lib/systemd/system/shadowsocks.service
+```
+
+输入：
+
+```
+[Unit]
+Description=Shadowsocks Server
+Documentation=https://github.com/shadowsocks/shadowsocks
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks/ssserver.json --user nobody -d start
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/usr/bin/ssserver -d stop
+
+[Install]
+WantedBy=multi-user.target
+```
+
+安装依赖关系并设置开机启动：
+
+``` shell
+yum -y install libsodium
+systemctl enable shadowsocks
+systemctl start shadowsocks
+```
+
+#### 5. 设置防火墙
+
+``` shell
+firewall-cmd --add-port=9001-9014/tcp
+firewall-cmd --add-port=9001-9014/tcp --permanent 
+```
+
+9001至9014是Step3中的用户端口，另外注意要在阿里云控制台的“安全”-“防火墙”中添加对应端口，使用“自定义”类型和TCP协议。
+
+不过，作为一场或几场事件的见证者，我的世界观或多或少是有被改变的。
+
+即使我以为的所谓“改变”并不存在，以我为主人公的连环画里或许也能添上一些特别的故事。
+
+
+#### 6. 完成
+
+``` shell
+ps -ef |grep ssserver
+```
+
+显示两个进程一个是python，另一个是ssserver，就ok。
+
+## Shadowsocks（SS）客户端配置
+具体就是下一个应用添加对应设置就好，具体参见[SSR Windows电脑客户端下载和使用教程](https://garygeng.com/others/ssr-windows/)。
+
+因为服务端是SS搭的，下的是SS或SSR客户端都可。
+
+* [shadowsocks（SS）](https://shadowsocks.org/en/download/clients.html)
+* [shadowsocksr（SSR）](https://github.com/shadowsocksrr)
+
+基本上要设置的就几样东西，和服务端架设时的第三步对应。
+
+> 服务器ip：阿里云控制台看公网IP
+>
+> 端口：之前配置的用户端口
+>
+> 密码：对应密码
+>
+> 加密：chacha20-ietf（和之前配置对应就好）
+>
+> 用SSR客户端的话，协议混淆应该默认就好，亲测设置origin和plain没问题。
+
+## 结语
+理论和技术是可逆的，能进去就能出来。
+但政策和法律就不一定了。
+
+2020.01.14 午后 于香港

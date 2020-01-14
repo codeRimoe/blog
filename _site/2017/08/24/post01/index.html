@@ -96,7 +96,7 @@
                     
 
                     <li>
-                        <a href="http://rimoe.xyz">Home - 柠萌</a>
+                        <a href="https://rimoe.xyz">Home - 柠萌</a>
                     </li>
                     
                     <li>
@@ -270,8 +270,8 @@
 <ul>
   <li><a href="https://docs.python.org/3/library/urllib.html">urllib官方文档</a></li>
   <li><a href="https://docs.python.org/2/library/urllib2.html">urllib2官方文档</a></li>
-  <li><a href="http://cuiqingcai.com/947.html">静觅 - Python爬虫入门三之Urllib库的基本使用</a></li>
-  <li><a href="http://cuiqingcai.com/954.html">静觅 - Python爬虫入门四之Urllib库的高级用法</a></li>
+  <li><a href="https://cuiqingcai.com/947.html">静觅 - Python爬虫入门三之Urllib库的基本使用</a></li>
+  <li><a href="https://cuiqingcai.com/954.html">静觅 - Python爬虫入门四之Urllib库的高级用法</a></li>
 </ul>
 
 <p>以下语句运行环境为Mac OS／Python2.7.13。</p>
@@ -286,7 +286,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib2</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://rimoe.xyz"</span><span class="p">)</span>  <span class="c"># 打开网页http://rimoe.xyz</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"https://rimoe.xyz"</span><span class="p">)</span>  <span class="c"># 打开网页https://rimoe.xyz</span>
 <span class="k">print</span> <span class="n">res</span>
 <span class="k">print</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>                          <span class="c"># 解析re，输出html格式</span>
 
@@ -313,8 +313,8 @@
 <p>我们日常浏览的网页一般都是浏览器解析过的标签文件，具体过程可以参考：</p>
 
 <ul>
-  <li><a href="http://blog.csdn.net/xiangriikui/article/details/52207153">前端文摘：深入解析浏览器的幕后工作原理</a></li>
-  <li><a href="http://www.cnblogs.com/lhb25/p/how-browsers-work.html">在浏览器中输入网址到网页展现全部过程</a></li>
+  <li><a href="https://blog.csdn.net/xiangriikui/article/details/52207153">前端文摘：深入解析浏览器的幕后工作原理</a></li>
+  <li><a href="https://www.cnblogs.com/lhb25/p/how-browsers-work.html">在浏览器中输入网址到网页展现全部过程</a></li>
 </ul>
 
 <p>当然对于爬虫而言，我们希望程序输出的只包含我们需要的信息，因此我们需要对刚刚抓取的网页进行分析，也就是写程序来代替浏览器解释我们获取的文件（这里是html）。</p>
@@ -342,7 +342,7 @@
   <p>Python里的原生字符串很好地解决了这个问题，这个例子中的正则表达式可以使用r”\”表示。同样，匹配一个数字的”\d”可以写成r”\d”。有了原生字符串，妈妈也不用担心是不是漏写了反斜杠，写出来的表达式也更直观勒。</p>
 </blockquote>
 
-<p>图片引用及参考来自：<a href="http://cuiqingcai.com/977.html">静觅 - Python爬虫入门七之正则表达式</a></p>
+<p>图片引用及参考来自：<a href="https://cuiqingcai.com/977.html">静觅 - Python爬虫入门七之正则表达式</a></p>
 
 <p>Python的re模块可以使用正则表达式匹配字符串：</p>
 
@@ -388,8 +388,8 @@
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ul&gt;</span>
   <span class="nt">&lt;li&gt;</span>
     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/codeRimoe/h5_game_kanna"</span><span class="nt">&gt;</span>h5 Game - 坎娜与托尔<span class="nt">&lt;/a&gt;</span>  
-    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://blog.rimoe.xyz/2017/06/09/post01/"</span><span class="nt">&gt;</span>[NOTE BLOG]<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://rimoe.xyz/kanna"</span><span class="nt">&gt;</span>[TRY NOW]<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://blog.rimoe.xyz/2017/06/09/post01/"</span><span class="nt">&gt;</span>[NOTE BLOG]<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://rimoe.xyz/kanna"</span><span class="nt">&gt;</span>[TRY NOW]<span class="nt">&lt;/a&gt;</span>
   <span class="nt">&lt;/li&gt;</span>
   <span class="nt">&lt;li&gt;</span>
     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://github.com/codeRimoe/Wolf_and_Sheep"</span><span class="nt">&gt;</span>OOP Homework - Wolf and Sheep<span class="nt">&lt;/a&gt;</span>
@@ -420,16 +420,16 @@
 </code></pre></div></div>
 
 <p>输出：</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span> <span class="p">[</span><span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/h5_game_kanna"&gt;h5 Game - </span><span class="se">\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94</span><span class="s">&lt;/a&gt;  &lt;a href="http://blog.rimoe.xyz/2017/06/09/post01/"&gt;[NOTE BLOG]&lt;/a&gt;  &lt;a href="http://rimoe.xyz/kanna"&gt;[TRY NOW]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/Wolf_and_Sheep"&gt;OOP Homework - Wolf and Sheep&lt;/a&gt;  &lt;a href="http://blog.rimoe.xyz/2017/07/27/post01/"&gt;[NOTE BLOG]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">]</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span> <span class="p">[</span><span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/h5_game_kanna"&gt;h5 Game - </span><span class="se">\xe5\x9d\x8e\xe5\xa8\x9c\xe4\xb8\x8e\xe6\x89\x98\xe5\xb0\x94</span><span class="s">&lt;/a&gt;  &lt;a href="https://blog.rimoe.xyz/2017/06/09/post01/"&gt;[NOTE BLOG]&lt;/a&gt;  &lt;a href="https://rimoe.xyz/kanna"&gt;[TRY NOW]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">          &lt;a href="https://github.com/codeRimoe/Wolf_and_Sheep"&gt;OOP Homework - Wolf and Sheep&lt;/a&gt;  &lt;a href="https://blog.rimoe.xyz/2017/07/27/post01/"&gt;[NOTE BLOG]&lt;/a&gt;</span><span class="se">\n</span><span class="s">        '</span><span class="p">]</span>
 
 <span class="mi">2</span> <span class="n">Project</span><span class="p">:</span>
 <span class="mi">3</span> <span class="n">h5</span> <span class="n">Game</span> <span class="o">-</span> <span class="err">坎娜与托尔</span><span class="p">:</span><span class="s">"https://github.com/codeRimoe/h5_game_kanna"</span>
-<span class="mi">4</span> <span class="p">[</span><span class="n">NOTE</span> <span class="n">BLOG</span><span class="p">]:</span><span class="s">"http://blog.rimoe.xyz/2017/06/09/post01/"</span>
-<span class="mi">5</span> <span class="p">[</span><span class="n">TRY</span> <span class="n">NOW</span><span class="p">]:</span><span class="s">"http://rimoe.xyz/kanna"</span>
+<span class="mi">4</span> <span class="p">[</span><span class="n">NOTE</span> <span class="n">BLOG</span><span class="p">]:</span><span class="s">"https://blog.rimoe.xyz/2017/06/09/post01/"</span>
+<span class="mi">5</span> <span class="p">[</span><span class="n">TRY</span> <span class="n">NOW</span><span class="p">]:</span><span class="s">"https://rimoe.xyz/kanna"</span>
 
 <span class="mi">6</span> <span class="n">Project</span><span class="err">：</span>
 <span class="mi">7</span> <span class="n">OOP</span> <span class="n">Homework</span> <span class="o">-</span> <span class="n">Wolf</span> <span class="ow">and</span> <span class="n">Sheep</span><span class="p">:</span><span class="s">"https://github.com/codeRimoe/Wolf_and_Sheep"</span>
-<span class="mi">8</span> <span class="p">[</span><span class="n">NOTE</span> <span class="n">BLOG</span><span class="p">]:</span><span class="s">"http://blog.rimoe.xyz/2017/07/27/post01/"</span>
+<span class="mi">8</span> <span class="p">[</span><span class="n">NOTE</span> <span class="n">BLOG</span><span class="p">]:</span><span class="s">"https://blog.rimoe.xyz/2017/07/27/post01/"</span>
 </code></pre></div></div>
 
 <p><img src="/img/in-post/2017082401/pic08.jpg" alt="图 - 8" />
@@ -461,7 +461,7 @@
 <span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"http://rimoe.xyz"</span><span class="p">)</span>        <span class="c"># 打开网页http://rimoe.xyz</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">"https://rimoe.xyz"</span><span class="p">)</span>        <span class="c"># 打开网页https://rimoe.xyz</span>
 
 <span class="n">txt1</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="n">pattern1</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">r'&lt;li&gt;(.*?)&lt;/li&gt;'</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>  <span class="c"># 提取列表标签&lt;li&gt;</span>
@@ -523,13 +523,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="7">
+                				<a href="/tags/#生活" title="生活" rel="8">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="8">
+                				<a href="/tags/#文艺" title="文艺" rel="9">
                                     文艺
                                 </a>
                             
@@ -549,7 +549,7 @@
                             
         				
                             
-                				<a href="/tags/#技术" title="技术" rel="6">
+                				<a href="/tags/#技术" title="技术" rel="7">
                                     技术
                                 </a>
                             
@@ -604,6 +604,10 @@
         				
                             
         				
+                            
+        				
+                            
+        				
         			</div>
                 </section>
                 
@@ -644,9 +648,9 @@
       s.parentNode.insertBefore(o, s);
     }
 </script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<!-- anchor-js, Doc:https://bryanbraun.github.io/anchorjs/ -->
 <script>
-    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
         anchors.options = {
           visible: 'always',
           placement: 'right',
@@ -684,11 +688,11 @@
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
                     <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
-                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="https://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 <p style="font-size:13px;">
-                All right reserved. &copy; 凝萌小记-2019</br>忘名社 <span class="love">❤</span> Una.
-                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                All right reserved. &copy; 凝萌小记-2020</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="https://huangxuan.me">Hux</a> |
                 <iframe
                     style="margin-left: 2px; margin-bottom:-5px;"
                     frameborder="0" scrolling="0" width="100px" height="20px"
@@ -750,7 +754,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })

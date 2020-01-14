@@ -96,7 +96,7 @@
                     
 
                     <li>
-                        <a href="http://rimoe.xyz">Home - 柠萌</a>
+                        <a href="https://rimoe.xyz">Home - 柠萌</a>
                     </li>
                     
                     <li>
@@ -265,11 +265,11 @@
 
 <p>以下以新浪微博API为例初探如何调用API。</p>
 
-<p>首先我们可以很容易找到<a href="http://open.weibo.com/wiki/API">新浪微博的API</a>，里面有各种各样的接口（如图-1）。</p>
+<p>首先我们可以很容易找到<a href="https://open.weibo.com/wiki/API">新浪微博的API</a>，里面有各种各样的接口（如图-1）。</p>
 
 <p><img src="/img/in-post/2017072901/pic01.jpg" alt="图 - 1" /></p>
 
-<p>我们先从“获取最新的公共微博”开始，点入左边的链接<a href="http://open.weibo.com/wiki/2/statuses/public_timeline">statuses/public_timeline</a>，可以看到里面有许多项内容——URL、支持格式、请求方式、是否需要登录等等（如图-2）。</p>
+<p>我们先从“获取最新的公共微博”开始，点入左边的链接<a href="https://open.weibo.com/wiki/2/statuses/public_timeline">statuses/public_timeline</a>，可以看到里面有许多项内容——URL、支持格式、请求方式、是否需要登录等等（如图-2）。</p>
 
 <p><img src="/img/in-post/2017072901/pic02.jpg" alt="图 - 2" /></p>
 
@@ -285,18 +285,18 @@
 
 <h6 id="-sdk的获取">* SDK的获取</h6>
 
-<p>SDK即软件开发工具包（Software Development Kit），为了方便调用API，sina提供了各种语言下调用API的SDK，具体参见网站<a href="http://open.weibo.com/wiki/SDK">Weibo SDK</a>。其中python的SDK是由大神廖雪峰<a href="https://github.com/michaelliao">github</a>写的，他的git上也有一些python教程。关于SDK，可以戳：</p>
+<p>SDK即软件开发工具包（Software Development Kit），为了方便调用API，sina提供了各种语言下调用API的SDK，具体参见网站<a href="https://open.weibo.com/wiki/SDK">Weibo SDK</a>。其中python的SDK是由大神廖雪峰<a href="https://github.com/michaelliao">github</a>写的，他的git上也有一些python教程。关于SDK，可以戳：</p>
 
 <ul>
   <li>下载页<a href="https://github.com/michaelliao/sinaweibopy">新浪微博Python SDK</a></li>
-  <li>介绍页<a href="http://github.liaoxuefeng.com/sinaweibopy/">sinaweibopy</a></li>
+  <li>介绍页<a href="https://github.liaoxuefeng.com/sinaweibopy/">sinaweibopy</a></li>
 </ul>
 
 <h6 id="-创建应用">* 创建应用</h6>
 
 <p>我们要调用数据，数据提供者必然不能随便开放数据，在新浪微博API中，要获取数据，就需要app-key和app-secret。这两个东西就像是账号密码，用来证明你是开发者，通过你开发的这个应用来使用API。</p>
 
-<p>要获得app-key和app-secret，我们首先要有一个app-，我们在<a href="http://open.weibo.com/">新浪开发平台</a>上创建一个应用，点击我的应用，然后认证信息后，点击微连接-其他，创建一个网页应用，不需要审核。</p>
+<p>要获得app-key和app-secret，我们首先要有一个app-，我们在<a href="https://open.weibo.com/">新浪开发平台</a>上创建一个应用，点击我的应用，然后认证信息后，点击微连接-其他，创建一个网页应用，不需要审核。</p>
 
 <p>然后在【应用信息-基本信息】里面的app-key和app-secret（如图-3）。</p>
 
@@ -440,7 +440,7 @@
   </tbody>
 </table>
 
-<p>一般用到的就只有GET和POST，区别大概是GET用于获取数据，POST要在header中提交更多的参数用于提交数据。我们浏览网页，实际上是提交一个表单，向服务器请求数据。关于http协议的教程，具体可以看<a href="http://www.runoob.com/http/http-tutorial.html">HTTP教程</a>，具体请求方式python中一般是使用urllib和urllib2两个模块的urlopen()函数。</p>
+<p>一般用到的就只有GET和POST，区别大概是GET用于获取数据，POST要在header中提交更多的参数用于提交数据。我们浏览网页，实际上是提交一个表单，向服务器请求数据。关于http协议的教程，具体可以看<a href="https://www.runoob.com/http/http-tutorial.html">HTTP教程</a>，具体请求方式python中一般是使用urllib和urllib2两个模块的urlopen()函数。</p>
 
 <p>我们在微博API的使用手册中可以看到，每个API都有写明HTTP请求方式，使用SDK可以不需要深入了解HTTP请求方式即可调用API。</p>
 
@@ -450,7 +450,7 @@
   <p>OAuth是一个关于授权(authorization)的开放网络标准,在全世界得到广泛应用,目前的版本是2.0版。</p>
 </blockquote>
 
-<p>新浪微博API采用OAuth2.0授权，具体原理可以参考<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">理解OAuth 2.0</a>，这里我们只需要知道通过授权码认证后，我们的程序可以获得用户账号的某些权限，比如查看微博、发微博等。这个授权码，其实就是上文提到“code=”后面的那串字符。</p>
+<p>新浪微博API采用OAuth2.0授权，具体原理可以参考<a href="https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">理解OAuth 2.0</a>，这里我们只需要知道通过授权码认证后，我们的程序可以获得用户账号的某些权限，比如查看微博、发微博等。这个授权码，其实就是上文提到“code=”后面的那串字符。</p>
 
 <h4 id="3-使用sdk">3. 使用SDK</h4>
 
@@ -464,14 +464,14 @@
 
 <p>使用client.set_access_token()函数设置access_token后就可以调用API了。</p>
 
-<p>API接口有很多，demo中调用的是公众时间流，可以获取公共微博数据。这些接口的调用方式在微博开放平台-<a href="http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI">微博API</a>中可以找到。</p>
+<p>API接口有很多，demo中调用的是公众时间流，可以获取公共微博数据。这些接口的调用方式在微博开放平台-<a href="https://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI">微博API</a>中可以找到。</p>
 
-<p>比如当前用户关注的人的最新微博的API<a href="http://open.weibo.com/wiki/2/statuses/home_timeline">statuses/home_timeline</a>其URL是”https://api.weibo.com/2/statuses/home_timeline.json”，调用就可以直接使用如下方法，其实就是把“/”换成“.”，然后后面加上请求方式（.get/.post）。</p>
+<p>比如当前用户关注的人的最新微博的API<a href="https://open.weibo.com/wiki/2/statuses/home_timeline">statuses/home_timeline</a>其URL是”https://api.weibo.com/2/statuses/home_timeline.json”，调用就可以直接使用如下方法，其实就是把“/”换成“.”，然后后面加上请求方式（.get/.post）。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">statuses</span><span class="o">.</span><span class="n">home_timeline</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>如果要调用某些API需要提交请求参数的，那就在括号里面加上参数名=具体参数，如<a href="http://open.weibo.com/wiki/2/comments/create">comments/create</a>（这个API是POST请求方式,请求参数如图-8），那就应该写成如下形式。</p>
+<p>如果要调用某些API需要提交请求参数的，那就在括号里面加上参数名=具体参数，如<a href="https://open.weibo.com/wiki/2/comments/create">comments/create</a>（这个API是POST请求方式,请求参数如图-8），那就应该写成如下形式。</p>
 
 <p><img src="/img/in-post/2017072901/pic08.png" alt="图 - 8" /></p>
 
@@ -487,7 +487,7 @@
 
 <h4 id="4-访问频次">4. 访问频次</h4>
 
-<p>API接口不是无限次数访问的，官方文档-<a href="http://open.weibo.com/wiki/Rate-limiting">接口访问频次权限</a>这样写道：</p>
+<p>API接口不是无限次数访问的，官方文档-<a href="https://open.weibo.com/wiki/Rate-limiting">接口访问频次权限</a>这样写道：</p>
 
 <blockquote>
   <p>微博开放接口限制每段时间只能请求一定的次数。限制的单位时间有每小时、每天；限制的维度有单授权用户和单IP；部分特殊接口有单独的请求次数限制。例如：</p>
@@ -500,11 +500,11 @@
   </ul>
 </blockquote>
 
-<p>使用API接口<a href="http://open.weibo.com/wiki/2/account/rate_limit_status">account/rate_limit_status</a>，可以查看当前应用的频次限制。</p>
+<p>使用API接口<a href="https://open.weibo.com/wiki/2/account/rate_limit_status">account/rate_limit_status</a>，可以查看当前应用的频次限制。</p>
 
 <h4 id="5-自动获取授权码">5. 自动获取授权码</h4>
 
-<p>这部分由于各种原因没有去研究，以后不知道什么时候才有空去研究，这里先贴一个链接：<a href="http://blog.csdn.net/liujiandu101/article/details/52096654">python模拟登录新浪微博自动获得调用新浪api所需的code</a>。</p>
+<p>这部分由于各种原因没有去研究，以后不知道什么时候才有空去研究，这里先贴一个链接：<a href="https://blog.csdn.net/liujiandu101/article/details/52096654">python模拟登录新浪微博自动获得调用新浪api所需的code</a>。</p>
 
 <p>大概看了一下好像就是直接用requests请求的。</p>
 
@@ -522,7 +522,7 @@
 
 <p>代码已发到<a href="https://github.com/codeRimoe/api">Github - api</a>。</p>
 
-<p>代码参考自：<a href="http://blog.csdn.net/dijason/article/details/8251322">微博 获取指定用户发表的所有微博</a></p>
+<p>代码参考自：<a href="https://blog.csdn.net/dijason/article/details/8251322">微博 获取指定用户发表的所有微博</a></p>
 
 <p>2017.07.27 于广州</p>
 
@@ -561,13 +561,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#生活" title="生活" rel="7">
+                				<a href="/tags/#生活" title="生活" rel="8">
                                     生活
                                 </a>
                             
         				
                             
-                				<a href="/tags/#文艺" title="文艺" rel="8">
+                				<a href="/tags/#文艺" title="文艺" rel="9">
                                     文艺
                                 </a>
                             
@@ -587,7 +587,7 @@
                             
         				
                             
-                				<a href="/tags/#技术" title="技术" rel="6">
+                				<a href="/tags/#技术" title="技术" rel="7">
                                     技术
                                 </a>
                             
@@ -642,6 +642,10 @@
         				
                             
         				
+                            
+        				
+                            
+        				
         			</div>
                 </section>
                 
@@ -682,9 +686,9 @@
       s.parentNode.insertBefore(o, s);
     }
 </script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<!-- anchor-js, Doc:https://bryanbraun.github.io/anchorjs/ -->
 <script>
-    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
         anchors.options = {
           visible: 'always',
           placement: 'right',
@@ -722,11 +726,11 @@
                     <a aria-label="My Twitter" target="_blank" href="https://twitter.com/Haowen_Luo"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
                     <a aria-label="My Facebook" target="_blank" href="https://www.facebook.com/negatronljl"><i class="icon fa fa-facebook-official" aria-hidden="true"></i></a>
                     <a aria-label="My Zhihu" target="_blank" href="https://www.zhihu.com/people/yue_/activities"><i class="icon fa fa-lightbulb-o" aria-hidden="true"></i></a>
-                    <a aria-label="My Jianshu" target="_blank" href="http://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+                    <a aria-label="My Jianshu" target="_blank" href="https://www.jianshu.com/u/5745dc55bfb6"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
                 <p style="font-size:13px;">
-                All right reserved. &copy; 凝萌小记-2019</br>忘名社 <span class="love">❤</span> Una.
-                </br>Theme by <a href="http://huangxuan.me">Hux</a> |
+                All right reserved. &copy; 凝萌小记-2020</br>忘名社 <span class="love">❤</span> Una.
+                </br>Theme by <a href="https://huangxuan.me">Hux</a> |
                 <iframe
                     style="margin-left: 2px; margin-bottom:-5px;"
                     frameborder="0" scrolling="0" width="100px" height="20px"
@@ -788,7 +792,7 @@
 
 <!--fastClick.js -->
 <script>
-    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })

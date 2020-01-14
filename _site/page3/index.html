@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>About - 凝萌小记 - Rimoe's</title>
+    <title>凝萌小记 - Rimoe's</title>
 
-    <link rel="canonical" href="http://localhost:4000/about/">
+    <link rel="canonical" href="http://localhost:4000/page3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -189,11 +189,11 @@
 
 
     <!-- Page Header -->
-<div id="particles-js" style="background-size:cover;background-image:url('/img/about-bg.jpg');background-repeat:no-repeat;" >
+<div id="particles-js" style="background-size:cover;background-image:url('/img/home-bg.jpg');background-repeat:no-repeat;" >
   <div class="content">
       <h1>
-        <span class="site-title">玥</span>
-        <span class="site-description">皓洁为月，佳文成玉。</span>
+        <span class="site-title">凝萌小记</span>
+        <span class="site-description">作家是杂家。</span>
       </h1>
       <div class="icons-header">
         <a aria-label="Send email" href="mailto:yue.rimoe@gmail.com"><i class="icon fa fa-envelope-o"></i></a>
@@ -226,107 +226,44 @@
                 col-xs-12
                 post-container
             ">
-    			<!-- Language Selector -->
-</br></br>
-<sapn>语言 Language：</span>
-<select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select>
+    			
+<div class="post-preview">
+    <a href="/2017/05/01/post01/">
+        <h2 class="post-title">
+            搭建一个小记事本
+        </h2>
+        
+        <h3 class="post-subtitle">
+            垦一个自己的园地
+        </h3>
+        
+        <div class="post-content-preview">
+            
+  “有些人种花聊以消遣，有些人种花志在卖钱；真种花者以种花为其生活，——而花亦未尝不美，未尝于人无益。（周作人《自己的园地》）”
 
-<!-- Chinese Version -->
-<div class="zh post-container">
-    <blockquote>
-        作家是杂家。
-    </blockquote>
-    中学时候有写周记的习惯，写得一篇文章后又会拿去给同学看，那非常的愉悦就像是幼儿园的孩子夸耀自己的手工作品一样。等到今天处于大学里，自由的时间多了，却更加无暇去作文。有无穷多的乐事、烦心事去充塞我的生活，这些大大小小的事迫使我戒掉了读书作文这种精神上的鸦片。由于某种心潮，近来终于又读起几本闲书来，自然又勾起往日的那些瘾。</br></br>
-    
-    这个世界很热闹，倘若我可以在其中垦一片自己的园地，那便是很好的。</br></br>
-    
-    我写小诗，写小说，写小杂文，也写学习上的小收获。</br></br>
-    
-    可是写在纸上的文字是没人能看到的，我便开垦了一个这样的小园地，种上我自己的菜苗。</br></br>
-    
-    世界变得飞快，万物在生长，科技也在生长，一不留神就会被时代的浪潮所淹没。倘若不能站在浪尖上，那便写一些无声的文字，研究一些过气的技术，或许也能慰藉一下自己。</br></br>
 
-    <p style="text-align:right;">
-        —— 罗  玥／皓文 <a href="https://blog.rimoe.xyz/2017/05/01/post01/">垦一个自己的园地 2017.05.01 早晨 于珠海</a>
+缘起
+
+中学时候有写周记的习惯，写得一篇文章后又会拿去给同学看，那非常的愉悦就像是幼儿园的孩子夸耀自己的手工作品一样。等到今天处于大学里，自由的时间多了，却更加无暇去作文。有无穷多的乐事、烦心事去充塞我的生活，这些大大小小的事迫使我戒掉了读书作文这种精神上...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 柠萌 on May 1, 2017
     </p>
-
 </div>
-
-<!-- English Version -->
-<div class="en post-container">
-    <blockquote>
-        Designer or Engineer, things in between.
-    </blockquote>
-
-    <p>
-        I used to writing weekly diary when I was in middle school. Every time I finish my writing, I asked my friend to read my work. I felt like that I am a child showing of his own handicrafts. After being a college student, I got more and more free time, but I found that I have less and less time to write something. There are so many happiness and sadness in my college life. These thing separated me from addiction of reading and writing. Recently, I read some books, and find that I am addicted into reading and writing.</br></br>
-        The world is bustling. It would be pretty good if I have a garden in it.</br></br>
-        I write poems, novele, essays, and something I have learned.</br></br>
-        However, nobody reads my words on my notebook. So I built such a garden and raise some flowers in it.</br></br>
-        The world is changing rapidly, technology is booming, everything is growing. Everyone would be swallowed by the tide of the times. I can not stand on the top of the tide. Instead, I can only write something silent, and learn something outdated, to make me feel better.</br></br>
-    </p>
-    <p style="text-align:right;">
-    -- Haowen Y. Luo <a href="https://blog.rimoe.xyz/2017/05/01/post01/">垦一个自己的园地 2017.05.01 morning Zhuhai</a>
-    </p>
-
-</div>
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script>
+<hr>
 
 
+<!-- Pager -->
 
-
-<!-- 多说评论框 start -->
-<div class="comment">
-    <div class="ds-thread"
+<ul class="pager">
     
-        data-thread-id="1187623191091085319"
+    <li class="previous">
+        <a href="/page2">&larr; Newer Posts</a>
+    </li>
     
-
-    data-title="About"
-    data-url="http://localhost:4000/about/"></div>
-</div>
-<!-- 多说评论框 end -->
-
-<!-- Duoshuo hacking -->
-<input id="dsUser" type="hidden" value="huxblog"  />
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User hacking by Hux
-    var _user = document.getElementById('dsUser').value;
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
+    
+</ul>
 
 
     		</div>
